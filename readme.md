@@ -1,6 +1,8 @@
 # Ambient Music Mod
 
-A hybrid Xposed & Magisk module that ports Pixel Ambient Music to other, compatible devices.
+A hybrid Xposed & Magisk module that ports Pixel Ambient Music to other, compatible devices. If you don't know what Pixel Ambient Music is, it's the feature that recognises music that's playing in the background (ie. not from your phone) automatically. It does this locally, without a connection, and doesn't send any data to Google servers for recognition.
+
+The aim of this feature is simple - you'll never wonder "what's that song" again when around the house or out and about - as your phone will tell you without you even having to ask.
 
 Please [read the FAQ](https://github.com/KieronQuinn/AmbientMusicMod/blob/main/app/src/main/assets/faq.md) before asking questions or reporting issues
 
