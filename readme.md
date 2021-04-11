@@ -2,7 +2,7 @@
 
 A hybrid Xposed & Magisk module that ports Pixel Ambient Music to other, compatible devices.
 
-Please [read the FAQ](https://github.com/KieronQuinn/AmbientMusicMod/app/src/main/assets/faq.md) before asking questions or reporting issues
+Please [read the FAQ](https://github.com/KieronQuinn/AmbientMusicMod/blob/main/app/src/main/assets/faq.md) before asking questions or reporting issues
 
 ## Features
 
