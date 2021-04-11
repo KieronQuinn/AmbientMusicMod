@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_16"
+    android:paddingEnd="@dimen/padding_16"
+    android:paddingBottom="@dimen/padding_16">
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/bs_gain_slider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

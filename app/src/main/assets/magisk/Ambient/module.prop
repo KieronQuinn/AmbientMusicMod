@@ -1,0 +1,6 @@
+id=AmbientMusicTest
+name=Ambient Music Mod
+version=1.0
+versionCode=1
+author=Kieron Quinn / Quinny899
+description=Port of Pixel Ambient Music to other devices. You MUST use the Xposed module AS WELL as this module for it to work.

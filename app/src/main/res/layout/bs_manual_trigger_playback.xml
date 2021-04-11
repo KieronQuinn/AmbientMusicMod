@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_16"
+    android:paddingEnd="@dimen/padding_16"
+    android:paddingBottom="@dimen/padding_16">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_8"
+        android:id="@+id/bs_manual_trigger_playback_title"
+        android:text="@string/bs_manual_trigger_state_complete_tertiary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Ambient"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="fitXY"
+        android:padding="12dp"
+        android:src="@drawable/ic_menu"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:foreground="@drawable/rounded_ripple"
+        android:id="@+id/bs_manual_trigger_playback_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@null"/>
+
+    <ImageButton
+        android:id="@+id/bs_manual_trigger_playback_play_pause"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:background="@drawable/bs_manual_trigger_playback_button"
+        android:padding="@dimen/padding_8"
+        android:layout_marginTop="@dimen/padding_24"
+        android:scaleType="fitXY"
+        android:src="@drawable/avd_play_to_stop"
+        android:tint="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bs_manual_trigger_playback_title" />
+
+    <rm.com.audiowave.AudioWaveView
+        android:id="@+id/bs_manual_trigger_playback_audiowave"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        app:animateExpansion="true"
+        app:chunkHeight="24dp"
+        app:chunkRadius="3dp"
+        app:chunkSpacing="1dp"
+        app:chunkWidth="3dp"
+        app:layout_constraintTop_toBottomOf="@id/bs_manual_trigger_playback_play_pause"
+        app:minChunkHeight="2dp"
+        app:touchable="false"
+        app:waveColor="@color/accent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_16"
+        android:gravity="center_horizontal"
+        android:text="@string/bs_manual_trigger_playback_note"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Ambient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bs_manual_trigger_playback_audiowave"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

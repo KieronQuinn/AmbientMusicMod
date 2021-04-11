@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:padding="@dimen/padding_16">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/developer_options_log_lottie"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_dump_logs"
+            app:layout_constraintBottom_toTopOf="@id/developer_options_log_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:tint="@color/accent" />
+
+        <TextView
+            android:id="@+id/developer_options_log_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/developer_options_log_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Ambient"
+            app:layout_constraintBottom_toTopOf="@id/developer_options_log_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/developer_options_log_lottie" />
+
+        <TextView
+            android:id="@+id/developer_options_log_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_8"
+            android:layout_marginBottom="@dimen/padding_8"
+            android:gravity="center"
+            android:text="@string/developer_options_log_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/developer_options_log_title" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/developer_options_log_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_16"
+            android:layout_marginBottom="@dimen/padding_16"
+            android:fontFamily="@font/google_sans_medium"
+            android:text="@string/developer_options_log_button"
+            android:textAllCaps="false"
+            app:icon="@drawable/ic_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/developer_options_log_content"
+            app:layout_constraintVertical_bias="1" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

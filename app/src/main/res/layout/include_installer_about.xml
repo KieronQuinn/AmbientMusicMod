@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/CardView.Ambient"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/padding_16"
+    android:layout_marginTop="@dimen/padding_8"
+    android:layout_marginEnd="@dimen/padding_16"
+    android:layout_marginBottom="@dimen/padding_8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/installer_faq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:selectableItemBackground"
+            android:paddingStart="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_16"
+            android:paddingEnd="@dimen/padding_16"
+            android:paddingBottom="@dimen/padding_8">
+
+            <ImageView
+                android:id="@+id/installer_faq_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_faq_round"
+                app:layout_constraintBottom_toBottomOf="@id/installer_faq_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/installer_faq_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_16"
+                android:text="@string/faq_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.Ambient.Medium"
+                app:layout_constraintBottom_toTopOf="@id/installer_faq_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/installer_faq_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/installer_faq_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_16"
+                android:text="@string/faq_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintBottom_toBottomOf="@id/installer_faq_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/installer_faq_icon"
+                app:layout_constraintTop_toBottomOf="@id/installer_faq_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/installer_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_16"
+            android:paddingTop="@dimen/padding_8"
+            android:paddingEnd="@dimen/padding_16"
+            android:paddingBottom="@dimen/padding_16">
+
+            <ImageView
+                android:id="@+id/installer_about_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_about_round"
+                app:layout_constraintBottom_toBottomOf="@id/installer_about_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/installer_about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_16"
+                android:text="@string/about_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.Ambient.Medium"
+                app:layout_constraintBottom_toTopOf="@id/installer_about_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/installer_about_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/installer_about_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_16"
+                android:paddingBottom="@dimen/padding_8"
+                android:text="@string/about_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintBottom_toBottomOf="@id/installer_about_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/installer_about_icon"
+                app:layout_constraintTop_toBottomOf="@id/installer_about_title" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/installer_about_chip_xda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/xda_thread"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Ambient.Medium"
+                app:chipBackgroundColor="@color/icon_circle_5"
+                app:chipEndPadding="@dimen/padding_8"
+                app:chipIcon="@drawable/ic_xda"
+                app:chipStartPadding="@dimen/padding_8"
+                app:layout_constraintStart_toStartOf="@id/installer_about_content"
+                app:layout_constraintTop_toBottomOf="@id/installer_about_content" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/installer_about_chip_github"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_8"
+                android:text="@string/github"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Ambient.Medium"
+                app:chipBackgroundColor="@color/icon_circle_6"
+                app:chipEndPadding="@dimen/padding_8"
+                app:chipIcon="@drawable/ic_github"
+                app:chipStartPadding="@dimen/padding_8"
+                app:layout_constraintStart_toEndOf="@id/installer_about_chip_xda"
+                app:layout_constraintTop_toBottomOf="@id/installer_about_content" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/installer_about_chip_donate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/donate"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Ambient.Medium"
+                app:chipBackgroundColor="@color/icon_circle_7"
+                app:chipEndPadding="@dimen/padding_8"
+                app:chipIcon="@drawable/ic_donate"
+                app:chipStartPadding="@dimen/padding_8"
+                app:layout_constraintStart_toStartOf="@id/installer_about_content"
+                app:layout_constraintTop_toBottomOf="@id/installer_about_chip_xda" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/installer_about_chip_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_8"
+                android:text="@string/twitter_short"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Ambient.Medium"
+                app:chipBackgroundColor="@color/icon_circle_8"
+                app:chipEndPadding="@dimen/padding_8"
+                app:chipIcon="@drawable/ic_twitter"
+                app:chipStartPadding="@dimen/padding_8"
+                app:layout_constraintStart_toEndOf="@id/installer_about_chip_donate"
+                app:layout_constraintTop_toBottomOf="@id/installer_about_chip_github" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

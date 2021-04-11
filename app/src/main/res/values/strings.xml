@@ -1,0 +1,295 @@
+<resources>
+    <string name="app_name">Ambient Music Mod</string>
+    <string name="now_playing_history">Now Playing History</string>
+
+    <!-- Toolbar titles -->
+    <string name="tab_settings">@string/app_name</string>
+    <string name="tab_installer">Installer</string>
+
+    <string name="close">Close</string>
+
+    <string name="xposed_module_desc">Enables Ambient Music in Pixel Ambient Services &amp; adds mods to control it.\nImportant: You MUST have the Magisk module installed AS WELL for this to work.</string>
+
+    <!-- Nav bar -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_installer">@string/tab_installer</string>
+
+    <!-- Foreground service notification -->
+    <string name="foreground_service_notification_title">Ambient Music Mod</string>
+    <string name="foreground_service_notification_content">Ambient Music Mod is running in the background. Tap to hide this notification in the system settings.</string>
+    <string name="foreground_service_notification_channel_title">Background Service</string>
+    <string name="foreground_service_notification_channel_content">Keeps Ambient Music Mod running to periodically start recognition</string>
+
+    <!-- Foreground service boot notification -->
+    <string name="foreground_service_notification_boot_title">Start Ambient Music</string>
+    <string name="foreground_service_notification_boot_content">The Ambient Music app must be launched manually after a reboot to allow the music model to start, tap to launch</string>
+    <string name="foreground_service_notification_boot_channel_title">Ambient Music Boot Helper</string>
+    <string name="foreground_service_notification_boot_channel_content">Shows a helper notification after a reboot to remind you to start Ambient Music so recognition can start</string>
+
+    <!-- Main app link -->
+    <string name="app_link_title">Launch Ambient Music App</string>
+    <string name="app_link_content">For notification controls and Now Playing history</string>
+
+    <!-- Reverse link -->
+    <string name="mod_app_link_title">Ambient Music Mod</string>
+    <string name="mod_app_link_content">Launch Ambient Music Mod for more settings</string>
+
+    <!-- Xposed module status -->
+    <string name="settings_module_state_title_disabled">Xposed Module not enabled</string>
+    <string name="settings_module_state_title_disabled_desc">You must enable the Xposed module for Ambient Music to work</string>
+    <string name="settings_module_state_title_enabled">Xposed Module enabled</string>
+    <string name="settings_module_state_title_enabled_desc">Module is enabled and hooks are working</string>
+    <string name="settings_module_state_title_not_installed">Xposed not installed</string>
+    <string name="settings_module_state_title_not_installed_desc">Xposed is not installed. Magisk alone is not enough for this mod to work, tap for more info.\n<b>Note: If you have a repackaged or hidden Xposed Manager installed, you can ignore this and enable the module as normal.</b></string>
+
+    <!-- Battery optimisation prompt -->
+    <string name="settings_battery_optimisation">Disable Battery Optimisation</string>
+    <string name="settings_battery_optimisation_desc">Battery optimisation should be disabled for both Ambient Music Mod and Pixel Ambient Services for this mod to work properly</string>
+
+    <!-- Enabled switch -->
+    <string name="settings_enabled">Enable Ambient Music</string>
+
+    <!-- Test listen -->
+    <string name="settings_test_listen">Test Recognition</string>
+    <string name="settings_test_listen_desc">Manually start recognition to check input and amplification levels</string>
+
+    <!-- Mod Settings -->
+    <string name="settings_category_mod_settings">Mod Settings</string>
+    <string name="settings_mod_gain">Amplification</string>
+    <string name="settings_mod_gain_desc">Set how much the audio input should be amplified. Some devices have better microphones than others so may need less (or none at all), some need more.\n<b>Note: Amplifying the input also amplifies noise, so a higher value is not always better.</b></string>
+    <string name="settings_mod_job">Listen period</string>
+    <string name="settings_mod_job_desc">Set how often Ambient Music should listen for music playing (<b>default: never</b>)</string>
+    <string name="settings_mod_listen_on_wake">Listen when device is woken</string>
+    <string name="settings_mod_listen_on_wake_desc">Listen for music playing when the device is woken</string>
+    <string name="settings_mod_show_history_launcher">Now Playing History in apps</string>
+    <string name="settings_mod_show_history_launcher_desc">Show "Now Playing History" in your apps, rather than having to add a home screen shortcut</string>
+    <string name="settings_mod_show_on_lockscreen">Show Now Playing on Lock Screen</string>
+    <string name="settings_mod_show_on_lockscreen_desc">Overlay the current Now Playing track on the lock screen. Requires an Accessibility Service.</string>
+
+    <!-- Amplification dialog -->
+    <string name="slider_amplification_label">%1d%%</string>
+
+    <!-- Listen period labels -->
+    <string name="listen_period_never">Never</string>
+    <string name="listen_period_automatic">Automatic</string>
+    <string name="listen_period_1_minute">1 minute</string>
+    <string name="listen_period_2_minute">2 minutes</string>
+    <string name="listen_period_3_minute">3 minutes</string>
+    <string name="listen_period_4_minute">4 minutes</string>
+    <string name="listen_period_5_minute">5 minutes</string>
+    <string name="listen_period_10_minute">10 minutes</string>
+    <string name="listen_period_15_minute">15 minutes</string>
+    <string name="listen_period_20_minute">20 minutes</string>
+    <string name="listen_period_30_minute">30 minutes</string>
+    <string name="listen_period_60_minute">1 hour</string>
+
+    <!-- Manual trigger bottom sheet -->
+    <string name="bs_manual_trigger_state_awaiting_start">Waiting for recognition to start…</string>
+    <string name="bs_manual_trigger_state_listening">Listening…</string>
+    <string name="bs_manual_trigger_state_awaiting_response">Awaiting response…</string>
+    <string name="bs_manual_trigger_state_response_music">Music recognised!</string>
+    <string name="bs_manual_trigger_state_response_music_desc">%1s by %1s</string>
+    <string name="bs_manual_trigger_state_response_no_music">No music recognised</string>
+    <string name="bs_manual_trigger_state_response_not_music">Ambient Music detected that no music was playing</string>
+    <string name="bs_manual_trigger_state_response_unknown">Unknown response from Ambient Music</string>
+    <string name="bs_manual_trigger_state_error_desc">Please try again</string>
+    <string name="bs_manual_trigger_state_error_not_started">Ambient Music failed to start</string>
+    <string name="bs_manual_trigger_state_error_no_response">No response from Ambient Music</string>
+    <string name="bs_manual_trigger_state_error_bad_response">@string/bs_manual_trigger_state_response_unknown</string>
+    <string name="bs_manual_trigger_state_complete_tertiary">Play back input</string>
+    <string name="bs_manual_trigger_troubleshooting">Troubleshooting</string>
+    <string name="bs_manual_trigger_playback_note">Audio is deleted after the Test Recognition dialog is closed</string>
+    <string name="bs_manual_trigger_playback_file_info_menu">Opening the saved file</string>
+    <string name="bs_manual_trigger_playback_file_info_title">Audio Format</string>
+    <string name="bs_manual_trigger_playback_file_info_content">The saved file is in raw (PCM) format. You can open it in Audacity or similar programs by importing raw audio with the following settings:\n\n- Signed 16-bit PCM\n- Big-endian byte order\n- 1 Channel (Mono)\n- 16000Hz Sample Rate</string>
+
+    <!-- Manual trigger playback menu -->
+    <string name="bs_manual_trigger_playback_write_to_file">Save to file</string>
+    <string name="bs_manual_trigger_playback_write_to_file_saved">Input audio saved</string>
+
+    <!-- Manual trigger troubleshooting -->
+    <string name="bs_manual_trigger_troubleshooting_title">Troubleshooting</string>
+    <string name="bs_manual_trigger_troubleshooting_type_not_started">If Ambient Music fails to start:\n\n• Use the Launch Ambient Music App option to start the app, it may simply have been killed, then return to Ambient Music Mod and try again (this fixes it most of the time)\n• Reboot your phone, but make sure to start Ambient Music before trying again as above\n• Make sure you have \"Android\", \"Pixel Ambient Services\", \"Ambient Music Mod\" and \"Device Personalisation Services\" (if it\'s installed on your device) whitelisted in EdXposed, if you are using the app whitelist/Xposed Hide mode</string>
+    <string name="bs_manual_trigger_troubleshooting_type_no_music">If Ambient Music does not detect music playing:\n\n• Adjust the amplification setting to make the sound loud, but not long enough that it\'s distorted. Use the \"Play back input\" option to listen back and adjust it as required\n• Move closer to the speaker, you may simply be too far away\n• Don\'t get too close to the speaker, very high volumes cause peaking and distortion that can prevent music being recognised</string>
+    <string name="bs_manual_trigger_troubleshooting_type_not_music">If Ambient Music says the input is not music:\n\n• Make sure you have \"Android\", \"Pixel Ambient Services\" and \"Ambient Music Mod\" whitelisted in EdXposed.\n\nThe \"Not Music\" detection result is meant to happen Pixel devices with the official Ambient Music, but as the model is not optimised to tell the difference between "not music" and "no music" on other devices, it is disabled in this mod. If you see this response, it suggests the Xposed module is not working properly.</string>
+    <string name="bs_manual_trigger_troubleshooting_type_unknown">If Ambient Music returns an unknown response:\n\n• Make sure you are using the correct version of Pixel Ambient Services for the mod, and have not updated the app on Google Play or via another source. Only version 1.0.279736494 works with this mod.</string>
+    <string name="bs_manual_trigger_troubleshooting_type_no_result">If Ambient Music fails to respond:\n\n• Use the Launch Ambient Music App option to start the app, it may simply have been killed, then return to Ambient Music Mod and try again (this fixes it most of the time)\n• Reboot your phone, but make sure to start Ambient Music and wait a few minutes for the system to settle before trying again as above\n• Make sure you have \"Android\", \"Pixel Ambient Services\", \"Ambient Music Mod\" and \"Device Personalisation Services\" (if it\'s installed on your device) whitelisted in EdXposed, if you are using the app whitelist/Xposed Hide mode</string>
+
+    <!-- Advanced Settings -->
+    <string name="settings_advanced_run_on_little_cores_desc">Run the music recognition on the little CPU cores. May save some battery, may be buggy (<b>default: disabled</b>).</string>
+    <string name="settings_advanced_run_on_little_cores">Run on Little Cores</string>
+    <string name="settings_advanced_show_album_art_desc">Show album art from YouTube Music in Now Playing History. May be buggy.</string>
+    <string name="settings_advanced_show_album_art">Show Album Art in History</string>
+    <string name="settings_advanced_use_assistant">Assistant for Notification Click</string>
+    <string name="settings_advanced_use_assistant_desc">Launch Google Assistant when the music recognition notification is clicked, rather than Google Search.\nChanges take effect on the next notification.</string>
+    <string name="settings_advanced">Advanced</string>
+    <string name="settings_advanced_desc">Advanced options such as core usage and custom amplification levels</string>
+    <string name="settings_advanced_custom_amplification_desc">Set a custom amplification level, if the standard option is still too low for your device. <b>Use with caution, high amplification will also cause amplification of noise.</b></string>
+    <string name="settings_advanced_custom_amplification">Custom Amplification</string>
+
+    <!-- Custom amplification bottom sheet -->
+    <string name="bs_advanced_custom_amplification_hint">Amplification</string>
+    <string name="bs_advanced_custom_amplification_error">Invalid amplification value</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_label">Ambient Music Mod</string>
+    <string name="accessibility_service_description">Display the current Now Playing track on the lock screen. Change position of the overlay in the Ambient Music Mod settings.\n\n<b>Important Note:</b>\nAmbient Music Mod does <b>not</b> collect or track any information from your device.</string>
+
+    <!-- Overlay settings -->
+    <string name="settings_lockscreen_overlay">Show on Lock Screen</string>
+    <string name="settings_lockscreen_overlay_sample_text">Song by Artist</string>
+    <string name="settings_lockscreen_overlay_sample_reset">Reset</string>
+    <string name="settings_lockscreen_overlay_sample_horizontal">Center Horizontally</string>
+    <string name="settings_lockscreen_overlay_enabled">Enable Lock Screen Overlay</string>
+    <string name="settings_lockscreen_overlay_enabled_desc">Overlay the current Now Playing track on the lock screen</string>
+    <string name="settings_lockscreen_overlay_position">Adjust Overlay Position</string>
+    <string name="settings_lockscreen_overlay_position_desc">Move the overlay around on the screen so it doesn\'t obstruct text or icons</string>
+    <string name="settings_lockscreen_overlay_enable_click">Launch Assistant on Click</string>
+    <string name="settings_lockscreen_overlay_enable_click_desc">Click on the overlay to ask Assistant for more info on a track</string>
+
+    <string name="settings_lockscreen_overlay_state_disabled_title">Accessibility Service Disabled</string>
+    <string name="settings_lockscreen_overlay_state_disabled_desc">Ambient Music Mod\'s Accessibility Service needs to be enabled to use this feature. Tap to go Settings to enable it.</string>
+    <string name="settings_lockscreen_overlay_state_enabled_title">Accessibility Service Enabled</string>
+
+    <!-- Installer Module Status -->
+    <string name="installer_module_status_title_installed">Magisk Module Installed</string>
+    <string name="installer_module_status_title_not_installed">Magisk Module not Installed</string>
+    <string name="installer_module_status_title_update">Magisk Module Update Available</string>
+    <string name="installer_module_status_content_version">Version %1s</string>
+    <string name="installer_module_status_content_not_installed">Create and install the module below</string>
+    <string name="installer_module_status_content_update">Current version: %1s, new version: %1s</string>
+    <string name="installer_module_compatibility_title">Compatibility</string>
+    <string name="installer_module_compatibility_help">What does this mean?</string>
+
+    <!-- Installer Module compatibility -->
+    <string name="installer_module_compatibility_check_sound_trigger_platform_text_compatible">Sound Trigger Platform compatible</string>
+    <string name="installer_module_compatibility_check_sound_trigger_platform_text_not_compatible">Sound Trigger Platform not compatible</string>
+    <string name="installer_module_compatibility_check_sound_trigger_text_compatible">Sound Trigger version: %1s</string>
+    <string name="installer_module_compatibility_check_sound_trigger_text_not_compatible">Sound Trigger version: %1s (requires at least %1s)</string>
+    <string name="installer_module_compatibility_check_xposed_text_installed">Xposed installed</string>
+    <string name="installer_module_compatibility_check_xposed_text_not_installed">Xposed not installed</string>
+
+    <string name="fab_build">Build Installer</string>
+    
+    <!-- Installer Not Compatible Page -->
+    <string name="installer_not_compatible_title">Not Compatible</string>
+    <string name="installer_not_compatible_sound_trigger_title">Sound Trigger Version</string>
+    <string name="installer_not_compatible_sound_trigger_content"><![CDATA[The sound trigger driver version on your device (%1s) is below the minimum required version for this mod to work (%1s).<br><b>Important note:</b> This CANNOT be fixed by a mod, or by flashing a different ROM. The driver is provided by your device\'s OEM, and is unlikely to be updated after the device is released.]]></string>
+    <string name="installer_not_compatible_sound_trigger_platform_title">Sound Trigger Platform</string>
+    <string name="installer_not_compatible_sound_trigger_platform_content">Your device does not have a compatible Sound Trigger platform (the software that loads sound trigger models), and therefore is unable to use this mod.\n<b>Important note:</b> This CANNOT be fixed by a mod, or by flashing a different ROM. The platform is provided by your device\'s OEM, and is unlikely to be updated or changed after the device is released.</string>
+    <string name="installer_not_compatible_xposed_title">Xposed</string>
+    <string name="installer_not_compatible_xposed_content">You do not have Xposed installed, and Xposed is required to use this mod. You can install Xposed via the Magisk App, by installing the Riru module and either EdXposed or LSposed modules.\n<b>Note:</b> If you are seeing this warning with Xposed installed and working, and you have the Xposed Manager app hidden, you can ignore it.</string>
+
+    <!-- Installer Xposed Warning -->
+    <string name="installer_warning_bottom_sheet_title">Xposed</string>
+    <string name="installer_warning_bottom_sheet_content">You need to have Xposed <b>and</b> Magisk installed to use this mod, it will <b>not</b> work with just Magisk.\n<b>Note:</b> If you plan to install Xposed later or have it installed but have hidden the Xposed Manager app, you can ignore this warning.</string>
+    <string name="installer_warning_bottom_sheet_ignore">Continue</string>
+
+    <!-- Installer Output Picker -->
+    <string name="installer_output_picker_toolbar_title">Output</string>
+    <string name="installer_output_picker_title">Choose Module Location</string>
+    <string name="installer_output_picker_content">Pick where to save the built Magisk module</string>
+    <string name="installer_output_picker_button">Choose Location</string>
+
+    <!-- Installer Build -->
+    <string name="installer_build_toolbar_title">Build Installer</string>
+    <string name="installer_build_title">Creating Module</string>
+    <string name="installer_build_error_title">Error Creating Module</string>
+    <string name="installer_build_building_module">Building module…</string>
+    <string name="installer_build_zipping_module">Zipping module…</string>
+    <string name="installer_build_copying_module">Copying module…</string>
+    <string name="installer_build_done">Module built</string>
+    <string name="installer_build_done_content">Install \"%1s\" in the Magisk App using the \"Install from Storage\" option</string>
+    <string name="installer_build_error_building">Error building module: %1s</string>
+    <string name="installer_build_error_building_already_installed">The module is already installed. Please disable or uninstall the module, reboot and try again.</string>
+    <string name="installer_build_error_building_incompatible">The builder hit an unexpected error creating a modified XML, please try again.</string>
+    <string name="installer_build_error_zipping">Error zipping the module. Please try again.</string>
+    <string name="installer_build_error_copying">Error copying the module. Please try again.</string>
+    <string name="installer_build_close">Close</string>
+
+    <!-- Battery Optimisation -->
+    <string name="battery_optimisation_toolbar_title">Battery Optimisation</string>
+    <string name="battery_optimisation_title">Disable Battery Optimisation</string>
+    <string name="battery_optimisation_content">Battery optimisation should be disabled for both Ambient Music Mod and Pixel Ambient Services for this mod to work properly, disable them in the settings below</string>
+    <string name="battery_optimisation_amm">Disable for Ambient Music Mod</string>
+    <string name="battery_optimisation_pas">Disable for Pixel Ambient Services</string>
+
+    <!-- Developer Options (ssh!) -->
+    <string name="developer_options">Developer Options</string>
+    <string name="developer_options_enabled">Developer options enabled</string>
+    <string name="developer_options_disabled">Developer options disabled</string>
+    <string name="developer_options_more">More…</string>
+    <string name="developer_options_phenotypes">Phenotypes</string>
+    <string name="developer_options_enable_logging">Enable Logging</string>
+    <string name="developer_options_enable_logging_desc">Change requires reboot</string>
+    <string name="developer_options_phenotypes_warning">Warning</string>
+    <string name="developer_options_phenotypes_warning_desc">These options are for testing purposes only and may cause Ambient Music to break, degraded performance, higher battery usage or simply not work on your device. Tap to reset the settings to default and close.\nReboot for changes to take effect.</string>
+    <string name="developer_options_dump_logs">Dump Logs</string>
+    <string name="developer_options_dump_logs_desc">Dump Ambient related logs for debugging &amp; reporting. Enable the Logging option and reboot first!</string>
+
+    <!-- Database Viewer -->
+    <string name="database_viewer">Track List</string>
+    <string name="database_viewer_desc">View &amp; search a list of tracks Ambient Music can recognise</string>
+    <string name="database_viewer_copy_warning_title">Copy &amp; Parse Databases</string>
+    <string name="database_viewer_copy_warning_content">This is quite an intensive task and may take up to a few minutes. Once complete, it will be much faster to load until Ambient Music\'s databases next update.</string>
+    <string name="database_viewer_copy_warning_start">Start</string>
+    <string name="database_viewer_copy_awaiting">Waiting for Ambient Music to respond…</string>
+    <string name="database_viewer_copy_content">Copying the databases, this may take up to a minute…</string>
+    <string name="database_viewer_read_offsets_content">Parsing the databases, this may take a while…</string>
+    <string name="database_viewer_error">Error: %1s</string>
+    <string name="database_viewer_read_offset_error">Failed to find offset in %1s</string>
+    <string name="database_viewer_unzip_error">Failed to unzip databases</string>
+    <string name="database_viewer_no_response">No response from Ambient Music (try restarting both apps)</string>
+    <string name="database_viewer_loading">Loading Databases…</string>
+    <string name="database_viewer_tracks_loading">Loading Tracks…</string>
+    <string name="database_viewer_artists_loading">Loading Artists…</string>
+    <string name="search">Search</string>
+    <string name="database_viewer_tracks_empty">No tracks found</string>
+    <string name="menu_tracks">Tracks</string>
+    <string name="menu_artists">Artists</string>
+    <string name="database_viewer_artists_empty">No artists found</string>
+    <string name="database_viewer_update_title">Newer Database Available</string>
+    <string name="database_viewer_update_content">Ambient Music has a newer version of the music database than is cached in Ambient Music mod. Tap to update.</string>
+
+    <!-- Developer Options -> Dump logs -->
+    <string name="developer_options_log_title">Dump Logs</string>
+    <string name="developer_options_log_content"><![CDATA[This option creates a zip of log files related to Sound Trigger & Ambient Music. Use it to report an issue on your device, ideally soon after rebooting (but launch the Ambient Music app and try a recognition first) or after a recent crash or error.<br><br><b>Please note that while error logs are useful to resolve bugs, the mod may not ever work on some devices.</b><br>The app will request root permissions as part of this process (required to access the system log). <a href="amm://logs">What\'s included in the log dump?</a>]]></string>
+    <string name="developer_options_log_button">Create Dump</string>
+    <string name="developer_options_log_contents_title">Dump Logs: Contents</string>
+    <string name="developer_options_log_contents_content">A log dump contains:\n\n• Metadata on the installed version of Ambient Music Mod, Pixel Ambient Services, Device Personalization Services, the Magisk module, the Sound Trigger version on the device, whether Xposed and the Xposed module are installed\n• A logcat, filtered on lines containing \"sound_trigger\" or \"soundtrigger\"\n• A logcat, filtered on lines coming from Pixel Ambient Services\n• A logcat, filtered on lines coming from Ambient Music Mod\n• The sound_trigger_platform.xml file installed on your device\n\n<b>Please note: While the log dump shouldn\'t contain any personal information as the logs are filtered to apps and lines that shouldn\'t contain any personal info, there is no guarantee that they will not if another app is logging lines containing \"soundtrigger\" or \"sound_trigger\".</b></string>
+
+    <string name="developer_options_log_dump_requesting_root">Requesting root…</string>
+    <string name="developer_options_log_dump_creating_dump">Creating dump…</string>
+    <string name="developer_options_log_dump_done">Dump created</string>
+    <string name="developer_options_log_dump_error">Error creating dump, please try again</string>
+    <string name="developer_options_log_dump_no_root">Root access was not granted, please try again and check the Superuser settings in the Magisk app if the problem persists.</string>
+
+    <string name="settings_category_about">About</string>
+
+    <!-- Frequently Asked Questions -->
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="faq_title_short">FAQ</string>
+    <string name="faq_desc">Read these before reporting issues or asking questions on the XDA thread or GitHub</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_desc">Ambient Music Mod v%1s (%1s)\nCreated by Kieron Quinn / Quinny899 @ XDA</string>
+    <string name="donate">Donate</string>
+    <string name="twitter">Follow me on Twitter</string>
+    <string name="twitter_short">Twitter</string>
+    <string name="xda_thread">XDA Thread</string>
+    <string name="github">GitHub</string>
+    <string name="pixel_ambient_services_incompatible_title">Error</string>
+    <string name="pixel_ambient_services_incompatible_content">The version of Pixel Ambient Services installed on your device is newer than the version that works with Ambient Music Mod. Please uninstall updates for it in the app info or Ambient Music Mod will <b>NOT</b> work. Make sure to not update Pixel Ambient Services via the Play Store or other means, in order to not get this issue again, read the FAQ for more information.</string>
+    <string name="pixel_ambient_services_incompatible_app_info">App Info</string>
+
+    <!-- Update -->
+    <string name="bs_update_download">Download</string>
+    <string name="bs_update_title">Update available!</string>
+    <string name="bs_update_content"><![CDATA[<h2>A new update is available</h2><br><b>Current version:</b> %1s<br><b>New version:</b> %1s<br><b>Update date:</b> %1s<br><b>Changelog:</b><br>%1s]]></string>
+    <string name="download_manager_description">Downloading update…</string>
+    <string name="bs_update_download_title">Downloading update…</string>
+    <string name="bs_update_download_failed">Download failed</string>
+    <string name="bs_update_download_github">Download via browser</string>
+
+</resources>

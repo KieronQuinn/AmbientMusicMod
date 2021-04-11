@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="28dp"
+        android:height="28dp"
+        android:start="4dp"
+        android:top="4dp"
+        android:drawable="@drawable/ic_module_cross" />
+</layer-list>

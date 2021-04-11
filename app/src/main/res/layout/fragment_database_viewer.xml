@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <FrameLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:windowBackground"
+        android:elevation="@dimen/toolbar_elevation"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <EditText
+            android:id="@+id/searchBox"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_box_height"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginTop="@dimen/padding_8"
+            android:layout_marginEnd="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/padding_8"
+            android:background="@drawable/search_box_background"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/activity_padding"
+            android:fontFamily="@font/google_sans_medium"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingStart="@dimen/activity_padding"
+            android:paddingEnd="52dp" />
+
+        <ImageView
+            android:id="@+id/search_clear"
+            android:layout_width="@dimen/clear_button_size"
+            android:layout_height="@dimen/clear_button_size"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/rounded_ripple_36"
+            android:padding="@dimen/padding_8"
+            android:src="@drawable/ic_clear" />
+
+    </FrameLayout>
+
+    <include layout="@layout/include_database_viewer_update"
+        android:id="@+id/database_viewer_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_8"
+        android:layout_marginBottom="@dimen/padding_8"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/search_container"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment_database_viewer"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:defaultNavHost="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/database_viewer_update"
+        app:navGraph="@navigation/nav_graph_database_viewer_tabs"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/database_viewer_loading_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginTop="@dimen/padding_16"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:layout_marginBottom="@dimen/padding_16"
+        android:text="@string/database_viewer_loading"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Ambient.Medium"
+        app:layout_constraintBottom_toTopOf="@id/database_viewer_loading_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/database_viewer_loading_progress"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:layout_marginBottom="@dimen/padding_16"
+        app:indicatorColor="@color/accent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/database_viewer_loading_title"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="8dp" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/database_viewer_loading_progress_indeterminate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/accent"
+        app:layout_constraintBottom_toBottomOf="@id/database_viewer_loading_progress"
+        app:layout_constraintEnd_toEndOf="@id/database_viewer_loading_progress"
+        app:layout_constraintStart_toStartOf="@id/database_viewer_loading_progress"
+        app:layout_constraintTop_toTopOf="@id/database_viewer_loading_progress"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="8dp" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/database_viewer_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="database_viewer_loading_progress,database_viewer_loading_title"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Blocks accidental touches below the nav bar -->
+    <View
+        android:id="@+id/touch_blocker"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        style="@style/BottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:theme="@style/BottomNavigation"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_database_viewer"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="last_input" path="." />
+    <cache-path name="superpacks" path="." />
+    <external-cache-path name="cached_files" path="." />
+</paths>

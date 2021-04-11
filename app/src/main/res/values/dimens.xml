@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_image_size">200dp</dimen>
+    <dimen name="splash_image_radius">150dp</dimen>
+    <dimen name="splash_image_music">200dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="padding_8">8dp</dimen>
+    <dimen name="padding_16">16dp</dimen>
+    <dimen name="padding_24">24dp</dimen>
+    <dimen name="button_padding">48dp</dimen>
+    <dimen name="activity_padding">@dimen/padding_16</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+    <dimen name="bottom_navigation_height">64dp</dimen>
+    <dimen name="app_link_margin_bottom">80dp</dimen>
+    <dimen name="fab_margin_bottom">24dp</dimen>
+    <dimen name="toolbar_elevation">8dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+    <dimen name="app_link_height">72dp</dimen>
+    <dimen name="bottom_sheet_elevation">16dp</dimen>
+
+    <dimen name="min_window_blur_radius">1px</dimen>
+    <dimen name="max_window_blur_radius">150px</dimen>
+    <!-- TODO move to values-31 eventually -->
+    <dimen name="min_window_blur_radius_31">1px</dimen>
+    <dimen name="max_window_blur_radius_31">32px</dimen>
+    <dimen name="search_box_height">48dp</dimen>
+    <dimen name="clear_button_size">36dp</dimen>
+    <dimen name="search_box_corners">24dp</dimen>
+</resources>

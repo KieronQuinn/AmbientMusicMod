@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_preference"
+    android:backgroundTint="@color/icon_circle_15"
+    android:foreground="@drawable/background_preference_ripple"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingTop="@dimen/padding_16"
+    android:paddingEnd="@dimen/padding_16"
+    android:paddingBottom="@dimen/padding_16"
+    android:paddingStart="@dimen/padding_8">
+
+    <ImageView
+        android:id="@+id/database_viewer_update_icon"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_database_update"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/database_viewer_update_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/database_viewer_update_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Ambient.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/database_viewer_update_icon"
+        app:layout_constraintBottom_toTopOf="@id/database_viewer_update_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/database_viewer_update_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/database_viewer_update_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/database_viewer_update_icon"
+        app:layout_constraintTop_toBottomOf="@id/database_viewer_update_title"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

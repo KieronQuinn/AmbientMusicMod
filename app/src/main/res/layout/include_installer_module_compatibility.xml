@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardView.Ambient"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_8"
+    android:layout_marginStart="@dimen/padding_16"
+    android:layout_marginEnd="@dimen/padding_16"
+    android:layout_marginBottom="@dimen/padding_8"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16">
+
+        <TextView
+            android:id="@+id/installer_module_compatibility_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/installer_module_compatibility_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Ambient.Medium"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/installer_module_compatibility_check_sound_trigger_icon"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_title"
+            tools:src="@drawable/ic_module_check" />
+
+        <TextView
+            android:id="@+id/installer_module_compatibility_check_sound_trigger_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="@+id/installer_module_compatibility_check_sound_trigger_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/installer_module_compatibility_check_sound_trigger_icon"
+            app:layout_constraintTop_toTopOf="@+id/installer_module_compatibility_check_sound_trigger_icon"
+            tools:text="@string/installer_module_compatibility_check_sound_trigger_text_compatible" />
+
+        <ImageView
+            android:id="@+id/installer_module_compatibility_check_sound_trigger_platform_icon"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_sound_trigger_text"
+            tools:src="@drawable/ic_module_check" />
+
+        <TextView
+            android:id="@+id/installer_module_compatibility_check_sound_trigger_platform_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="@+id/installer_module_compatibility_check_sound_trigger_platform_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/installer_module_compatibility_check_sound_trigger_platform_icon"
+            app:layout_constraintTop_toTopOf="@+id/installer_module_compatibility_check_sound_trigger_platform_icon"
+            tools:text="@string/installer_module_compatibility_check_sound_trigger_platform_text_compatible" />
+
+        <ImageView
+            android:id="@+id/installer_module_compatibility_check_xposed_icon"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_sound_trigger_platform_text"
+            tools:src="@drawable/ic_warning" />
+
+        <TextView
+            android:id="@+id/installer_module_compatibility_check_xposed_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="@+id/installer_module_compatibility_check_xposed_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/installer_module_compatibility_check_xposed_icon"
+            app:layout_constraintTop_toTopOf="@+id/installer_module_compatibility_check_xposed_icon"
+            tools:text="@string/installer_module_compatibility_check_xposed_text_installed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/installer_module_compatibility_help"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_8"
+            android:layout_marginBottom="@dimen/padding_8"
+            android:fontFamily="@font/google_sans_medium"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:paddingTop="@dimen/padding_8"
+            android:paddingBottom="@dimen/padding_8"
+            android:text="@string/installer_module_compatibility_help"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_xposed_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

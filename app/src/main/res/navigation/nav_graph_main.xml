@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/settingsFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.main.MainSettingsFragment"
+        android:label="@string/tab_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAmplificationBottomSheetFragment"
+            app:destination="@id/settingsAmplificationBottomSheetFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsListenPeriodBottomSheetFragment"
+            app:destination="@id/settingsListenPeriodBottomSheetFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsManualTriggerBottomSheetFragment"
+            app:destination="@id/settingsManualTriggerBottomSheetFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAdvancedFragment"
+            app:destination="@id/settingsAdvancedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsLockscreenOverlayFragment"
+            app:destination="@id/settingsLockscreenOverlayFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsBatteryOptimisationFragment"
+            app:destination="@id/settingsBatteryOptimisationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsDeveloperOptionsFragment"
+            app:destination="@id/settingsDeveloperOptionsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_settingsFragment_to_databaseViewerActivity"
+            app:destination="@id/databaseViewerActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_faqFragment"
+            app:destination="@id/faqFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_pixelAmbientServicesIncompatibleBottomSheetFragment"
+            app:destination="@id/pixelAmbientServicesIncompatibleBottomSheetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/installerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.InstallerFragment"
+        android:label="@string/tab_installer"
+        tools:layout="@layout/fragment_installer">
+        <action
+            android:id="@+id/action_installerFragment_to_installerXposedWarningBottomSheetFragment"
+            app:destination="@id/installerXposedWarningBottomSheetFragment" />
+        <action
+            android:id="@+id/action_installerFragment_to_installerNotCompatibleFragment"
+            app:destination="@id/installerNotCompatibleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_installerFragment_to_installerOutputPickerFragment"
+            app:destination="@id/installerOutputPickerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_installerFragment_to_faqFragment"
+            app:destination="@id/faqFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out" />
+    <action
+        android:id="@+id/action_global_installerFragment"
+        app:destination="@id/installerFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out" />
+
+    <dialog
+        android:id="@+id/settingsAmplificationBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.amplification.SettingsAmplificationBottomSheetFragment"
+        android:label=" " />
+    <dialog
+        android:id="@+id/settingsListenPeriodBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.listenperiod.SettingsListenPeriodBottomSheetFragment"
+        android:label=" " />
+    <dialog
+        android:id="@+id/settingsManualTriggerBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.manualtrigger.SettingsManualTriggerBottomSheetFragment"
+        android:label=" ">
+        <action
+            android:id="@+id/action_settingsManualTriggerBottomSheetFragment_to_settingsManualTriggerPlaybackBottomSheetFragment"
+            app:destination="@id/settingsManualTriggerPlaybackBottomSheetFragment" />
+        <action
+            android:id="@+id/action_settingsManualTriggerBottomSheetFragment_to_settingsManualTriggerTroubleshootingBottomSheetFragment"
+            app:destination="@id/settingsManualTriggerTroubleshootingBottomSheetFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/settingsManualTriggerPlaybackBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.manualtrigger.playback.SettingsManualTriggerPlaybackBottomSheetFragment"
+        android:label=" " >
+        <action
+            android:id="@+id/action_settingsManualTriggerPlaybackBottomSheetFragment_to_settingsManualTriggerPlaybackFileInfoBottomSheetFragment"
+            app:destination="@id/settingsManualTriggerPlaybackFileInfoBottomSheetFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/settingsManualTriggerTroubleshootingBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.manualtrigger.troubleshooting.SettingsManualTriggerTroubleshootingBottomSheetFragment"
+        android:label=" ">
+        <argument
+            android:name="troubleshootingType"
+            app:argType="com.kieronquinn.app.ambientmusicmod.app.ui.settings.manualtrigger.troubleshooting.SettingsManualTriggerTroubleshootingBottomSheetFragment$TroubleshootingType" />
+    </dialog>
+    <fragment
+        android:id="@+id/settingsAdvancedFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.advanced.SettingsAdvancedFragment"
+        android:label="@string/settings_advanced">
+        <action
+            android:id="@+id/action_settingsAdvancedFragment_to_settingsAdvancedCustomAmplificationBottomSheetFragment"
+            app:destination="@id/settingsAdvancedCustomAmplificationBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/settingsAdvancedCustomAmplificationBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.advanced.customamplification.SettingsAdvancedCustomAmplificationBottomSheetFragment"
+        android:label=" " />
+    <activity
+        android:id="@+id/settingsLockscreenOverlayPositionActivity"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.activities.SettingsLockscreenOverlayPositionActivity"
+        android:label="SettingsLockscreenOverlayPositionActivity" />
+    <fragment
+        android:id="@+id/settingsLockscreenOverlayFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.lockscreenoverlay.SettingsLockscreenOverlayFragment"
+        android:label="@string/settings_lockscreen_overlay">
+        <action
+            android:id="@+id/action_settingsLockscreenOverlayFragment_to_settingsLockscreenOverlayPositionActivity"
+            app:destination="@id/settingsLockscreenOverlayPositionActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <dialog
+        android:id="@+id/installerXposedWarningBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.xposed.InstallerXposedWarningBottomSheetFragment"
+        android:label=" " />
+    <fragment
+        android:id="@+id/installerNotCompatibleFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.notcompatible.InstallerNotCompatibleFragment"
+        android:label="@string/installer_not_compatible_title"
+        tools:layout="@layout/installer_not_compatible">
+        <argument
+            android:name="compatibilityStatus"
+            app:argType="com.kieronquinn.app.ambientmusicmod.app.ui.installer.InstallerViewModel$CompatibilityStatus" />
+    </fragment>
+    <fragment
+        android:id="@+id/installerOutputPickerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.outputpicker.InstallerOutputPickerFragment"
+        android:label="@string/installer_output_picker_toolbar_title"
+        tools:layout="@layout/fragment_installer_output_picker" >
+        <action
+            android:id="@+id/action_installerOutputPickerFragment_to_installerBuildFragment"
+            app:destination="@id/installerBuildFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/installerBuildFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.build.InstallerBuildFragment"
+        android:label="@string/installer_build_toolbar_title"
+        tools:layout="@layout/fragment_installer_build" >
+        <argument
+            android:name="outputUri"
+            app:argType="android.net.Uri" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsBatteryOptimisationFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.batteryoptimisation.SettingsBatteryOptimisationFragment"
+        android:label="@string/battery_optimisation_toolbar_title"
+        tools:layout="@layout/fragment_battery_optimisation" />
+    <fragment
+        android:id="@+id/settingsDeveloperOptionsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.developer.SettingsDeveloperOptionsFragment"
+        android:label="@string/developer_options" >
+        <action
+            android:id="@+id/action_settingsDeveloperOptionsFragment_to_settingsDeveloperOptionsPhenotypesFragment"
+            app:destination="@id/settingsDeveloperOptionsPhenotypesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_settingsDeveloperOptionsFragment_to_settingsDeveloperOptionsLogFragment"
+            app:destination="@id/settingsDeveloperOptionsLogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsDeveloperOptionsPhenotypesFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.developer.phenotypes.SettingsDeveloperOptionsPhenotypesFragment"
+        android:label="@string/developer_options_phenotypes" />
+    <activity
+        android:id="@+id/databaseViewerActivity"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.activities.DatabaseViewerActivity"
+        android:label=" "
+        tools:layout="@layout/fragment_database_viewer" />
+    <fragment
+        android:id="@+id/settingsDeveloperOptionsLogFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.developer.log.SettingsDeveloperOptionsLogFragment"
+        android:label="@string/developer_options_log_title"
+        tools:layout="@layout/fragment_developer_options_log" >
+        <action
+            android:id="@+id/action_settingsDeveloperOptionsLogFragment_to_settingsDeveloperOptionsLogContentsBottomSheetFragment"
+            app:destination="@id/settingsDeveloperOptionsLogContentsBottomSheetFragment"/>
+        <action
+            android:id="@+id/action_settingsDeveloperOptionsLogFragment_to_settingsDeveloperOptionsDumpLogBottomSheetFragment"
+            app:destination="@id/settingsDeveloperOptionsDumpLogBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/settingsDeveloperOptionsLogContentsBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.developer.log.contents.SettingsDeveloperOptionsLogContentsBottomSheetFragment"
+        android:label=" " />
+    <dialog
+        android:id="@+id/settingsDeveloperOptionsDumpLogBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.developer.log.dump.SettingsDeveloperOptionsDumpLogBottomSheetFragment"
+        android:label=" "/>
+
+    <fragment
+        android:id="@+id/faqFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.faq.FaqFragment"
+        android:label="@string/faq_title_short"
+        tools:layout="@layout/fragment_faq" />
+    <dialog
+        android:id="@+id/pixelAmbientServicesIncompatibleBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.pasincompatible.PixelAmbientServicesIncompatibleBottomSheetFragment"
+        android:label=" " />
+    <dialog
+        android:id="@+id/settingsManualTriggerPlaybackFileInfoBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.settings.manualtrigger.playback.fileinfo.SettingsManualTriggerPlaybackFileInfoBottomSheetFragment"
+        android:label=" " />
+    <dialog
+        android:id="@+id/updateBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.update.UpdateBottomSheetFragment"
+        android:label=" " >
+        <action
+            android:id="@+id/action_updateBottomSheetFragment_to_updateDownloadBottomSheetFragment"
+            app:destination="@id/updateDownloadBottomSheetFragment" />
+        <argument
+            android:name="update"
+            app:argType="com.kieronquinn.app.ambientmusicmod.components.github.UpdateChecker$Update" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_updateBottomSheetFragment"
+        app:destination="@id/updateBottomSheetFragment" />
+    <dialog
+        android:id="@+id/updateDownloadBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.update.download.UpdateDownloadBottomSheetFragment"
+        android:label=" " />
+
+</navigation>

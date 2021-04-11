@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardView.Ambient"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_16"
+    android:layout_marginStart="@dimen/padding_16"
+    android:layout_marginEnd="@dimen/padding_16"
+    android:layout_marginBottom="@dimen/padding_8"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16">
+
+        <ImageView
+            android:id="@+id/installer_module_status_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@drawable/ic_module_check_round" />
+
+        <TextView
+            android:id="@+id/installer_module_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.Ambient.Medium"
+            app:layout_constraintBottom_toTopOf="@id/installer_module_status_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/installer_module_status_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_module_check_round"
+            tools:text="Magisk Module Installed" />
+
+        <TextView
+            android:id="@+id/installer_module_status_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="@id/installer_module_status_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/installer_module_status_icon"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_status_title"
+            tools:src="@drawable/ic_module_check_round"
+            tools:text="Version 1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

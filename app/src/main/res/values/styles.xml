@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.MaterialComponents.BottomNavigationView.Text" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+    </style>
+
+    <style name="BottomNavigation">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.MaterialComponents.BottomNavigationView.Text</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.MaterialComponents.BottomNavigationView.Text</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Large.Ambient" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Medium.Ambient" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Ambient" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Medium.Ambient.Medium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Ambient.Medium" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+    </style>
+
+    <style name="CardView.Ambient" parent="CardView">
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/card_outlined</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">?android:windowBackground</item>
+        <item name="cardCornerRadius">@dimen/padding_8</item>
+    </style>
+
+    <style name="AppTheme.ThirdPartyLicences" parent="Theme.MaterialComponents.DayNight">
+        <item name="actionBarStyle">@style/ThirdPartyLicencesToolbarTheme</item>
+        <item name="android:statusBarColor">?android:windowBackground</item>
+        <item name="android:windowLightStatusBar">@bool/lightSystemUI</item>
+        <item name="android:textViewStyle">@style/ThirdPartyLicencesTextViewStyle</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="ThirdPartyLicencesToolbarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">?android:windowBackground</item>
+        <item name="titleTextStyle">@style/ThirdPartyLicencesToolbarTitleStyle</item>
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="homeAsUpIndicator">@drawable/ic_back</item>
+    </style>
+
+    <style name="ThirdPartyLicencesToolbarTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+    </style>
+
+    <style name="ThirdPartyLicencesTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+</resources>

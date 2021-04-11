@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:interpolator="@anim/audioanim_animation_interpolator_0" android:duration="800" android:pathData="M -12.65991,32.61206 c 1.33333,0.0 5.52083,0.0 8.0,0.0 c 2.47917,0.0 5.72917,0.0 6.875,0.0" android:propertyXName="translateX" android:propertyYName="translateY" />
+    <set android:ordering="sequentially">
+        <objectAnimator android:interpolator="@android:interpolator/linear" android:duration="483" android:valueFrom="0.8" android:valueTo="0.8" android:valueType="floatType" android:propertyName="scaleX" />
+        <objectAnimator android:interpolator="@anim/audioanim_animation_interpolator_4" android:duration="316" android:valueFrom="0.8" android:valueTo="1.0" android:valueType="floatType" android:propertyName="scaleX" />
+    </set>
+    <set android:ordering="sequentially">
+        <objectAnimator android:interpolator="@android:interpolator/linear" android:duration="483" android:valueFrom="0.4" android:valueTo="0.4" android:valueType="floatType" android:propertyName="scaleY" />
+        <objectAnimator android:interpolator="@anim/audioanim_animation_interpolator_1" android:duration="316" android:valueFrom="0.4" android:valueTo="1.0" android:valueType="floatType" android:propertyName="scaleY" />
+    </set>
+    <set android:ordering="sequentially">
+        <objectAnimator android:interpolator="@android:interpolator/linear" android:duration="483" android:valueFrom="70.0" android:valueTo="70.0" android:valueType="floatType" android:propertyName="rotation" />
+        <objectAnimator android:interpolator="@anim/audioanim_animation_interpolator_5" android:duration="316" android:valueFrom="70.0" android:valueTo="0.0" android:valueType="floatType" android:propertyName="rotation" />
+    </set>
+</set>

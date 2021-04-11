@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nested_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:overScrollMode="never"
+    android:scrollbars="none"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="150dp">
+
+        <include
+            android:id="@+id/installer_module_status"
+            layout="@layout/include_installer_module_status" />
+
+        <include
+            android:id="@+id/installer_module_compatibility"
+            layout="@layout/include_installer_module_compatibility" />
+
+        <include
+            android:id="@+id/installer_about_container"
+            layout="@layout/include_installer_about" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

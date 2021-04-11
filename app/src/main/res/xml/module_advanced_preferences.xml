@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.SwitchPreference
+        android:icon="@drawable/ic_run_on_little_cores"
+        android:key="run_on_little_cores"
+        android:summary="@string/settings_advanced_run_on_little_cores_desc"
+        android:title="@string/settings_advanced_run_on_little_cores" />
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.SwitchPreference
+        android:icon="@drawable/ic_album_art"
+        android:key="show_album_art"
+        android:summary="@string/settings_advanced_show_album_art_desc"
+        android:title="@string/settings_advanced_show_album_art" />
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.SwitchPreference
+        android:icon="@drawable/ic_assistant"
+        android:key="use_assistant_for_click"
+        android:summary="@string/settings_advanced_use_assistant_desc"
+        android:title="@string/settings_advanced_use_assistant" />
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.Preference
+        android:icon="@drawable/ic_custom_amplification"
+        android:key="advanced_custom_amplification"
+        android:summary="@string/settings_advanced_custom_amplification_desc"
+        android:title="@string/settings_advanced_custom_amplification" />
+
+</PreferenceScreen>

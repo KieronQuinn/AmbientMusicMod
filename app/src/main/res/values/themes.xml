@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Ambient" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/lightSystemUI</item>
+        <item name="android:windowLightStatusBar">@bool/lightSystemUI</item>
+        <item name="md_font_title">@font/google_sans_medium</item>
+        <item name="md_font_button">@font/google_sans_medium</item>
+        <item name="md_font_body">@font/google_sans</item>
+        <item name="md_button_casing">literal</item>
+        <item name="searchBoxBackground">@color/search_color</item>
+    </style>
+
+    <style name="Theme.Ambient.Fullscreen" parent="Theme.Ambient">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+</resources>

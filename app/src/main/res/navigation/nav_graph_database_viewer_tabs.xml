@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_database_viewer_tabs"
+    app:startDestination="@id/databaseViewerTracksFragment">
+
+    <fragment
+        android:id="@+id/databaseViewerTracksFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.database.viewer.tracks.DatabaseViewerTracksFragment"
+        android:label=""
+        tools:layout="@layout/fragment_database_viewer_tracks"/>
+    <action
+        android:id="@+id/action_global_databaseViewerTracksFragment"
+        app:destination="@id/databaseViewerTracksFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out" />
+    <fragment
+        android:id="@+id/databaseViewerArtistsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.database.viewer.artists.DatabaseViewerArtistsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_database_viewer_artists" >
+        <action
+            android:id="@+id/action_databaseViewerArtistsFragment_to_databaseViewerArtistTracksFragment"
+            app:destination="@id/databaseViewerArtistTracksFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_databaseViewerArtistsFragment"
+        app:destination="@id/databaseViewerArtistsFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out" />
+    <fragment
+        android:id="@+id/databaseViewerArtistTracksFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.database.viewer.artists.tracks.DatabaseViewerArtistTracksFragment"
+        android:label="DatabaseViewerArtistTracksFragment"
+        tools:layout="@layout/fragment_database_viewer_artist_tracks" >
+        <argument
+            android:name="artist"
+            app:argType="string" />
+    </fragment>
+</navigation>

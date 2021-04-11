@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kieronquinn.app.ambientmusicmod">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="com.google.android.ambientindication.permission.AMBIENT_INDICATION"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name=".AmbientApplication"
+        android:theme="@style/Theme.Ambient">
+
+        <activity android:name=".app.ui.activities.AmbientActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Optional launcher activity for History without needing to add a shortcut -->
+        <activity android:name=".app.ui.activities.HistoryLaunchActivity"
+            android:enabled="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:icon="@mipmap/ic_launcher_history"
+            android:label="@string/now_playing_history">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".app.ui.activities.SettingsLockscreenOverlayPositionActivity"
+            android:theme="@style/Theme.Ambient.Fullscreen"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".app.ui.activities.BootHelperLaunchActivity"/>
+
+        <activity android:name=".app.ui.activities.DatabaseViewerActivity"
+            android:screenOrientation="portrait"/>
+
+        <service android:name=".app.service.GetModelStateForegroundService" />
+
+        <receiver android:name=".app.receivers.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="@string/xposed_module_desc" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="53" />
+
+        <provider
+            android:name=".providers.SharedPrefsProvider"
+            android:authorities="com.kieronquinn.app.ambientmusicmod.provider.sharedprefs"
+            android:exported="true"
+            android:grantUriPermissions="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
+        <service
+            android:name=".app.service.LockscreenOverlayAccessibilityService"
+            android:label="@string/accessibility_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibilityservice" />
+        </service>
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.ThirdPartyLicences" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/AppTheme.ThirdPartyLicences" />
+
+    </application>
+
+    <queries>
+        <package android:name="org.meowcat.edxposed.manager"/>
+        <package android:name="org.lsposed.manager"/>
+        <package android:name="com.google.intelligence.sense"/>
+        <package android:name="com.google.android.as"/>
+    </queries>
+
+</manifest>

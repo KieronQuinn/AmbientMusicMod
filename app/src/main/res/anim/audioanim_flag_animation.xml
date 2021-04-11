@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <set android:ordering="sequentially">
+        <objectAnimator android:interpolator="@android:interpolator/linear" android:duration="483" android:valueFrom="0.5" android:valueTo="0.5" android:valueType="floatType" android:propertyName="scaleX" />
+        <objectAnimator android:interpolator="@anim/audioanim_animation_interpolator_7" android:duration="316" android:valueFrom="0.5" android:valueTo="1.0" android:valueType="floatType" android:propertyName="scaleX" />
+    </set>
+</set>

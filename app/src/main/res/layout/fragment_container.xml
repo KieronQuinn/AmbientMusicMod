@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.views.ElevationAppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:animateLayoutChanges="true"
+        android:background="@color/primary"
+        android:stateListAnimator="@animator/appbar_elevation_enabled"
+        app:layout_behavior=".utils.DragDisabledAppBarLayoutBehaviour">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:collapsedTitleGravity="center_horizontal"
+            app:expandedTitleGravity="start|bottom"
+            app:expandedTitleMarginEnd="@dimen/padding_16"
+            app:expandedTitleMarginStart="@dimen/padding_16"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                android:paddingEnd="20dp"
+                app:layout_collapseMode="pin" />
+
+            <ImageButton
+                android:id="@+id/toolbar_back"
+                android:layout_width="?android:actionBarSize"
+                android:layout_height="?android:actionBarSize"
+                android:background="@null"
+                android:src="@drawable/ic_back"
+                android:foreground="@drawable/rounded_ripple_28"
+                app:layout_collapseMode="pin" />
+
+            <ImageButton
+                android:id="@+id/overflow_menu"
+                android:layout_width="?android:actionBarSize"
+                android:layout_height="?android:actionBarSize"
+                android:foreground="@drawable/rounded_ripple_28"
+                android:background="@null"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_menu"
+                app:layout_collapseMode="pin" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.kieronquinn.app.ambientmusicmod.app.ui.views.ElevationAppBarLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bottom_navigation_height"
+        app:defaultNavHost="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <include
+        android:id="@+id/main_app_link"
+        layout="@layout/include_main_app_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:layout_marginBottom="@dimen/app_link_margin_bottom" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_build"
+        app:icon="@drawable/ic_build"
+        app:iconTint="@android:color/white"
+        android:text="@string/fab_build"
+        android:fontFamily="@font/google_sans_medium"
+        android:textAllCaps="false"
+        android:layout_gravity="center_horizontal|bottom"
+        tools:layout_marginBottom="88dp"
+        android:layout_marginBottom="@dimen/fab_margin_bottom" />
+
+    <!-- Blocks accidental touches below the nav bar -->
+    <View
+        android:id="@+id/touch_blocker"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:layout_gravity="bottom"
+        android:clickable="true" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        style="@style/BottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:layout_gravity="bottom"
+        android:theme="@style/BottomNavigation"
+        app:menu="@menu/menu_main" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

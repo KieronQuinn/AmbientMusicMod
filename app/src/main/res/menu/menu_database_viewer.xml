@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menu_tracks"
+        android:icon="@drawable/ic_music"
+        android:id="@+id/menu_tracks" />
+
+    <item android:title="@string/menu_artists"
+        android:icon="@drawable/ic_artists"
+        android:id="@+id/menu_artists"/>
+
+</menu>

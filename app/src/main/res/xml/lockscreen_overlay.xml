@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.Preference android:key="lockscreen_overlay_accessibility_status" />
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.SwitchPreference
+        android:icon="@drawable/ic_lockscreen_overlay_enabled"
+        android:key="lockscreen_overlay_enabled"
+        android:summary="@string/settings_lockscreen_overlay_enabled_desc"
+        android:title="@string/settings_lockscreen_overlay_enabled" />
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.Preference
+        android:icon="@drawable/ic_lockscreen_overlay_move"
+        android:key="lockscreen_overlay_position"
+        android:summary="@string/settings_lockscreen_overlay_position_desc"
+        android:title="@string/settings_lockscreen_overlay_position" />
+
+    <com.kieronquinn.app.ambientmusicmod.app.ui.preferences.SwitchPreference
+        android:icon="@drawable/ic_assistant"
+        android:key="lockscreen_launch_click"
+        android:summary="@string/settings_lockscreen_overlay_enable_click_desc"
+        android:title="@string/settings_lockscreen_overlay_enable_click" />
+
+</PreferenceScreen>
