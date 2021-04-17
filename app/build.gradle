@@ -7,7 +7,20 @@ plugins {
     id 'com.google.android.gms.oss-licenses-plugin'
 }
 
-def tagName = '1.0'
+def tagName = '1.1'
+def moduleVersionName = "1.1"
+def moduleVersionCode = 11
+
+def getLocalProperty(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return ""
+    }
+}
 
 android {
     compileSdkVersion 'android-S'
@@ -17,20 +30,24 @@ android {
         applicationId "com.kieronquinn.app.ambientmusicmod"
         minSdkVersion 26
         targetSdkVersion 'S'
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BUILD_MODULE_VERSION", "\"1.0\"")
-        buildConfigField("int", "BUILD_MODULE_VERSION_CODE", "1")
+        buildConfigField("String", "BUILD_MODULE_VERSION", "\"${moduleVersionName}\"")
+        buildConfigField("int", "BUILD_MODULE_VERSION_CODE", "${moduleVersionCode}")
         buildConfigField("String", "TAG_NAME", "\"${tagName}\"")
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField("String", "TEST_OUTPUT_CSV_DIR", "\"" + getLocalProperty("test.output.csv_dir").replace("\\", "\\\\") + "\"")
         }
     }
     compileOptions {
@@ -43,6 +60,10 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     /**
@@ -58,6 +79,7 @@ android {
                 manifestContent = manifestContent
                         .replaceAll('android:minSdkVersion="S"', 'android:minSdkVersion="26"')
                         .replaceAll('android:targetSdkVersion="S"', 'android:targetSdkVersion="30"')
+                        .replaceAll('android:testOnly="true"', 'android:testOnly="false"')
                 def fos = new FileOutputStream(manifestFile.getPath())
                 fos.write(manifestContent.getBytes())
                 fos.flush()
@@ -120,7 +142,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //libsu for root
-    implementation "com.github.topjohnwu.libsu:core:3.1.1"
+    def libsuVersion = '3.1.2'
+    implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
+    implementation "com.github.topjohnwu.libsu:service:${libsuVersion}"
 
     //Insetter for compat status/nav bar insets
     implementation 'dev.chrisbanes.insetter:insetter:0.5.0'
@@ -139,8 +163,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20201115'
+    testImplementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.15.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

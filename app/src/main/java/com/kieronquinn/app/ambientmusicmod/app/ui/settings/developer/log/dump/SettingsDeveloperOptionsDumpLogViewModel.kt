@@ -14,6 +14,7 @@ import com.kieronquinn.app.ambientmusicmod.components.settings.BaseViewModel
 import com.kieronquinn.app.ambientmusicmod.constants.MODULE_VERSION_CODE_PROP
 import com.kieronquinn.app.ambientmusicmod.constants.MODULE_VERSION_PROP
 import com.kieronquinn.app.ambientmusicmod.constants.SOUND_TRIGGER_PLATFORM_PATH
+import com.kieronquinn.app.ambientmusicmod.constants.SOUND_TRIGGER_PLATFORM_PATH_BACKUP
 import com.kieronquinn.app.ambientmusicmod.utils.ModuleStateCheck
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.SystemProperties_getInt
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.SystemProperties_getString
@@ -134,7 +135,8 @@ class SettingsDeveloperOptionsDumpLogViewModelImpl(private val context: Context)
                         "Device Personalization Services version ${context.packageManager.getAppVersion("com.google.android.as")}",
                         "Sound trigger version ${Installer.getMaxSoundTriggerVersion()}",
                         "Module enabled ${ModuleStateCheck.isModuleEnabled()}",
-                        "Xposed installed ${context.isXposedInstalled()}"
+                        "Xposed installed ${context.isXposedInstalled()}",
+                        "Last Module Check result ${settings.getModelLastResult} (${settings.getModelSupported.name})"
                     )
                     val soundTriggerLogs = ArrayList<String>().apply {
                         shell.newJob().to(this).apply {
@@ -152,6 +154,7 @@ class SettingsDeveloperOptionsDumpLogViewModelImpl(private val context: Context)
                         }.exec()
                     }
                     val soundTriggerPlatformInfo = File(SOUND_TRIGGER_PLATFORM_PATH).readBytes()
+                    val soundTriggerPlatformInfoBackup = File(SOUND_TRIGGER_PLATFORM_PATH_BACKUP).readBytesOrNull()
                     val metadataEntry = ZipEntry("metadata.txt")
                     output.putNextEntry(metadataEntry)
                     output.write(metadata.joinToString("\n").toByteArray())
@@ -172,6 +175,11 @@ class SettingsDeveloperOptionsDumpLogViewModelImpl(private val context: Context)
                     output.putNextEntry(soundTriggerPlatformInfoEntry)
                     output.write(soundTriggerPlatformInfo)
                     output.closeEntry()
+                    val soundTriggerPlatformInfoEntryOriginal = ZipEntry("sound_trigger_platform_info_original.xml")
+                    output.putNextEntry(soundTriggerPlatformInfoEntryOriginal)
+                    output.write(soundTriggerPlatformInfoBackup)
+                    output.closeEntry()
+                    output.finish()
                     output.flush()
                     fileOutput.close()
                 }.onFailure {
@@ -181,6 +189,11 @@ class SettingsDeveloperOptionsDumpLogViewModelImpl(private val context: Context)
                 }
             }
         }
+    }
+
+    private fun File.readBytesOrNull(): ByteArray {
+        if(!exists()) return "".toByteArray()
+        return readBytes()
     }
 
 }

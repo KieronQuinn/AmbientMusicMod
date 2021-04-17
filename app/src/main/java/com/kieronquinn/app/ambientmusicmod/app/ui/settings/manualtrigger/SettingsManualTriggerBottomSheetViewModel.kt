@@ -68,7 +68,6 @@ class SettingsManualTriggerBottomSheetViewModelImpl(private val context: Context
                         sendGetModelStateBroadcast()
                     }
                     is State.Started -> {
-                        Log.d("ModelResponse", "Started")
                         registerFinishReceiver()
                         emit(State.Running)
                         delay(RECOGNITION_RUNTIME)
@@ -91,7 +90,6 @@ class SettingsManualTriggerBottomSheetViewModelImpl(private val context: Context
     private fun registerStartReceiver() = viewModelScope.launch {
         withTimeoutOrNull(TIMEOUT) {
             startBus.take(1).collect {
-                Log.d("ModelResponse", "Start bus ${_state.value}")
                 if(_state.value is State.AwaitingStart) _state.emit(State.Started)
             }
         } ?: _state.emit(State.Error(ErrorType.FAILED_TO_START))

@@ -93,6 +93,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_installerFragment_to_installerModelStateCheckBottomSheetFragment"
+            app:destination="@id/installerModelStateCheckBottomSheetFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_settingsFragment"
@@ -176,7 +179,7 @@
         android:id="@+id/installerNotCompatibleFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.notcompatible.InstallerNotCompatibleFragment"
         android:label="@string/installer_not_compatible_title"
-        tools:layout="@layout/installer_not_compatible">
+        tools:layout="@layout/fragment_installer_not_compatible">
         <argument
             android:name="compatibilityStatus"
             app:argType="com.kieronquinn.app.ambientmusicmod.app.ui.installer.InstallerViewModel$CompatibilityStatus" />
@@ -287,6 +290,10 @@
     <dialog
         android:id="@+id/updateDownloadBottomSheetFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.app.ui.update.download.UpdateDownloadBottomSheetFragment"
+        android:label=" " />
+    <dialog
+        android:id="@+id/installerModelStateCheckBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.modelstate.InstallerModelStateCheckBottomSheetFragment"
         android:label=" " />
 
 </navigation>

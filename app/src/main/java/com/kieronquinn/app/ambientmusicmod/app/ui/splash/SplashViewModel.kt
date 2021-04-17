@@ -32,17 +32,14 @@ class SplashViewModelImpl: SplashViewModel() {
     private val requiredDestination = MutableSharedFlow<Int>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST).apply {
         viewModelScope.launch {
             if(SystemProperties_getInt(MODULE_VERSION_CODE_PROP, 0) > 0){
-                Log.d("Anim", "destination emit settings")
                 emit(R.id.settingsFragment)
             }else{
-                Log.d("Anim", "destination emit installer")
                 emit(R.id.installerFragment)
             }
         }
     }
 
     override val destination: Flow<Int> = combine(animationCompleted, requiredDestination){ _, destination ->
-        Log.d("Anim", "destination $destination")
         destination
     }
 

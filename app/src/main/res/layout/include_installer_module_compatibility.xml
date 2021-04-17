@@ -15,6 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:padding="@dimen/padding_16">
 
         <TextView
@@ -48,15 +49,45 @@
             tools:text="@string/installer_module_compatibility_check_sound_trigger_text_compatible" />
 
         <ImageView
+            android:id="@+id/installer_module_compatibility_check_sound_model_icon"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_sound_trigger_icon"
+            tools:src="@drawable/ic_warning" />
+
+        <TextView
+            android:id="@+id/installer_module_compatibility_check_sound_model_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="@+id/installer_module_compatibility_check_sound_model_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/installer_module_compatibility_check_sound_model_icon"
+            app:layout_constraintTop_toTopOf="@+id/installer_module_compatibility_check_sound_model_icon"
+            tools:text="@string/installer_module_compatibility_check_sound_model_text_unknown" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/installer_module_compatibility_check_sound_model_button"
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_sound_trigger_text"
+            app:layout_constraintBottom_toTopOf="@id/installer_module_compatibility_check_sound_trigger_platform_text"/>
+
+
+        <ImageView
             android:id="@+id/installer_module_compatibility_check_sound_trigger_platform_icon"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_sound_trigger_text"
-            tools:src="@drawable/ic_module_check" />
-
-        <TextView
+            app:layout_constraintTop_toBottomOf="@id/installer_module_compatibility_check_sound_model_text"
+            tools:src="@drawable/ic_module_check" /><TextView
             android:id="@+id/installer_module_compatibility_check_sound_trigger_platform_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.util.Log
 import com.kieronquinn.app.ambientmusicmod.providers.SharedPrefsProvider
+import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -52,6 +53,20 @@ class XposedSharedPreferences(private val context: Context): AmbientSharedPrefer
         }
     }
 
+    inline fun <reified T : Enum<T>> sharedEnum(key: String, default: Enum<T>): ReadWriteProperty<Any?, T> {
+        return object: ReadWriteProperty<Any?, T> {
+
+            override operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+                throw NotImplementedError("Cannot get enum shared values from XposedSharedPreferences")
+            }
+
+            override operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+                throw NotImplementedError("Cannot set enum shared values from XposedSharedPreferences")
+            }
+
+        }
+    }
+
     override fun sendUpdateIntent() {
         throw XposedSharedPreferencesException("Cannot send update intent from XposedSharedPreferences")
     }
@@ -92,10 +107,8 @@ class XposedSharedPreferences(private val context: Context): AmbientSharedPrefer
             cursor.moveToFirst()
             val prefValue: Int = cursor.getInt(0)
             cursor.close()
-            Log.d("PASS", "getBoolSharedPref $name, default $defValue with value $prefValue")
             prefValue == 1
         } else {
-            Log.d("PASS", "getBoolSharedPref $name returning defValue $defValue")
             defValue
         }
     }

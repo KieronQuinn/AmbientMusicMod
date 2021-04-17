@@ -1,6 +1,8 @@
 package com.kieronquinn.app.ambientmusicmod.components
 
-abstract class AmbientSharedPreferences: BaseSharedPreferences {
+import com.kieronquinn.app.ambientmusicmod.xposed.wrappers.SoundTriggerManager
+
+abstract class AmbientSharedPreferences: BaseSharedPreferences() {
 
     companion object {
 
@@ -45,6 +47,12 @@ abstract class AmbientSharedPreferences: BaseSharedPreferences {
         val KEY_OVERLAY_POSITION_Y = "overlay_position_y"
         val DEFAULT_OVERLAY_POSITION_Y = -1f
 
+        val KEY_SOUND_TRIGGER_GET_MODEL_SUPPORTED = "soundtrigger_get_model_supported"
+        val DEFAULT_SOUND_TRIGGER_GET_MODEL_SUPPORTED = GetModelSupported.UNKNOWN
+
+        val KEY_SOUND_TRIGGER_GET_MODEL_LAST_RESULT = "soundtrigger_get_model_last_result"
+        val DEFAULT_SOUND_TRIGGER_GET_MODEL_LAST_RESULT = SoundTriggerManager.STATUS_NOT_RUN
+
     }
 
     var enabled by this.shared(KEY_ENABLED, DEFAULT_ENABLED)
@@ -60,6 +68,10 @@ abstract class AmbientSharedPreferences: BaseSharedPreferences {
     var overlayPositionX by this.shared(KEY_OVERLAY_POSITION_X, DEFAULT_OVERLAY_POSITION_X)
     var overlayPositionY by this.shared(KEY_OVERLAY_POSITION_Y, DEFAULT_OVERLAY_POSITION_Y)
 
+    //Whether getModelState is supported
+    var getModelSupported by this.shared(KEY_SOUND_TRIGGER_GET_MODEL_SUPPORTED, DEFAULT_SOUND_TRIGGER_GET_MODEL_SUPPORTED)
+    var getModelLastResult by this.shared(KEY_SOUND_TRIGGER_GET_MODEL_LAST_RESULT, DEFAULT_SOUND_TRIGGER_GET_MODEL_LAST_RESULT)
+
     //Developer options
     var developerEnableLogging by this.shared(KEY_DEVELOPER_ENABLE_LOGGING, DEFAULT_DEVELOPER_ENABLE_LOGGING)
 
@@ -69,5 +81,11 @@ abstract class AmbientSharedPreferences: BaseSharedPreferences {
     var phenotype_highQualityResampling by this.shared("phenotype_ambient_music_high_quality_resampling", true)
     var phenotype_useDspAudioSource by this.shared("phenotype_ambient_music_use_dsp_audio_source", true)
     var phenotype_suppressDuringAudioRecording by this.shared("phenotype_ambient_music_suppress_recognition_during_audio_recording", true)
+
+    enum class GetModelSupported {
+        UNKNOWN,
+        SUPPORTED,
+        UNSUPPORTED
+    }
 
 }

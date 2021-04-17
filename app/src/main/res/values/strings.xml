@@ -166,6 +166,9 @@
     <string name="installer_module_compatibility_check_sound_trigger_platform_text_not_compatible">Sound Trigger Platform not compatible</string>
     <string name="installer_module_compatibility_check_sound_trigger_text_compatible">Sound Trigger version: %1s</string>
     <string name="installer_module_compatibility_check_sound_trigger_text_not_compatible">Sound Trigger version: %1s (requires at least %1s)</string>
+    <string name="installer_module_compatibility_check_sound_model_text_unknown">Unknown Sound Model compatibility (tap to check)</string>
+    <string name="installer_module_compatibility_check_sound_model_text_compatible">Sound Model compatible (tap to check again)</string>
+    <string name="installer_module_compatibility_check_sound_model_text_incompatible">Sound Model incompatible (tap to check again)</string>
     <string name="installer_module_compatibility_check_xposed_text_installed">Xposed installed</string>
     <string name="installer_module_compatibility_check_xposed_text_not_installed">Xposed not installed</string>
 
@@ -175,6 +178,8 @@
     <string name="installer_not_compatible_title">Not Compatible</string>
     <string name="installer_not_compatible_sound_trigger_title">Sound Trigger Version</string>
     <string name="installer_not_compatible_sound_trigger_content"><![CDATA[The sound trigger driver version on your device (%1s) is below the minimum required version for this mod to work (%1s).<br><b>Important note:</b> This CANNOT be fixed by a mod, or by flashing a different ROM. The driver is provided by your device\'s OEM, and is unlikely to be updated after the device is released.]]></string>
+    <string name="installer_not_compatible_sound_model_title">Sound Model Compatibility</string>
+    <string name="installer_not_compatible_sound_model_content">The compatibility check of the Sound Model failed on your device. This is usually because the driver does not support it, or at least not the model in this mod. It may be supported in the future, check back later for future updates!</string>
     <string name="installer_not_compatible_sound_trigger_platform_title">Sound Trigger Platform</string>
     <string name="installer_not_compatible_sound_trigger_platform_content">Your device does not have a compatible Sound Trigger platform (the software that loads sound trigger models), and therefore is unable to use this mod.\n<b>Important note:</b> This CANNOT be fixed by a mod, or by flashing a different ROM. The platform is provided by your device\'s OEM, and is unlikely to be updated or changed after the device is released.</string>
     <string name="installer_not_compatible_xposed_title">Xposed</string>
@@ -291,5 +296,18 @@
     <string name="bs_update_download_title">Downloading update…</string>
     <string name="bs_update_download_failed">Download failed</string>
     <string name="bs_update_download_github">Download via browser</string>
+
+    <!-- Get Model State check -->
+    <string name="installer_get_model_state_check_title">Model Compatibility</string>
+    <string name="installer_get_model_state_check_state_awaiting_title">Starting check…</string>
+    <string name="installer_get_model_state_check_state_awaiting_content">You may be asked to grant root permissions</string>
+    <string name="installer_get_model_state_check_state_running_title">Running check…</string>
+    <string name="installer_get_model_state_check_state_result_title_compatible">Model compatible</string>
+    <string name="installer_get_model_state_check_state_result_title_incompatible">Model incompatible</string>
+    <string name="installer_get_model_state_check_state_result_content">Result code %1d</string>
+    <string name="installer_get_model_state_check_state_result_content_failed">Result code %1d\nIf you think this is an error, you can override the check and proceed anyway (but the mod may not work)</string>
+    <string name="installer_get_model_state_check_state_result_content_failed_check">I understand the module may not work and I am proceeding at my own risk</string>
+    <string name="installer_get_model_state_check_state_result_content_failed_override">Override</string>
+    <string name="installer_get_model_state_run_toast">Run the "Sound Model compatibility" check first before building!</string>
 
 </resources>

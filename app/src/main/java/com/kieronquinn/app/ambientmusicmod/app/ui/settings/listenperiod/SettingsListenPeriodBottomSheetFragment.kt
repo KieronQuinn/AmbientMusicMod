@@ -18,7 +18,6 @@ class SettingsListenPeriodBottomSheetFragment: BaseBottomSheetDialogFragment() {
     override fun onMaterialDialogCreated(materialDialog: MaterialDialog, savedInstanceState: Bundle?) = materialDialog.apply {
         title(R.string.settings_mod_job)
         listItemsSingleChoice(R.array.listen_periods, initialSelection = viewModel.currentSelectedItem, waitForPositiveButton = false, selection = { _, item, _ ->
-            Log.d("AC", "setSelectedItem $item")
             viewModel.setSelectedItem(item)
         })
         positiveButton(android.R.string.ok){

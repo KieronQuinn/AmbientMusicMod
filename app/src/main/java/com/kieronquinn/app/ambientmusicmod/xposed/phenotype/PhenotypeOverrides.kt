@@ -2,6 +2,7 @@ package com.kieronquinn.app.ambientmusicmod.xposed.phenotype
 
 import android.util.Log
 import com.kieronquinn.app.ambientmusicmod.components.AmbientSharedPreferences
+import com.kieronquinn.app.ambientmusicmod.xposed.debug.XLog
 
 class PhenotypeOverrides(private val settings: AmbientSharedPreferences) {
 
@@ -35,7 +36,7 @@ class PhenotypeOverrides(private val settings: AmbientSharedPreferences) {
             "phenotype_ambient_music_use_dsp_audio_source" to settings.phenotype_useDspAudioSource,
             "phenotype_ambient_music_suppress_recognition_during_audio_recording" to settings.phenotype_suppressDuringAudioRecording
         )
-        Log.d("PAPhenotype", "Refreshed dynamic overrides ${dynamicPhenotypeOverrides.map { it.key + ": " + it.value }.joinToString(", ")}")
+        XLog.d("Refreshed dynamic overrides ${dynamicPhenotypeOverrides.map { it.key + ": " + it.value }.joinToString(", ")}")
     }
 
 }

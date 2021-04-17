@@ -8,6 +8,8 @@ import com.kieronquinn.app.ambientmusicmod.BuildConfig
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.ReadWriteProperty
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.sendSecureBroadcast
 import com.kieronquinn.app.ambientmusicmod.xposed.apps.PixelAmbientServices
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 //These calls are from background threads and need to await changes so commit is required
 @SuppressLint("ApplySharedPref")
@@ -54,6 +56,20 @@ class AppSharedPreferences(private val context: Context) : AmbientSharedPreferen
     }, {
         sharedPreferences.edit().putString(key, it.toString()).commit()
     })
+
+    inline fun <reified T : Enum<T>> sharedEnum(key: String, default: Enum<T>): ReadWriteProperty<Any?, T> {
+        return object: ReadWriteProperty<Any?, T> {
+
+            override operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+                return java.lang.Enum.valueOf(T::class.java, sharedPreferences.getString(key, default.name))
+            }
+
+            override operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+                sharedPreferences.edit().putString(key, value.name).commit()
+            }
+
+        }
+    }
 
     override fun sendUpdateIntent() {
         context.sendSecureBroadcast(Intent(INTENT_ACTION_SETTINGS_CHANGED).apply {

@@ -14,15 +14,19 @@ abstract class AmbientContainerSharedViewModel: ViewModel() {
     abstract val mainAppLinkHeight: Flow<Float>
     abstract val fabClick: Flow<InstallerViewModel.CompatibilityStatus>
     abstract val shouldShowFab: Flow<FabVisibility>
+    abstract val forceRefreshBus: Flow<Unit>
+
     abstract fun setAppLinkHeight(height: Float)
     abstract fun setCompatibilityState(compatibilityState: InstallerViewModel.CompatibilityStatus)
     abstract fun setPage(@IdRes pageId: Int)
     abstract fun onFabClicked()
+    abstract fun forceRefresh()
 
     enum class CompatibilityState {
         COMPATIBLE,
         NO_XPOSED,
-        NOT_COMPATIBLE
+        NOT_COMPATIBLE,
+        NEED_MODULE_CHECK
     }
 
     sealed class FabVisibility {
@@ -41,8 +45,10 @@ class AmbientContainerSharedViewModelImpl: AmbientContainerSharedViewModel() {
     private val _fabClick = MutableSharedFlow<InstallerViewModel.CompatibilityStatus>()
     override val fabClick = _fabClick.asSharedFlow()
 
+    private val _forceRefreshBus = MutableSharedFlow<Unit>()
+    override val forceRefreshBus = _forceRefreshBus.asSharedFlow()
+
     override fun setAppLinkHeight(height: Float) {
-        Log.d("AC", "setAppLinkHeight $height")
         viewModelScope.launch {
             _mainAppLinkHeight.emit(height)
         }
@@ -64,7 +70,6 @@ class AmbientContainerSharedViewModelImpl: AmbientContainerSharedViewModel() {
 
     override fun onFabClicked() {
         viewModelScope.launch {
-            Log.d("FabClick", "VM ${compatibilityState.value}")
             _fabClick.emit(compatibilityState.value ?: return@launch)
         }
     }
@@ -72,6 +77,12 @@ class AmbientContainerSharedViewModelImpl: AmbientContainerSharedViewModel() {
     override fun setPage(pageId: Int) {
         viewModelScope.launch {
             this@AmbientContainerSharedViewModelImpl.pageId.emit(pageId)
+        }
+    }
+
+    override fun forceRefresh() {
+        viewModelScope.launch {
+            _forceRefreshBus.emit(Unit)
         }
     }
 

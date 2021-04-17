@@ -27,7 +27,6 @@ class SettingsListenPeriodBottomSheetViewModelImpl: SettingsListenPeriodBottomSh
 
     override fun saveListenPeriod() {
         viewModelScope.launch {
-            Log.d("AC", "new jobtime $currentSelectedItem ${jobTimeValues[currentSelectedItem]}")
             settings.jobTime = jobTimeValues[currentSelectedItem]
             settings.sendUpdateIntent()
         }

@@ -29,11 +29,9 @@ fun writeAudioRecordToFile(shorts: ShortArray, outputFilename: String = "output.
         val context = AndroidAppHelper.currentApplication() as Context
         withContext(Dispatchers.IO){
             try {
-                Log.d("AudioRecord", "Write to file start")
                 val outputStream = FileOutputStream(File(context.filesDir, outputFilename))
                 outputStream.write(AudioUtils.short2byte(shorts))
                 outputStream.close()
-                Log.d("AudioRecord", "Write to file complete")
             }catch (e: Exception){
                 Log.d("AudioRecord", "Error", e)
             }
@@ -47,11 +45,9 @@ fun writeAudioRecordToUri(shorts: ShortArray, outputUri: Uri) {
         val contentResolver = context.contentResolver
         withContext(Dispatchers.IO){
             try {
-                Log.d("AudioRecord", "Write to file with URI ${outputUri.toString()} start")
                 val outputStream = contentResolver.openOutputStream(outputUri)
                 outputStream?.write(AudioUtils.short2byte(shorts))
                 outputStream?.close()
-                Log.d("AudioRecord", "Write to file complete")
             }catch (e: Exception){
                 Log.d("AudioRecord", "Error", e)
             }

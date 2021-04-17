@@ -45,7 +45,6 @@ class AmbientContainerViewModelImpl(private val navigation: NavigationComponent,
     override val currentPage: Flow<Page?> = _currentPage.asStateFlow()
 
     private val _shouldShowMainAppLink = combine(mainAppInstalled, _currentPage){ appInstalled: Boolean, page: Page? ->
-        Log.d("AC", "shouldShowMainAppLink ${appInstalled && page?.id == R.id.settingsFragment}")
         appInstalled && page?.id == R.id.settingsFragment
     }
 
