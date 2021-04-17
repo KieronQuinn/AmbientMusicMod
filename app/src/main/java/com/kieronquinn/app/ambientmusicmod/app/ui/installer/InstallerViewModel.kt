@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
+import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.app.ui.container.AmbientContainerSharedViewModel
+import com.kieronquinn.app.ambientmusicmod.components.AmbientSharedPreferences
 import com.kieronquinn.app.ambientmusicmod.components.NavigationEvent
 import com.kieronquinn.app.ambientmusicmod.components.installer.Installer
 import com.kieronquinn.app.ambientmusicmod.components.settings.BaseViewModel
@@ -31,9 +34,11 @@ abstract class InstallerViewModel: BaseViewModel() {
     abstract fun getModelStatus()
     abstract fun getCompatibilityStatus()
     abstract fun getXposedStatus()
+    abstract fun getModelCompatibilityStatus()
 
     abstract fun onBuildFabClicked(compatibilityStatus: CompatibilityStatus)
     abstract fun onHelpClicked(compatibilityStatus: CompatibilityStatus)
+    abstract fun onModelCheckClicked()
 
     abstract fun onFaqClicked()
     abstract fun onXDAThreadClicked()
@@ -51,12 +56,13 @@ abstract class InstallerViewModel: BaseViewModel() {
     data class SoundTriggerStatus(val version: String, val compatible: Boolean): Parcelable
 
     @Parcelize
-    data class CompatibilityStatus(val soundTriggerStatus: SoundTriggerStatus, val soundTriggerPlatformExists: Boolean, val xposedInstalled: Boolean): Parcelable {
+    data class CompatibilityStatus(val soundTriggerStatus: SoundTriggerStatus, val soundTriggerPlatformExists: Boolean, val xposedInstalled: Boolean, val getModelSupported: AmbientSharedPreferences.GetModelSupported): Parcelable {
 
         fun toEnum(): AmbientContainerSharedViewModel.CompatibilityState {
             return when {
-                soundTriggerStatus.compatible && soundTriggerPlatformExists && xposedInstalled -> AmbientContainerSharedViewModel.CompatibilityState.COMPATIBLE
-                soundTriggerStatus.compatible && soundTriggerPlatformExists && !xposedInstalled -> AmbientContainerSharedViewModel.CompatibilityState.NO_XPOSED
+                getModelSupported == AmbientSharedPreferences.GetModelSupported.SUPPORTED && soundTriggerStatus.compatible && soundTriggerPlatformExists && xposedInstalled -> AmbientContainerSharedViewModel.CompatibilityState.COMPATIBLE
+                getModelSupported == AmbientSharedPreferences.GetModelSupported.SUPPORTED && soundTriggerStatus.compatible && soundTriggerPlatformExists && !xposedInstalled -> AmbientContainerSharedViewModel.CompatibilityState.NO_XPOSED
+                getModelSupported == AmbientSharedPreferences.GetModelSupported.UNKNOWN -> AmbientContainerSharedViewModel.CompatibilityState.NEED_MODULE_CHECK
                 else -> AmbientContainerSharedViewModel.CompatibilityState.NOT_COMPATIBLE
             }
         }
@@ -75,8 +81,10 @@ class InstallerViewModelImpl(private val context: Context): InstallerViewModel()
 
     private val xposedInstalled = MutableSharedFlow<Boolean>()
 
-    override val compatibilityStatus: Flow<CompatibilityStatus> = combine(soundTriggerStatus, soundTriggerPlatformExists, xposedInstalled){ status: SoundTriggerStatus, exists: Boolean, xposed: Boolean ->
-        CompatibilityStatus(status, exists, xposed)
+    private val modelCompatibilityStatus = MutableSharedFlow<AmbientSharedPreferences.GetModelSupported>()
+
+    override val compatibilityStatus: Flow<CompatibilityStatus> = combine(soundTriggerStatus, soundTriggerPlatformExists, xposedInstalled, modelCompatibilityStatus){ status: SoundTriggerStatus, exists: Boolean, xposed: Boolean, getModelSupported: AmbientSharedPreferences.GetModelSupported ->
+        CompatibilityStatus(status, exists, xposed, getModelSupported)
     }
 
     override fun getModelStatus() {
@@ -110,6 +118,12 @@ class InstallerViewModelImpl(private val context: Context): InstallerViewModel()
         }
     }
 
+    override fun getModelCompatibilityStatus() {
+        viewModelScope.launch {
+            modelCompatibilityStatus.emit(settings.getModelSupported)
+        }
+    }
+
     override fun onBuildFabClicked(compatibilityStatus: CompatibilityStatus) {
         viewModelScope.launch {
             when(compatibilityStatus.toEnum()){
@@ -121,6 +135,9 @@ class InstallerViewModelImpl(private val context: Context): InstallerViewModel()
                 }
                 AmbientContainerSharedViewModel.CompatibilityState.COMPATIBLE -> {
                     navigation.navigate(NavigationEvent.NavigateByDirections(InstallerFragmentDirections.actionInstallerFragmentToInstallerOutputPickerFragment()))
+                }
+                AmbientContainerSharedViewModel.CompatibilityState.NEED_MODULE_CHECK -> {
+                    Toast.makeText(context, context.getString(R.string.installer_get_model_state_run_toast), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -152,6 +169,12 @@ class InstallerViewModelImpl(private val context: Context): InstallerViewModel()
 
     override fun onTwitterClicked() {
         launchURL(TWITTER_REDIRECT_URL)
+    }
+
+    override fun onModelCheckClicked() {
+        viewModelScope.launch {
+            navigation.navigate(NavigationEvent.NavigateByDirections(InstallerFragmentDirections.actionInstallerFragmentToInstallerModelStateCheckBottomSheetFragment()))
+        }
     }
 
     private fun launchURL(url: String){

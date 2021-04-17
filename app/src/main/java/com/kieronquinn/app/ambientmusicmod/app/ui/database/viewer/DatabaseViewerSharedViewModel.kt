@@ -1,17 +1,8 @@
 package com.kieronquinn.app.ambientmusicmod.app.ui.database.viewer
 
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.NavigationEvent
 import com.kieronquinn.app.ambientmusicmod.components.settings.BaseViewModel
-import com.kieronquinn.app.ambientmusicmod.components.superpacks.Superpacks
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.broadcastReceiverFlow
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.sendSecureBroadcast
-import com.kieronquinn.app.ambientmusicmod.xposed.apps.PixelAmbientServices
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -26,7 +17,7 @@ abstract class DatabaseViewerSharedViewModel: BaseViewModel() {
     abstract fun setSearchTerm(searchTerm: String)
 }
 
-class DatabaseViewerSharedViewModelImpl(private val context: Context) : DatabaseViewerSharedViewModel() {
+class DatabaseViewerSharedViewModelImpl : DatabaseViewerSharedViewModel() {
 
     private val _navigationBus = MutableSharedFlow<NavigationEvent>()
     override val navigationBus = _navigationBus.asSharedFlow()

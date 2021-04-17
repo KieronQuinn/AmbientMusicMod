@@ -6,6 +6,7 @@ import java.util.*
 const val BUILD_MODULE_VERSION = BuildConfig.BUILD_MODULE_VERSION
 const val BUILD_MODULE_VERSION_CODE = BuildConfig.BUILD_MODULE_VERSION_CODE
 const val SOUND_TRIGGER_PLATFORM_PATH = "/system/vendor/etc/sound_trigger_platform_info.xml"
+const val SOUND_TRIGGER_PLATFORM_PATH_BACKUP = "/system/vendor/etc/sound_trigger_platform_info.xml.orig"
 const val MODULE_VERSION_PROP = "ro.ambientmusicmod.version"
 const val MODULE_VERSION_CODE_PROP = "ro.ambientmusicmod.version_code"
 const val MODEL_UUID = "9f6ad62a-1f0b-11e7-87c5-40a8f03d3f15"

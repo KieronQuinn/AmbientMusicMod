@@ -53,7 +53,6 @@ class DatabaseSharedViewModelImpl(private val context: Context): DatabaseSharedV
     }
 
     private fun loadTracks() = viewModelScope.launch(Dispatchers.IO) {
-        Log.d("LoadBus", "loadTracks")
         val tracks = ArrayList<Track>()
         val startTime = System.currentTimeMillis()
         val success = Superpacks.forEachSuperpack(context, getCoreMatcherFile()){ file, index, count ->

@@ -46,7 +46,6 @@ fun Context.sendSecureBroadcast(intent: Intent){
 @ExperimentalCoroutinesApi
 fun Context.broadcastReceiverFlow(intentFilter: IntentFilter, secure: Boolean = true) = callbackFlow<Intent?> {
     val onReceive = { intent: Intent? ->
-        Log.d("ModelResponse", "Response for ${intentFilter.getAction(0)}")
         offer(intent)
     }
     val receiver = if(secure){
@@ -54,10 +53,8 @@ fun Context.broadcastReceiverFlow(intentFilter: IntentFilter, secure: Boolean = 
     }else{
         BroadcastReceiver { _, intent -> onReceive.invoke(intent) }
     }
-    Log.d("ModelResponse", "Registering ${intentFilter.getAction(0)}")
     registerReceiver(receiver, intentFilter)
     awaitClose {
-        Log.d("ModelResponse", "Unregistering ${intentFilter.getAction(0)}")
         unregisterReceiver(receiver)
     }
 }

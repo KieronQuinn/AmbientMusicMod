@@ -11,7 +11,6 @@ enum class RecognitionResponse {
 
 fun Any.toRecognitionResponse(): RecognitionResponse {
     val asEnum = this as java.lang.Enum<*>
-    Log.d("ModelResponse", "enum name ${asEnum.name()}")
     return RecognitionResponse.valueOf(asEnum.name())
 }
 

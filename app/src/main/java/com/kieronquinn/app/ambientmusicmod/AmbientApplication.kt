@@ -32,6 +32,8 @@ import com.kieronquinn.app.ambientmusicmod.app.ui.installer.InstallerViewModel
 import com.kieronquinn.app.ambientmusicmod.app.ui.installer.InstallerViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.app.ui.installer.build.InstallerBuildViewModel
 import com.kieronquinn.app.ambientmusicmod.app.ui.installer.build.InstallerBuildViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.app.ui.installer.modelstate.InstallerModelStateCheckBottomSheetViewModel
+import com.kieronquinn.app.ambientmusicmod.app.ui.installer.modelstate.InstallerModelStateCheckBottomSheetViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.app.ui.installer.outputpicker.InstallerOutputPickerViewModel
 import com.kieronquinn.app.ambientmusicmod.app.ui.installer.outputpicker.InstallerOutputPickerViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.app.ui.installer.xposed.InstallerXposedWarningBottomSheetViewModel
@@ -130,13 +132,14 @@ class AmbientApplication: Application() {
         viewModel<InstallerXposedWarningBottomSheetViewModel> { InstallerXposedWarningBottomSheetViewModelImpl() }
         viewModel<InstallerOutputPickerViewModel> { InstallerOutputPickerViewModelImpl() }
         viewModel<InstallerBuildViewModel> { InstallerBuildViewModelImpl(get()) }
+        viewModel<InstallerModelStateCheckBottomSheetViewModel> { InstallerModelStateCheckBottomSheetViewModelImpl(get()) }
 
         //Database viewer
         viewModel<DatabaseSharedViewModel> { DatabaseSharedViewModelImpl(get()) }
         viewModel<DatabaseCopyWarningViewModel> { DatabaseCopyWarningViewModelImpl() }
         viewModel<DatabaseCopyViewModel> { DatabaseCopyViewModelImpl(get()) }
         viewModel<DatabaseViewerViewModel> { DatabaseViewerViewModelImpl(get()) }
-        viewModel<DatabaseViewerSharedViewModel> { DatabaseViewerSharedViewModelImpl(get()) }
+        viewModel<DatabaseViewerSharedViewModel> { DatabaseViewerSharedViewModelImpl() }
         viewModel<DatabaseViewerTracksViewModel> { DatabaseViewerTracksViewModelImpl() }
         viewModel<DatabaseViewerArtistsViewModel> { DatabaseViewerArtistsViewModelImpl() }
         viewModel<DatabaseViewerArtistTracksViewModel> { DatabaseViewerArtistTracksViewModelImpl() }

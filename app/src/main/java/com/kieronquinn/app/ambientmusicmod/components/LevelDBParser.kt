@@ -36,7 +36,7 @@ object LevelDBParser {
      */
     fun parseMatcherFile(file: File, endOfData: Long): List<Track> {
         val tracks = ArrayList<Track>()
-        var startTime = System.currentTimeMillis()
+        var startTime: Long
         RandomAccessFile(file, "r").use {
             var offset = 0L
             it.seek(offset)

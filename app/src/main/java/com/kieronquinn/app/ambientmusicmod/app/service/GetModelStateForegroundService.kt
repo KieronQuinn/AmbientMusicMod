@@ -78,7 +78,6 @@ class GetModelStateForegroundService: LifecycleService(), SharedPreferences.OnSh
         super.onCreate()
         createNotificationChannel()
         startForeground(NOTIFICATION_ID_FOREGROUND, createNotification())
-        Log.d("GetModelState", "jobTime $jobTime")
         if(jobTime == 0){
             stopSelf()
             return
@@ -128,7 +127,6 @@ class GetModelStateForegroundService: LifecycleService(), SharedPreferences.OnSh
             if(!minuteTicker.isScheduled && jobTime != 0){
                 val timeToAdd: Long = if(jobTime == -1){
                     //Automatic mode selected
-                    Log.d("GetModelState", "Using automatic time of $automaticTime")
                     automaticTime ?: DEFAULT_AUTOMATIC_TIME
                 }else{
                     //Job time (in minutes) * 60 seconds - 10 seconds
@@ -157,7 +155,6 @@ class GetModelStateForegroundService: LifecycleService(), SharedPreferences.OnSh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        Log.d("GetModelState", "onSharedPreferenceChanged")
         if(key == AmbientSharedPreferences.KEY_JOB_TIME){
             // Time changed, we'll need to re-schedule the alarm
             jobTime = settings.jobTime

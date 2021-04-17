@@ -77,12 +77,10 @@ class SettingsManualTriggerPlaybackBottomSheetFragment: BaseBottomSheetDialogFra
 
     private fun handleState(state: SettingsManualTriggerPlaybackBottomSheetViewModel.State) = when(state) {
         is SettingsManualTriggerPlaybackBottomSheetViewModel.State.Playing -> {
-            Log.d("AudioTrack", "new state playing")
             binding.bsManualTriggerPlaybackPlayPause.setImageDrawable(avdPlayToStop)
             avdPlayToStop.start()
         }
         is SettingsManualTriggerPlaybackBottomSheetViewModel.State.Stopped -> {
-            Log.d("AudioTrack", "new state stopped")
             binding.bsManualTriggerPlaybackPlayPause.setImageDrawable(avdStopToPlay)
             avdStopToPlay.start()
         }

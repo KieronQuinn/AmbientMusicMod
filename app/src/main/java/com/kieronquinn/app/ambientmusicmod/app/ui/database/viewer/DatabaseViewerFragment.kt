@@ -55,12 +55,13 @@ class DatabaseViewerFragment: BaseFragment<FragmentDatabaseViewerBinding>(Fragme
         }
     }
 
+    private var isLoading = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launchWhenResumed {
             launch {
                 innerSharedViewModel.loadBus.collect {
-                    Log.d("LoadBus", "ping")
                     sharedViewModel.reload()
                 }
             }
@@ -86,14 +87,14 @@ class DatabaseViewerFragment: BaseFragment<FragmentDatabaseViewerBinding>(Fragme
             }
             launch {
                 viewModel.shouldShowControls.collect {
-                    binding.bottomNavigation.isVisible = it
-                    binding.searchContainer.isVisible = it
+                    if(!isLoading) {
+                        binding.bottomNavigation.isVisible = it
+                        binding.searchContainer.isVisible = it
+                    }
                 }
             }
             launch {
-                Log.d("XASuperpacks", "start collect")
                 viewModel.shouldShowUpdateBanner.collect {
-                    Log.d("XASuperpacks", "update available $it")
                     binding.databaseViewerUpdate.root.isVisible = it
                 }
             }
@@ -134,6 +135,7 @@ class DatabaseViewerFragment: BaseFragment<FragmentDatabaseViewerBinding>(Fragme
 
     private fun handleState(state: DatabaseSharedViewModel.State) = when(state) {
         is DatabaseSharedViewModel.State.Loading -> {
+            isLoading = true
             binding.navHostFragmentDatabaseViewer.isVisible = false
             binding.databaseViewerLoading.isVisible = true
             binding.databaseViewerLoadingProgressIndeterminate.isVisible = false
@@ -142,13 +144,15 @@ class DatabaseViewerFragment: BaseFragment<FragmentDatabaseViewerBinding>(Fragme
             binding.bottomNavigation.isVisible = false
         }
         is DatabaseSharedViewModel.State.Loaded -> {
+            isLoading = false
             binding.navHostFragmentDatabaseViewer.isVisible = true
             binding.databaseViewerLoading.isVisible = false
             binding.searchContainer.isVisible = true
             binding.bottomNavigation.isVisible = true
             viewModel.onLoaded()
         }
-        is DatabaseSharedViewModel.State.Sorting, DatabaseSharedViewModel.State.Idle, DatabaseSharedViewModel.State.StartLoading -> {
+        is DatabaseSharedViewModel.State.Sorting, is DatabaseSharedViewModel.State.Idle, is DatabaseSharedViewModel.State.StartLoading -> {
+            isLoading = true
             binding.databaseViewerLoading.isVisible = true
             binding.databaseViewerLoadingProgress.visibility = View.INVISIBLE
             binding.databaseViewerLoadingProgressIndeterminate.isVisible = true

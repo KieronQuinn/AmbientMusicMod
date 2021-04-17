@@ -92,13 +92,21 @@ class AmbientContainerFragment: BaseFragment<FragmentContainerBinding>(FragmentC
                             binding.mainAppLink.root.setOnClickListener {
                                 viewModel.onMainAppLinkClicked()
                             }
-                            binding.mainAppLink.root.slideIn {
-                                sharedViewModel.setAppLinkHeight(binding.mainAppLink.root.height.toFloat())
+                            binding.mainAppLink.root.run {
+                                slideIn {
+                                    sharedViewModel.setAppLinkHeight(binding.mainAppLink.root.height.toFloat())
+                                    isClickable = true
+                                    isFocusable = true
+                                }
                             }
                         } else {
                             binding.mainAppLink.root.setOnClickListener(null)
-                            binding.mainAppLink.root.slideOut {
-                                sharedViewModel.setAppLinkHeight(0f)
+                            binding.mainAppLink.root.run {
+                                slideOut {
+                                    sharedViewModel.setAppLinkHeight(0f)
+                                    isClickable = false
+                                    isFocusable = false
+                                }
                             }
                         }
                     }
@@ -220,7 +228,7 @@ class AmbientContainerFragment: BaseFragment<FragmentContainerBinding>(FragmentC
                 setIconResource(R.drawable.ic_build)
                 backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.accent))
             }
-            AmbientContainerSharedViewModel.CompatibilityState.NOT_COMPATIBLE -> {
+            AmbientContainerSharedViewModel.CompatibilityState.NOT_COMPATIBLE, AmbientContainerSharedViewModel.CompatibilityState.NEED_MODULE_CHECK -> {
                 //Yellow
                 setIconResource(R.drawable.ic_warning)
                 backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.fab_color_warning))

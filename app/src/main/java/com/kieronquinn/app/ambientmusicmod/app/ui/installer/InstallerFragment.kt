@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.kieronquinn.app.ambientmusicmod.BuildConfig
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.app.ui.container.AmbientContainerSharedViewModel
+import com.kieronquinn.app.ambientmusicmod.components.AmbientSharedPreferences
 import com.kieronquinn.app.ambientmusicmod.components.settings.BaseFragment
 import com.kieronquinn.app.ambientmusicmod.components.settings.RootFragment
 import com.kieronquinn.app.ambientmusicmod.components.settings.ScrollableFragment
@@ -43,6 +45,11 @@ class InstallerFragment: BaseFragment<FragmentInstallerBinding>(FragmentInstalle
                 }
             }
         }
+        lifecycleScope.launch {
+            containerViewModel.forceRefreshBus.collect {
+                viewModel.getModelCompatibilityStatus()
+            }
+        }
         setupAboutCard(binding.installerAboutContainer)
     }
 
@@ -51,6 +58,7 @@ class InstallerFragment: BaseFragment<FragmentInstallerBinding>(FragmentInstalle
         viewModel.getModelStatus()
         viewModel.getCompatibilityStatus()
         viewModel.getXposedStatus()
+        viewModel.getModelCompatibilityStatus()
     }
 
     private fun setModuleStatus(moduleStatus: InstallerViewModel.ModuleStatus){
@@ -102,6 +110,23 @@ class InstallerFragment: BaseFragment<FragmentInstallerBinding>(FragmentInstalle
             }else{
                 installerModuleCompatibilityCheckXposedIcon.setImageResource(R.drawable.ic_warning)
                 installerModuleCompatibilityCheckXposedText.text = getString(R.string.installer_module_compatibility_check_xposed_text_not_installed)
+            }
+            when(compatibilityStatus.getModelSupported){
+                AmbientSharedPreferences.GetModelSupported.SUPPORTED -> {
+                    installerModuleCompatibilityCheckSoundModelText.text = getString(R.string.installer_module_compatibility_check_sound_model_text_compatible)
+                    installerModuleCompatibilityCheckSoundModelIcon.setImageResource(R.drawable.ic_module_check)
+                }
+                AmbientSharedPreferences.GetModelSupported.UNSUPPORTED -> {
+                    installerModuleCompatibilityCheckSoundModelText.text = getString(R.string.installer_module_compatibility_check_sound_model_text_incompatible)
+                    installerModuleCompatibilityCheckSoundModelIcon.setImageResource(R.drawable.ic_module_cross_small)
+                }
+                AmbientSharedPreferences.GetModelSupported.UNKNOWN -> {
+                    installerModuleCompatibilityCheckSoundModelText.text = getString(R.string.installer_module_compatibility_check_sound_model_text_unknown)
+                    installerModuleCompatibilityCheckSoundModelIcon.setImageResource(R.drawable.ic_warning)
+                }
+            }
+            installerModuleCompatibilityCheckSoundModelButton.setOnClickListener {
+                viewModel.onModelCheckClicked()
             }
             installerModuleCompatibilityHelp.isVisible = !compatibilityStatus.soundTriggerStatus.compatible || !compatibilityStatus.soundTriggerPlatformExists || !compatibilityStatus.xposedInstalled
             installerModuleCompatibilityHelp.setOnClickListener {

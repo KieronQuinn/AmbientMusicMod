@@ -32,10 +32,20 @@ object Installer {
         //Create XML folders
         val outputXml = File(context.filesDir.absolutePath + "/Ambient/" + SOUND_TRIGGER_PLATFORM_PATH)
         outputXml.parentFile?.mkdirs()
+        //Copy the original XML
+        val outputXmlBackup = File(context.filesDir.absolutePath + "/Ambient/" + SOUND_TRIGGER_PLATFORM_PATH_BACKUP)
+        outputXmlBackup.parentFile?.mkdirs()
+        File(SOUND_TRIGGER_PLATFORM_PATH).inputStream().use {
+            val output = outputXmlBackup.outputStream()
+            it.copyTo(output)
+            output.close()
+        }
         //Create the actual XML or fail
         val result = createXML(outputXml)
         val customiseFile = File(context.filesDir.absolutePath + "/Ambient", "customize.sh")
         addBuildDetailsToCustomise(customiseFile)
+        val moduleProp = File(context.filesDir.absolutePath + "/Ambient", "module.prop")
+        modifyModuleProp(moduleProp)
         return result
     }
 
@@ -44,6 +54,15 @@ object Installer {
             var text = readText()
             text = text.replace("%BUILDMODEL%", Build.MODEL)
             text = text.replace("%BUILDFIRMVER%", Build.ID)
+            writeText(text)
+        }
+    }
+
+    private fun modifyModuleProp(file: File){
+        file.run {
+            var text = readText()
+            text = text.replace("%MODULEVERSION%", BUILD_MODULE_VERSION)
+            text = text.replace("%MODULEVERSIONCODE%", BUILD_MODULE_VERSION_CODE.toString())
             writeText(text)
         }
     }
@@ -86,7 +105,6 @@ object Installer {
         SoundTriggerPlatformXML(xmlSerializer).run {
             //Runs until a suitable point of injection, cloning as it goes
             val result = xmlParser.skipUntilInjectionPoint()
-            Log.d("Installer", "XML injection type $result")
             when(result){
                 SoundTriggerPlatformXML.CurrentXMLType.PARTIAL_MUSIC -> {
                     //Inject just the usecase section and move on

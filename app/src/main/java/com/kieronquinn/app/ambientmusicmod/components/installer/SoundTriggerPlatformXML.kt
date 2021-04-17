@@ -178,6 +178,8 @@ class SoundTriggerPlatformXML(private val xmlSerializer: XmlSerializer) {
             param("read_rsp_ids", "0x00020013, 0x6, 0x00020016")
         }
         tag("lsm_usecase"){
+            //Required for devices with Sound Trigger platform XML version 0x0105 or greater
+            param("capture_device", "HANDSET")
             param("execution_mode", "ADSP")
             param("load_sound_model_ids", "0x18100000, 0x0, 0x00012C14")
             param("unload_sound_model_ids", "0x18100000, 0x0, 0x00012C15")

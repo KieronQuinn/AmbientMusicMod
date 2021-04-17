@@ -192,7 +192,6 @@ class PixelAmbientServices: XposedAppHook() {
         hookEnabledSetting(lpparam)
         hookAskGoogle(lpparam)
         hookAmbientSettings(lpparam)
-        hookLevelDb(lpparam)
         hookAlbumArt(lpparam)
     }
 
@@ -433,20 +432,6 @@ class PixelAmbientServices: XposedAppHook() {
         })
     }
 
-    private fun hookLevelDb(lpparam: XC_LoadPackage.LoadPackageParam){
-        XposedHelpers.findAndHookConstructor("com.google.intelligence.sense.leveldb.LevelDbTable", lpparam.classLoader, Long::class.java, MethodHook {
-            Log.d("XAL", "LevelDB init ${it.args[0]}")
-        })
-        XposedHelpers.findAndHookMethod("com.google.intelligence.sense.leveldb.LevelDbTable", lpparam.classLoader, "a", String::class.java, MethodHook {
-            Log.d("XAL", "LevelDB open ${it.args[0]}")
-        })
-        XposedHelpers.findAndHookMethod("com.google.intelligence.sense.leveldb.LevelDbTable", lpparam.classLoader, "a", ByteArray::class.java, MethodHook {
-            val bytes = it.args[0] as ByteArray
-            Log.d("XAL", "LevelDB get ${Base64.encodeToString(bytes, Base64.DEFAULT)}")
-        })
-
-    }
-
     /**
      *  END XPOSED HOOKS
      */
@@ -573,7 +558,6 @@ class PixelAmbientServices: XposedAppHook() {
 
     private fun sendSuperpacksVersion(context: Context){
         val version = Superpacks.getSuperpackVersion(context, Superpacks.SUPERPACK_AMBIENT_MUSIC_INDEX)
-        Log.d("XASuperpacks", "sendSuperpacksVersion $version")
         context.sendSecureBroadcast(Intent(INTENT_ACTION_RESPONSE_SUPERPACKS_VERSION).apply {
             putExtra(INTENT_RESPONSE_SUPERPACKS_VERSION_EXTRA_VERSION, version)
         })

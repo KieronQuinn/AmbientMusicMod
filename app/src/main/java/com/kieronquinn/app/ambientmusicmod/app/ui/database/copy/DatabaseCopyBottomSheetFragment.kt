@@ -33,12 +33,10 @@ class DatabaseCopyBottomSheetFragment: BaseBottomSheetDialogFragment() {
 
 
     private val startReceiver = SecureBroadcastReceiver { _, _ ->
-        Log.d("DatabaseCopy", "start received")
         viewModel.copyStarted()
     }
 
     private val resultReceiver = SecureBroadcastReceiver { _, _ ->
-        Log.d("DatabaseCopy", "finish received")
         viewModel.copyFinished()
     }
 

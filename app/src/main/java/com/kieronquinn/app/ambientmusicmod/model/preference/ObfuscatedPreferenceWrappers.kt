@@ -61,7 +61,7 @@ class Preference(private val original: Any, private val classLoader: ClassLoader
          *      }
          *  }
          */
-        Log.d("HAS", "setVisible $original $visible")
+
         @ObfuscatedNames("class Preference -> search for method passing one boolean argument with example structure as above (main thing is the listener null check & call)")
         preferenceClass.getMethod("b", Boolean::class.java).invoke(original, visible)
     }
