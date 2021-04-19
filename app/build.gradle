@@ -7,7 +7,7 @@ plugins {
     id 'com.google.android.gms.oss-licenses-plugin'
 }
 
-def tagName = '1.1'
+def tagName = '1.1.1'
 def moduleVersionName = "1.1"
 def moduleVersionCode = 11
 
@@ -30,8 +30,8 @@ android {
         applicationId "com.kieronquinn.app.ambientmusicmod"
         minSdkVersion 26
         targetSdkVersion 'S'
-        versionCode 11
-        versionName "1.1"
+        versionCode 111
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

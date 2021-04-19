@@ -1,6 +1,7 @@
 package com.kieronquinn.app.ambientmusicmod.app.ui.installer.xposed
 
 import androidx.lifecycle.viewModelScope
+import com.kieronquinn.app.ambientmusicmod.components.NavigationEvent
 import com.kieronquinn.app.ambientmusicmod.components.settings.BaseViewModel
 import kotlinx.coroutines.launch
 
@@ -14,7 +15,7 @@ class InstallerXposedWarningBottomSheetViewModelImpl: InstallerXposedWarningBott
 
     override fun onIgnoreClicked() {
         viewModelScope.launch {
-
+            navigation.navigate(NavigationEvent.NavigateByDirections(InstallerXposedWarningBottomSheetFragmentDirections.actionInstallerXposedWarningBottomSheetFragmentToInstallerOutputPickerFragment()))
         }
     }
 
