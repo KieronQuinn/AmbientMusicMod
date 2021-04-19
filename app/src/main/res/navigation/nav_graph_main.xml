@@ -174,7 +174,15 @@
     <dialog
         android:id="@+id/installerXposedWarningBottomSheetFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.xposed.InstallerXposedWarningBottomSheetFragment"
-        android:label=" " />
+        android:label=" " >
+        <action
+            android:id="@+id/action_installerXposedWarningBottomSheetFragment_to_installerOutputPickerFragment"
+            app:destination="@id/installerOutputPickerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </dialog>
     <fragment
         android:id="@+id/installerNotCompatibleFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.app.ui.installer.notcompatible.InstallerNotCompatibleFragment"
