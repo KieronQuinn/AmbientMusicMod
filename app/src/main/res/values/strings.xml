@@ -9,6 +9,12 @@
     <string name="close">Close</string>
 
     <string name="xposed_module_desc">Enables Ambient Music in Pixel Ambient Services &amp; adds mods to control it.\nImportant: You MUST have the Magisk module installed AS WELL for this to work.</string>
+    <string-array name="scope">
+        <item>android</item>
+        <item>com.google.intelligence.sense</item>
+        <item>com.google.android.as</item>
+        <item>com.kieronquinn.app.ambientmusicmod</item>
+    </string-array>
 
     <!-- Nav bar -->
     <string name="menu_settings">Settings</string>
