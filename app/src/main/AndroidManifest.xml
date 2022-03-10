@@ -19,7 +19,8 @@
         android:theme="@style/Theme.Ambient">
 
         <activity android:name=".app.ui.activities.AmbientActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,6 +33,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:icon="@mipmap/ic_launcher_history"
+            android:exported="true"
             android:label="@string/now_playing_history">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -51,7 +53,8 @@
 
         <service android:name=".app.service.GetModelStateForegroundService" />
 
-        <receiver android:name=".app.receivers.BootCompletedReceiver">
+        <receiver android:name=".app.receivers.BootCompletedReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
@@ -89,6 +92,7 @@
         <service
             android:name=".app.service.LockscreenOverlayAccessibilityService"
             android:label="@string/accessibility_service_label"
+            android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

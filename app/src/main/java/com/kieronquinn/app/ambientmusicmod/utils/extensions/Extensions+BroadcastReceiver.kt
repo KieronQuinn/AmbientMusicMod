@@ -39,7 +39,7 @@ fun SecureBroadcastReceiver(onReceive: (Context, Intent?) -> Unit) = object: Bro
  */
 fun Context.sendSecureBroadcast(intent: Intent){
     sendBroadcast(intent.apply {
-        putExtra(SECURE_BROADCAST_RECEIVER_EXTRA_PENDING_INTENT, PendingIntent.getBroadcast(this@sendSecureBroadcast, intent.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT))
+        putExtra(SECURE_BROADCAST_RECEIVER_EXTRA_PENDING_INTENT, PendingIntent.getBroadcast(this@sendSecureBroadcast, intent.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
     })
 }
 

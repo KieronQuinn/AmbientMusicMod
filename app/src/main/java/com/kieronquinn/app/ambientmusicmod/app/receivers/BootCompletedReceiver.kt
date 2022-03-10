@@ -38,7 +38,7 @@ class BootCompletedReceiver: BroadcastReceiver() {
     }
 
     private fun getClickIntent(context: Context): PendingIntent {
-        return PendingIntent.getActivity(context, 1, Intent(context, BootHelperLaunchActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getActivity(context, 1, Intent(context, BootHelperLaunchActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     private fun createNotificationChannel(notificationManager: NotificationManager, context: Context) = with(context) {

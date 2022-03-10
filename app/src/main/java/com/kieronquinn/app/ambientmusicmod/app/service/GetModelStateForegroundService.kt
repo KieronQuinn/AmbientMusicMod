@@ -118,7 +118,7 @@ class GetModelStateForegroundService: LifecycleService(), SharedPreferences.OnSh
             putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
             putExtra(Settings.EXTRA_CHANNEL_ID, NOTIFICATION_CHANNEL_FOREGROUND)
         }
-        return PendingIntent.getActivity(this, 1, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getActivity(this, 1, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     private fun createTicker() {

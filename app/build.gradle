@@ -16,20 +16,25 @@ def getLocalProperty(String propName) {
     if (propsFile.exists()) {
         def props = new Properties()
         props.load(new FileInputStream(propsFile))
-        return props[propName]
+        String prop = props[propName]
+        if(prop != null){
+            return prop
+        }else{
+            return ""
+        }
     } else {
         return ""
     }
 }
 
 android {
-    compileSdkVersion 'android-S'
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 31
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.kieronquinn.app.ambientmusicmod"
         minSdkVersion 26
-        targetSdkVersion 'S'
+        targetSdkVersion 31
         versionCode 111
         versionName "1.1.1"
 
@@ -65,28 +70,6 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
-    /**
-     *  Hack that re-replaces the minSdk and targetSdk back to levels that allow installing on lower than Android S Developer Preview
-     *  TODO remove this when S becomes stable
-     */
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.processManifest.doLast {
-                def manifestPath = "${buildDir.path}/intermediates/merged_manifests/${variant.buildType.name}/AndroidManifest.xml"
-                def manifestFile = new File(manifestPath)
-                def manifestContent = manifestFile.getText()
-                manifestContent = manifestContent
-                        .replaceAll('android:minSdkVersion="S"', 'android:minSdkVersion="26"')
-                        .replaceAll('android:targetSdkVersion="S"', 'android:targetSdkVersion="30"')
-                        .replaceAll('android:testOnly="true"', 'android:testOnly="false"')
-                def fos = new FileOutputStream(manifestFile.getPath())
-                fos.write(manifestContent.getBytes())
-                fos.flush()
-                fos.close()
-            }
-        }
-    }
 }
 
 dependencies {
@@ -108,7 +91,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.1.1"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    def work_version = "2.5.0"
+    def work_version = "2.7.1"
     implementation "androidx.work:work-runtime:$work_version"
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
