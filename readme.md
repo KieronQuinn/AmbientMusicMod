@@ -28,6 +28,8 @@ Ambient Music Mod is a Shizuku or root app that ports Now Playing from Pixels to
 
 Download the latest APK from the [Releases page](https://github.com/KieronQuinn/AmbientMusicMod/releases) and install it. Ambient Music Mod will download and install the latest Now Playing APK for you as part of the setup process.
 
+If you have any questions, please [read the FAQ](https://github.com/KieronQuinn/AmbientMusicMod/blob/main/app/src/main/res/raw/faq.md) before opening an issue or replying to the XDA thread.
+
 ## Building
 
 > Note: If you are building Ambient Music Mod yourself, you **must** also build Now Playing, since the signatures have to match for security reasons.
