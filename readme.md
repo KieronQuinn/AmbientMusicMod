@@ -52,4 +52,4 @@ keyPassword=<key password>
 
 ## Sources
 
-This repository contains a local version of [google/private-compute-services](https://github.com/google/private-compute-services) ([Apache 2.0 licence](https://github.com/google/private-compute-services/blob/master/LICENSE)) and
+This repository contains a local version of [google/private-compute-services](https://github.com/google/private-compute-services) ([Apache 2.0 licence](https://github.com/google/private-compute-services/blob/master/LICENSE))
