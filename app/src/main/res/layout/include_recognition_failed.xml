@@ -59,7 +59,9 @@
         android:layout_marginStart="@dimen/margin_8"
         android:text="@string/recognition_success_playback"
         android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        android:textColor="?android:textColorPrimaryInverse"
         app:icon="@drawable/ic_recognition_success_playback"
+        app:iconTint="?android:textColorPrimaryInverse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/recognition_retry"
         app:layout_constraintTop_toTopOf="@id/recognition_retry" />

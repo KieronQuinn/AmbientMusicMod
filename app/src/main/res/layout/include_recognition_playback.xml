@@ -24,8 +24,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/margin_16"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
@@ -36,7 +36,9 @@
             android:layout_marginEnd="@dimen/margin_8"
             android:text="@string/recognition_playback_play"
             android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
-            app:icon="@drawable/avd_play_to_stop" />
+            android:textColor="?android:textColorPrimaryInverse"
+            app:icon="@drawable/avd_play_to_stop"
+            app:iconTint="?android:textColorPrimaryInverse" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/recognition_playback_save"
@@ -44,7 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
             android:text="@string/recognition_playback_save"
-            app:icon="@drawable/ic_recognition_save" />
+            android:textColor="?android:textColorPrimaryInverse"
+            app:icon="@drawable/ic_recognition_save"
+            app:iconTint="?android:textColorPrimaryInverse" />
 
     </LinearLayout>
 
