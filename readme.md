@@ -50,7 +50,7 @@ keyPassword=<key password>
 ### Building the Magisk Overlay Module
 
 1. Open the project in Android Studio
-2. Run the `::ondemandoverlay::buildOverlay` task. A module zip will be built and placed in `ondemandoverlay/build/module`.
+2. Run the `:ondemandoverlay:buildOverlay` task. A module zip will be built and placed in `ondemandoverlay/build/module`.
 
 ## Sources
 
