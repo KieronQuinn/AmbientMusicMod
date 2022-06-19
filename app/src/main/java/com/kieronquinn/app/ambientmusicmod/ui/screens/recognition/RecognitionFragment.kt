@@ -33,6 +33,7 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionFailureReason
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionSource
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
+import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -155,12 +156,17 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun setupFailed() = with(binding.recognitionFailed) {
+        val accent = monet.getAccentColor(root.context)
         recognitionRetry.applyMonet()
+        recognitionRetry.overrideRippleColor(accent)
         recognitionFailedPlayback.applyMonet()
+        recognitionFailedPlayback.overrideRippleColor(accent)
     }
 
     private fun setupSuccess() = with(binding.recognitionSuccess) {
+        val accent = monet.getAccentColor(root.context)
         recognitionSuccessPlayback.applyMonet()
+        recognitionSuccessPlayback.overrideRippleColor(accent)
         recognitionSuccessChips.adapter = this@RecognitionFragment.chipsAdapter
         recognitionSuccessChips.layoutManager = FlexboxLayoutManager(context).apply {
             flexDirection = FlexDirection.ROW
@@ -169,9 +175,11 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun setupPlayback() = with(binding.recognitionPlayback) {
-        recognitionPlaybackPlay.applyMonet()
-        recognitionPlaybackSave.applyMonet()
         val accent = monet.getAccentColor(root.context)
+        recognitionPlaybackPlay.applyMonet()
+        recognitionPlaybackPlay.overrideRippleColor(accent)
+        recognitionPlaybackSave.applyMonet()
+        recognitionPlaybackSave.overrideRippleColor(accent)
         recognitionPlaybackWaveform.waveColor = accent
     }
 

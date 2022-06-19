@@ -272,7 +272,7 @@
     <string name="settings_advanced_content">Change the audio recording gain and more</string>
 
     <string name="settings_advanced_gain">Gain</string>
-    <string name="settings_advanced_gain_content">Apply a gain to audio recordings.\n<b>Note:</b> A higher gain also increases noise, use with care</string>
+    <string name="settings_advanced_gain_content">Apply a gain to audio recordings.\n<b>Note:</b> A higher gain also increases noise, use with care. Use a gain lower than 1.0x if you are experiencing distortion with the default setting.</string>
     <string name="settings_advanced_gain_reset">Reset</string>
     <string name="settings_advanced_gain_formatter">%1sx</string>
 

@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_16"
-        android:valueFrom="1.0"
+        android:valueFrom="0.1"
         android:valueTo="2.0"
         android:stepSize="0.05"
         app:layout_constraintBottom_toTopOf="@id/settings_advanced_gain_positive"
