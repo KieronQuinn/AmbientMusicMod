@@ -1,0 +1,66 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:viewportWidth="120"
+    android:viewportHeight="120"
+    android:width="120dp"
+    android:height="120dp">
+    <group
+        android:scaleX="4"
+        android:scaleY="4"
+        android:translateX="96"
+        android:translateY="44.002">
+        <path
+            android:pathData="M1 8.5411C1 8.5411 1 -0.541096 1 -0.541096"
+            android:strokeColor="#000000"
+            android:strokeWidth="2"
+            android:strokeMiterLimit="10"
+            android:strokeLineCap="round" />
+    </group>
+    <group
+        android:scaleX="4"
+        android:scaleY="4"
+        android:translateX="76"
+        android:translateY="16.002">
+        <path
+            android:pathData="M1 18.5171C1 18.5171 1 3.48288 1 3.48288"
+            android:strokeColor="#000000"
+            android:strokeWidth="2"
+            android:strokeMiterLimit="10"
+            android:strokeLineCap="round" />
+    </group>
+    <group
+        android:scaleX="4"
+        android:scaleY="4"
+        android:translateX="56"
+        android:translateY="36.002">
+        <path
+            android:pathData="M1 9.24521C1 9.24521 1 2.75479 1 2.75479"
+            android:strokeColor="#000000"
+            android:strokeWidth="2"
+            android:strokeMiterLimit="10"
+            android:strokeLineCap="round" />
+    </group>
+    <group
+        android:scaleX="4"
+        android:scaleY="4"
+        android:translateX="36"
+        android:translateY="48.002">
+        <path
+            android:pathData="M1 7.48288C1 7.48288 1 -1.48288 1 -1.48288"
+            android:strokeColor="#000000"
+            android:strokeWidth="2"
+            android:strokeMiterLimit="10"
+            android:strokeLineCap="round" />
+    </group>
+    <group
+        android:scaleX="4"
+        android:scaleY="4"
+        android:translateX="16"
+        android:translateY="36.002">
+        <path
+            android:pathData="M1 9.28767C1 9.28767 1 2.71233 1 2.71233"
+            android:strokeColor="#000000"
+            android:strokeWidth="2"
+            android:strokeMiterLimit="10"
+            android:strokeLineCap="round" />
+    </group>
+</vector>

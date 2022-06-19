@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_lockscreen_header"
+    android:clipToPadding="false"
+    android:layout_marginStart="@dimen/margin_16"
+    android:layout_marginEnd="@dimen/margin_16"
+    android:layout_marginBottom="@dimen/margin_16"
+    android:layout_marginTop="@dimen/margin_8"
+    android:paddingBottom="@dimen/margin_16">
+
+    <View
+        android:id="@+id/lockscreen_header_new_background"
+        android:layout_width="0dp"
+        android:layout_height="112dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:background="@drawable/background_lockscreen_style"
+        app:layout_constraintEnd_toStartOf="@id/lockscreen_header_classic_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/lockscreen_header_classic_background"
+        android:layout_width="0dp"
+        android:layout_height="112dp"
+        android:layout_marginStart="@dimen/margin_4"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:background="@drawable/background_lockscreen_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lockscreen_header_new_background"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/lockscreen_header_new_preview"
+        layout="@layout/overlay_now_playing"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/lockscreen_header_new_background"
+        app:layout_constraintEnd_toEndOf="@id/lockscreen_header_new_background"
+        app:layout_constraintStart_toStartOf="@id/lockscreen_header_new_background"
+        app:layout_constraintTop_toTopOf="@id/lockscreen_header_new_background" />
+
+    <include
+        android:id="@+id/lockscreen_header_classic_preview"
+        layout="@layout/overlay_now_playing_classic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/lockscreen_header_classic_background"
+        app:layout_constraintEnd_toEndOf="@id/lockscreen_header_classic_background"
+        app:layout_constraintStart_toStartOf="@id/lockscreen_header_classic_background"
+        app:layout_constraintTop_toTopOf="@id/lockscreen_header_classic_background" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/lockscreen_header_tabs"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="@dimen/margin_16"
+        android:background="@drawable/background_tabs"
+        android:minWidth="@dimen/tab_min_width"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lockscreen_header_new_preview"
+        app:tabIndicator="@drawable/indicator_tabs"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="56dp"
+        app:tabSelectedTextColor="?android:textColorPrimaryInverse"
+        app:tabTextAppearance="@style/TextAppearance.Tabs"
+        app:tabTextColor="@android:color/white">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lockscreen_style_new" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lockscreen_style_classic" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lockscreen_header_change_position"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/lockscreen_position"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        android:textColor="?android:textColorPrimary"
+        app:icon="@drawable/ic_lockscreen_change_position"
+        app:iconPadding="@dimen/margin_8"
+        app:iconTint="?android:textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lockscreen_header_tabs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

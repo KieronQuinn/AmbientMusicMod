@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_root.xml"
+    app:startDestination="@id/containerFragment">
+    <fragment
+        android:id="@+id/containerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.container.ContainerFragment"
+        android:label="ContainerFragment"
+        tools:layout="@layout/fragment_container" >
+        <action
+            android:id="@+id/action_containerFragment_to_recognitionFragment"
+            app:destination="@id/recognitionFragment" />
+        <action
+            android:id="@+id/action_containerFragment_to_tracklistFragment"
+            app:destination="@id/tracklistFragment"
+            app:restoreState="true" />
+        <action
+            android:id="@+id/action_containerFragment_to_lockScreenPositionFragment"
+            app:destination="@id/lockScreenPositionFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/recognitionFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionFragment"
+        android:label="RecognitionFragment"
+        tools:layout="@layout/fragment_recognition">
+        <argument
+            android:name="start_state"
+            app:argType="com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel$StartState" />
+    </dialog>
+    <fragment
+        android:id="@+id/tracklistFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.TracklistFragment"
+        android:label="TracklistFragment"
+        tools:layout="@layout/fragment_tracklist" />
+    <fragment
+        android:id="@+id/lockScreenPositionFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.position.LockScreenPositionFragment"
+        android:label="LockScreenPositionFragment"
+        tools:layout="@layout/fragment_lockscreen_position" >
+        <argument
+            android:name="overlay_style"
+            app:argType="com.kieronquinn.app.ambientmusicmod.model.lockscreenoverlay.LockscreenOverlayStyle" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupLandingFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.landing.SetupLandingFragment"
+        android:label="SetupLandingFragment"
+        tools:layout="@layout/fragment_setup_landing">
+        <action
+            android:id="@+id/action_setupLandingFragment_to_setupContainerFragment"
+            app:destination="@id/setupContainerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupContainerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.container.SetupContainerFragment"
+        android:label="SetupContainerFragment"
+        tools:layout="@layout/fragment_setup_container">
+        <action
+            android:id="@+id/action_setupContainerFragment_to_setupCompleteFragment"
+            app:destination="@id/setupCompleteFragment"
+            app:popUpTo="@layout/fragment_setup_landing"/>
+    </fragment>
+    <fragment
+        android:id="@+id/setupCompleteFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.complete.SetupCompleteFragment"
+        android:label="SetupCompleteFragment"
+        tools:layout="@layout/fragment_setup_complete"/>
+</navigation>

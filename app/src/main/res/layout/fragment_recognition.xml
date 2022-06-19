@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingStart="@dimen/margin_16"
+    android:paddingEnd="@dimen/margin_16"
+    app:layoutDescription="@xml/fragment_recognition_scene">
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:background="@drawable/background_recognition" />
+
+    <View
+        android:id="@+id/fake_fab_barrier"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginBottom="@dimen/bottom_nav_height_margins"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fake_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_fab_recognise"
+        app:fabCustomSize="@dimen/fab_size" />
+
+    <include
+        android:id="@+id/recognition_loading"
+        layout="@layout/include_recognition_loading" />
+
+    <include
+        android:id="@+id/recognition_recording"
+        layout="@layout/include_recognition_recording" />
+
+    <include
+        android:id="@+id/recognition_success"
+        layout="@layout/include_recognition_success" />
+
+    <include
+        android:id="@+id/recognition_failed"
+        layout="@layout/include_recognition_failed" />
+
+    <include
+        android:id="@+id/recognition_circle_background"
+        layout="@layout/include_recognition_circle_background" />
+
+    <include
+        android:id="@+id/recognition_circle"
+        layout="@layout/include_recognition_circle" />
+
+    <include
+        android:id="@+id/recognition_playback"
+        layout="@layout/include_recognition_playback" />
+
+    <include
+        android:id="@+id/recognition_source_picker"
+        layout="@layout/include_recognition_source_picker" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_now_playing"
+    app:startDestination="@id/nowPlayingFragment">
+    <fragment
+        android:id="@+id/nowPlayingFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingFragment"
+        android:label="@string/nowplaying_title"
+        tools:layout="@layout/fragment_now_playing" >
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_onDemandFragment"
+            app:destination="@id/onDemandFragment" />
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_lockScreenFragment"
+            app:destination="@id/lockScreenFragment" />
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_backupRestoreFragment"
+            app:destination="@id/backupRestoreFragment" />
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_wallpaperColourPickerBottomSheetFragment"
+            app:destination="@id/wallpaperColourPickerBottomSheetFragment" />
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_batteryOptimisationFragment"
+            app:destination="@id/batteryOptimisationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onDemandFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.ondemand.OnDemandFragment"
+        android:label="@string/on_demand_title"
+        tools:layout="@layout/fragment_settings_base" />
+    <fragment
+        android:id="@+id/lockScreenFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.LockScreenFragment"
+        android:label="@string/lockscreen_title"
+        tools:layout="@layout/fragment_settings_base" >
+        <action
+            android:id="@+id/action_lockScreenFragment_to_lockScreenActionFragment"
+            app:destination="@id/lockScreenActionFragment" />
+        <action
+            android:id="@+id/action_lockScreenFragment_to_lockScreenOwnerInfoFragment"
+            app:destination="@id/lockScreenOwnerInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lockScreenActionFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.action.LockScreenActionFragment"
+        android:label="@string/lockscreen_overlay_on_clicked_title"
+        tools:layout="@layout/fragment_settings_base" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.SettingsFragment"
+        android:label="@string/settings_title"
+        tools:layout="@layout/fragment_settings_base" >
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsRecognitionPeriodFragment"
+            app:destination="@id/settingsRecognitionPeriodFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsRecognitionBufferFragment"
+            app:destination="@id/settingsRecognitionBufferFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsBedtimeFragment"
+            app:destination="@id/settingsBedtimeFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAdvancedFragment"
+            app:destination="@id/settingsAdvancedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsRecognitionPeriodFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.recognitionperiod.SettingsRecognitionPeriodFragment"
+        android:label="@string/title_settings_recognition_period"
+        tools:layout="@layout/fragment_settings_base" />
+    <fragment
+        android:id="@+id/settingsRecognitionBufferFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.recognitionbuffer.SettingsRecognitionBufferFragment"
+        android:label="@string/title_settings_recognition_buffer"
+        tools:layout="@layout/fragment_settings_base" />
+    <fragment
+        android:id="@+id/settingsBedtimeFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsBedtimeFragment"
+        android:label="@string/title_settings_bedtime"
+        tools:layout="@layout/fragment_settings_base" />
+    <fragment
+        android:id="@+id/settingsAdvancedFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.SettingsAdvancedFragment"
+        android:label="@string/settings_advanced"
+        tools:layout="@layout/fragment_settings_base">
+        <action
+            android:id="@+id/action_settingsAdvancedFragment_to_settingsAdvancedGainBottomSheetFragment"
+            app:destination="@id/settingsAdvancedGainBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/settingsAdvancedGainBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.gain.SettingsAdvancedGainBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_settings_advanced_gain_bottom_sheet" />
+    <fragment
+        android:id="@+id/lockScreenOwnerInfoFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo.LockScreenOwnerInfoFragment"
+        android:label="@string/lockscreen_owner_info_title"
+        tools:layout="@layout/fragment_settings_base" >
+        <action
+            android:id="@+id/action_lockScreenOwnerInfoFragment_to_lockScreenOwnerInfoFallbackBottomSheetFragment"
+            app:destination="@id/lockScreenOwnerInfoFallbackBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/lockScreenOwnerInfoFallbackBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo.fallback.LockScreenOwnerInfoFallbackBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_lockscreen_owner_info_fallback_bottom_sheet" />
+    <fragment
+        android:id="@+id/backupRestoreFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.BackupRestoreFragment"
+        android:label="@string/backup_restore_title"
+        tools:layout="@layout/fragment_settings_base" >
+        <action
+            android:id="@+id/action_backupRestoreFragment_to_backupRestoreBackupFragment"
+            app:destination="@id/backupRestoreBackupFragment" />
+        <action
+            android:id="@+id/action_backupRestoreFragment_to_backupRestoreOptionsFragment"
+            app:destination="@id/backupRestoreOptionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/backupRestoreBackupFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.backup.BackupRestoreBackupFragment"
+        android:label="@string/restore_title"
+        tools:layout="@layout/fragment_settings_base">
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+    </fragment>
+    <fragment
+        android:id="@+id/backupRestoreOptionsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.restoreoptions.BackupRestoreOptionsFragment"
+        android:label="@string/backup_restore_restore_options_title"
+        tools:layout="@layout/fragment_backup_restore_options" >
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+        <action
+            android:id="@+id/action_backupRestoreOptionsFragment_to_backupRestoreRestoreFragment"
+            app:destination="@id/backupRestoreRestoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/backupRestoreRestoreFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.restore.BackupRestoreRestoreFragment"
+        android:label="@string/restore_title"
+        tools:layout="@layout/fragment_backup_restore_restore_fragment" >
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+        <argument
+            android:name="options"
+            app:argType="com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository$RestoreOptions" />
+    </fragment>
+    <fragment
+        android:id="@+id/faqFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.faq.FaqFragment"
+        android:label="@string/faq_title_short"
+        tools:layout="@layout/fragment_faq"/>
+    <action
+        android:id="@+id/action_global_faqFragment"
+        app:destination="@id/faqFragment" />
+    <dialog
+        android:id="@+id/wallpaperColourPickerBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.wallpapercolourpicker.WallpaperColourPickerBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_wallpaper_color_picker_bottom_sheet" />
+    <fragment
+        android:id="@+id/batteryOptimisationFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.batteryoptimisation.BatteryOptimisationSettingsFragment"
+        android:label="@string/battery_optimisation_title"
+        tools:layout="@layout/fragment_settings_base"/>
+
+</navigation>

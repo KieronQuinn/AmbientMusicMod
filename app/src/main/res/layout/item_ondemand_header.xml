@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_16"
+    android:layout_marginStart="@dimen/margin_16"
+    android:layout_marginEnd="@dimen/margin_16">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:id="@+id/ondemand_header_motion"
+        android:layout_height="80dp"
+        android:background="@drawable/background_lockscreen_style"
+        android:paddingStart="@dimen/margin_16"
+        android:paddingTop="@dimen/margin_24"
+        android:paddingEnd="@dimen/margin_16"
+        android:paddingBottom="@dimen/margin_24"
+        app:layoutDescription="@xml/item_ondemand_header_scene"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ondemand_header_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:tint="@color/white"
+            tools:src="@drawable/ic_nowplaying_ondemand" />
+
+        <View
+            android:id="@+id/ondemand_header_fake_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
+        <TextView
+            android:id="@+id/ondemand_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_8"
+            android:text="@string/item_nowplaying_header_preview"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod.Lighter"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="138dp"
+            tools:layout_editor_absoluteY="27dp" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

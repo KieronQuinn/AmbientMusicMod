@@ -1,55 +1,55 @@
-# Ambient Music Mod
+![Ambient Music Mod Banner](https://i.imgur.com/xVKAYYjl.png)
 
-A hybrid Xposed & Magisk module that ports Pixel Ambient Music to other, compatible devices. If you don't know what Pixel Ambient Music is, it's the feature that recognises music that's playing in the background (ie. not from your phone) automatically. It does this locally, without a connection, and doesn't send any data to Google servers for recognition.
+**Ambient Music Mod** | [Now Playing](https://github.com/KieronQuinn/NowPlaying)
 
-The aim of this feature is simple - you'll never wonder "what's that song" again when around the house or out and about - as your phone will tell you without you even having to ask.
-
-Please [read the FAQ](https://github.com/KieronQuinn/AmbientMusicMod/blob/main/app/src/main/assets/faq.md) before asking questions or reporting issues
-
-## Features
-
-- Full Ambient Music support, including downloading the latest databases from Google
-
-- Music recognition when the device is idle or in use (exclusions apply, see the FAQ for more details)
-
-- Now Playing History built in, and support for third party history apps
-
-- The ability to display the current now playing track on the lock screen using an Accessibility overlay service
-
-- Manual recognition on demand in the Ambient Music Mod app
-
-- Settings to control the amplification, how often recognition should be triggered, whether to run on the small CPU cores and what to do when a song recognition notification is tapped
-
-- View all the recognisable track in your locally downloaded database via the Track List option
+Ambient Music Mod is a Shizuku or root app that ports Now Playing from Pixels to other Android devices. 
 
 ## Requirements
 
-- Magisk
+- Android device running Android 9.0 or above (11+ recommended). ARM64 is currently required.
+- Shizuku (Android 12+) or root access (Android 9+). 
+	- Shizuku does not require root, instead needing an ADB command to be run every reboot.
 
-- Xposed
+## Features
 
-- A device with a Snapdragon processor that supports Sound Trigger 2.1 or above (the app will tell you if it's compatible)
-
-## Installation Instructions
-
-- Install the latest release APK from the [releases page](https://github.com/KieronQuinn/AmbientMusicMod/releases)
-
-- Open the app, check your device is compatible and build the module using the Build Installer option
-
-- Install the built Magisk module using the Magisk app
-
-- Enable the Xposed module in Xposed Manager
-
-- Reboot
+- Full Now Playing support, based on the latest version from Pixel devices and the latest music databases
+- Automatic Ambient Music recognition, with settings to control how often recognition runs - finding the right balance between battery usage and convenience
+- Now Playing History and Favourites support
+- Support to trigger recognitions manually, including a homescreen widget
+- On Demand recognition on supported devices, using the Google Assistant-backed recognition engine for songs that are not in the local database (**must be triggered manually**)
+- Show Now Playing songs on the lock screen (accessibility service required)
+- View the full track list of recognisable songs, and change the database location if your taste does not match your device's locale
 
 ## Screenshots
 
-Ambient Music Mod displaying the currently playing track on the lock screen of a OnePlus 7T Pro running Oxygen OS 11:
+[![Screenshots](https://i.imgur.com/RCPP9Sol.png)](https://i.imgur.com/RCPP9So.png)
 
-![Ambient Music Mod on lock screen](https://i.imgur.com/vBvVYUDl.png)
+## Installation
 
-Settings, Installer, standard Ambient Music settings & Now Playing history 
+Download the latest APK from the [Releases page](https://github.com/KieronQuinn/AmbientMusicMod/releases) and install it. Ambient Music Mod will download and install the latest Now Playing APK for you as part of the setup process.
 
-![Ambient Music Mod](https://i.imgur.com/8IRTEUL.png)
+## Building
 
-You can verify that the songs displayed in these screenshots were being played at the time by viewing an screenshot of the playlist from the radio station being listened to at the time [here](https://i.imgur.com/Qhpqnsf.png)
+> Note: If you are building Ambient Music Mod yourself, you **must** also build Now Playing, since the signatures have to match for security reasons.
+
+1. Clone the repository
+2. Create a `local.properties` file in the root of the project, and set it up:
+```
+sdk.dir=<path to your Android SDK>
+storeFile=<path to your keystore>
+keyAlias=<keystore alias>
+storePassword=<keystore password>
+keyPassword=<key password>
+```
+3. Open the project in Android Studio
+4. Set the Build Variant to release
+5. Run and install a build of `app` as normal
+
+### Building the Magisk Overlay Module
+
+1. Open the project in Android Studio
+2. Run the `::ondemandoverlay::buildOverlay` task. A module zip will be built and placed in `ondemandoverlay/build/module`.
+
+## Sources
+
+This repository contains a local version of [google/private-compute-services](https://github.com/google/private-compute-services) ([Apache 2.0 licence](https://github.com/google/private-compute-services/blob/master/LICENSE)) and

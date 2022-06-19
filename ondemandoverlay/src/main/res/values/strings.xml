@@ -1,0 +1,3 @@
+<resources>
+    <string name="config_defaultMusicRecognitionService">com.google.android.googlequicksearchbox/com.google.android.apps.search.soundsearch.service.SoundSearchService</string>
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:minWidth="350dp"
+    android:padding="@dimen/margin_24"
+    tools:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/recognition_success_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_24"
+        android:gravity="center"
+        android:paddingTop="@dimen/margin_8"
+        android:text="@string/recognition_success_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.AmbientMusicMod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/recognition_success_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recognition_success_title"
+        tools:text="Clocks by Coldplay" />
+
+    <com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
+        android:id="@+id/recognition_success_chips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recognition_success_song" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recognition_success_playback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/recognition_success_playback"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:icon="@drawable/ic_recognition_success_playback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recognition_success_chips" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

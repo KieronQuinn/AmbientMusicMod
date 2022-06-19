@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_24"
+    android:paddingBottom="@dimen/margin_24">
+
+    <rm.com.audiowave.AudioWaveView
+        android:id="@+id/recognition_playback_waveform"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:animateExpansion="true"
+        app:chunkHeight="24dp"
+        app:chunkRadius="3dp"
+        app:chunkSpacing="1dp"
+        app:chunkWidth="3dp"
+        app:minChunkHeight="2dp"
+        app:touchable="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_16"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recognition_playback_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:text="@string/recognition_playback_play"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+            app:icon="@drawable/avd_play_to_stop" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recognition_playback_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8"
+            android:text="@string/recognition_playback_save"
+            app:icon="@drawable/ic_recognition_save" />
+
+    </LinearLayout>
+
+</LinearLayout>

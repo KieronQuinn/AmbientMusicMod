@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin_8"
+    android:paddingEnd="@dimen/margin_8"
+    android:clipToPadding="false">
+
+    <com.google.android.material.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recognition_success_player_chip"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium.Forced"
+        app:chipStrokeColor="@android:color/transparent"
+        tools:chipBackgroundColor="@color/recognition_chip_spotify"
+        tools:chipIcon="@drawable/ic_chip_player_spotify"
+        tools:text="@string/recognition_chip_spotify"
+        tools:textColor="@color/recognition_chip_text_spotify" />
+
+</FrameLayout>

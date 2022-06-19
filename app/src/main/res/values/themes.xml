@@ -1,26 +1,67 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.Ambient" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/accent</item>
-        <item name="colorOnPrimary">@android:color/white</item>
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="colorSecondary">@color/accent</item>
-        <item name="colorSecondaryVariant">@color/accent</item>
-        <item name="colorOnSecondary">@android:color/white</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/lightSystemUI</item>
-        <item name="android:windowLightStatusBar">@bool/lightSystemUI</item>
-        <item name="md_font_title">@font/google_sans_medium</item>
-        <item name="md_font_button">@font/google_sans_medium</item>
-        <item name="md_font_body">@font/google_sans</item>
-        <item name="md_button_casing">literal</item>
-        <item name="searchBoxBackground">@color/search_color</item>
+
+    <style name="Theme.AmbientMusicMod.Splash" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/icon_background</item>
+        <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
+        <item name="postSplashScreenTheme">@style/Theme.AmbientMusicMod</item>
     </style>
 
-    <style name="Theme.Ambient.Fullscreen" parent="Theme.Ambient">
-        <item name="android:windowFullscreen">true</item>
+    <style name="Theme.AmbientMusicMod" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">@bool/lightStatusNav</item>
+        <item name="android:windowLightNavigationBar">@bool/lightStatusNav</item>
+        <item name="android:overScrollMode">@integer/overscroll_enabled</item>
+        <item name="actionOverflowMenuStyle">@style/AmbientMusicModOverflowMenu</item>
+    </style>
+
+    <style name="Theme.AmbientMusicMod.Dialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">@bool/lightStatusNav</item>
+        <item name="android:windowLightNavigationBar">@bool/lightStatusNav</item>
+        <item name="android:overScrollMode">@integer/overscroll_enabled</item>
+        <item name="actionOverflowMenuStyle">@style/AmbientMusicModOverflowMenu</item>
+    </style>
+
+    <style name="AppTheme.ThirdPartyLicences" parent="Theme.MaterialComponents.DayNight">
+        <item name="actionBarStyle">@style/ThirdPartyLicencesToolbarTheme</item>
+        <item name="android:windowBackground">@color/licenses_background</item>
+        <item name="android:statusBarColor">@color/licenses_background</item>
+        <item name="android:navigationBarColor">@color/licenses_background</item>
+        <item name="android:windowLightStatusBar">@bool/lightStatusNav</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/lightStatusNav</item>
+        <item name="android:textViewStyle">@style/ThirdPartyLicencesTextViewStyle</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/ThirdPartyLicencesActivityAnimation</item>
+    </style>
+
+    <style name="ThirdPartyLicencesActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="ThirdPartyLicencesToolbarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/licenses_toolbar</item>
+        <item name="titleTextStyle">@style/ThirdPartyLicencesToolbarTitleStyle</item>
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="homeAsUpIndicator">@drawable/ic_back</item>
+    </style>
+
+    <style name="ThirdPartyLicencesToolbarTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/google_sans_text_medium</item>
+    </style>
+
+    <style name="ThirdPartyLicencesTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/google_sans_text</item>
     </style>
 
 </resources>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:transitionGroup="true">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/setup_permissions_loading_progress"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toTopOf="@id/setup_permissions_loading_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="8dp" />
+
+    <TextView
+        android:id="@+id/setup_permissions_loading_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/setup_permissions_loading"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/setup_permissions_loading_progress" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/setup_permissions_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="setup_permissions_loading_label,setup_permissions_loading_progress" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/setup_permissions_scrollable"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingTop="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_16"
+        app:layout_constraintBottom_toTopOf="@id/setup_permissions_controls"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/setup_permissions_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginEnd="@dimen/margin_20"
+                android:text="@string/setup_permissions_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/setup_permissions_phone_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_setup_permissions_phone"
+                app:layout_constraintBottom_toBottomOf="@id/setup_permissions_phone_content"
+                app:layout_constraintStart_toStartOf="@id/setup_permissions_content"
+                app:layout_constraintTop_toTopOf="@id/setup_permissions_phone_title" />
+
+            <TextView
+                android:id="@+id/setup_permissions_phone_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/setup_permissions_phone_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                android:textColor="?android:textColorPrimary"
+                app:layout_constraintEnd_toEndOf="@id/setup_permissions_content"
+                app:layout_constraintStart_toEndOf="@id/setup_permissions_phone_icon"
+                app:layout_constraintTop_toBottomOf="@id/setup_permissions_content" />
+
+            <TextView
+                android:id="@+id/setup_permissions_phone_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:text="@string/setup_permissions_phone_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+                app:layout_constraintEnd_toEndOf="@id/setup_permissions_content"
+                app:layout_constraintStart_toEndOf="@id/setup_permissions_phone_icon"
+                app:layout_constraintTop_toBottomOf="@id/setup_permissions_phone_title" />
+
+            <ImageView
+                android:id="@+id/setup_permissions_audio_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_setup_permissions_audio"
+                app:layout_constraintBottom_toBottomOf="@id/setup_permissions_audio_content"
+                app:layout_constraintStart_toStartOf="@id/setup_permissions_content"
+                app:layout_constraintTop_toTopOf="@id/setup_permissions_audio_title" />
+
+            <TextView
+                android:id="@+id/setup_permissions_audio_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/setup_permissions_audio_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                android:textColor="?android:textColorPrimary"
+                app:layout_constraintEnd_toEndOf="@id/setup_permissions_content"
+                app:layout_constraintStart_toEndOf="@id/setup_permissions_audio_icon"
+                app:layout_constraintTop_toBottomOf="@id/setup_permissions_phone_content" />
+
+            <TextView
+                android:id="@+id/setup_permissions_audio_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:text="@string/setup_permissions_audio_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+                app:layout_constraintEnd_toEndOf="@id/setup_permissions_content"
+                app:layout_constraintStart_toEndOf="@id/setup_permissions_audio_icon"
+                app:layout_constraintTop_toBottomOf="@id/setup_permissions_audio_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setup_permissions_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_setup_controls"
+        android:clipToPadding="false"
+        android:padding="@dimen/margin_16"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/setup_permissions_grant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:padding="0dp"
+            android:stateListAnimator="@null"
+            android:text="@string/setup_permissions_grant"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+            android:textColor="@android:color/white"
+            app:icon="@drawable/ic_setup_permissions_grant"
+            app:iconTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

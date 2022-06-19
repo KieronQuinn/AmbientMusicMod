@@ -1,6 +1,5 @@
 package com.kieronquinn.app.ambientmusicmod.utils.extensions
 
-
 fun SystemProperties_getInt(key: String, defaultValue: Int): Int {
     runCatching {
         val systemProperties = Class.forName("android.os.SystemProperties")

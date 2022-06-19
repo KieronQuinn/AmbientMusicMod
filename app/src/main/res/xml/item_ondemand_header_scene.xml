@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/ondemand_header_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/ondemand_header_fake_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintEnd_toStartOf="@id/ondemand_header_text"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/ondemand_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintTop_toTopOf="@id/ondemand_header_fake_icon" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/ondemand_header_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toBottomOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintEnd_toEndOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintTop_toTopOf="@id/ondemand_header_fake_icon" />
+        <Constraint
+            android:id="@id/ondemand_header_fake_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintEnd_toStartOf="@id/ondemand_header_text"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/ondemand_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/ondemand_header_fake_icon"
+            app:layout_constraintTop_toTopOf="@id/ondemand_header_fake_icon" />
+    </ConstraintSet>
+
+    <Transition
+        android:id="@+id/start_to_end"
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0.0"
+                app:framePosition="0"
+                app:motionTarget="@id/ondemand_header_text" />
+            <KeyAttribute
+                android:alpha="1.0"
+                app:framePosition="100"
+                app:motionTarget="@id/ondemand_header_text" />
+        </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        android:id="@+id/end_to_start"
+        app:constraintSetEnd="@id/start"
+        app:constraintSetStart="@+id/end">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1.0"
+                app:framePosition="0"
+                app:motionTarget="@id/ondemand_header_text" />
+            <KeyAttribute
+                android:alpha="0.0"
+                app:framePosition="100"
+                app:motionTarget="@id/ondemand_header_text" />
+        </KeyFrameSet>
+    </Transition>
+</MotionScene>

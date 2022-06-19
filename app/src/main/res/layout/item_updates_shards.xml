@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_16"
+    android:layout_marginTop="@dimen/margin_16"
+    android:layout_marginEnd="@dimen/margin_16"
+    android:background="@drawable/background_updates_item"
+    android:padding="@dimen/margin_16">
+
+    <TextView
+        android:id="@+id/updates_shards_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/updates_shards_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.AmbientMusicMod"
+        android:textColor="?android:textColorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/updates_shards_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_title"
+        tools:text="@string/updates_status_up_to_date" />
+
+    <TextView
+        android:id="@+id/updates_shards_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/updates_version"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_status" />
+
+    <TextView
+        android:id="@+id/updates_shards_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/updates_shards_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_version" />
+
+    <ImageView
+        android:id="@+id/updates_shards_icon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:alpha="0.5"
+        android:src="@drawable/ic_music_database"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/updates_shards_track_data_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_date"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="8dp" />
+
+    <LinearLayout
+        android:id="@+id/updates_shards_track_data_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_date">
+
+        <LinearLayout
+            android:id="@+id/updates_shards_track_data"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/updates_shards_track_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                tools:text="12345" />
+
+            <TextView
+                android:id="@+id/updates_shards_track_count_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/updates_shards_track_count_label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/updates_shards_personalised_track_data"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/updates_shards_track_count_personalised"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                tools:text="12345" />
+
+            <TextView
+                android:id="@+id/updates_shards_track_count_label_personalised"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/updates_shards_track_count_label_personalised"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/updates_shards_update"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/margin_8"
+        android:text="@string/updates_update"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_track_data_container" />
+
+    <Space
+        android:id="@+id/updates_shards_view_space"
+        android:layout_width="@dimen/margin_8"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/updates_shards_update"
+        app:layout_constraintTop_toTopOf="@id/updates_shards_update" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/updates_shards_view_tracks"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/margin_8"
+        android:text="@string/updates_shards_view_tracks"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintEnd_toStartOf="@id/updates_shards_country"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/updates_shards_view_space"
+        app:layout_constraintTop_toBottomOf="@id/updates_shards_track_data_container" />
+
+    <ImageButton
+        android:id="@+id/updates_shards_country"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/background_updates_shards_country"
+        android:clipToOutline="true"
+        android:outlineProvider="background"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_flag_gb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/updates_shards_view_tracks" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

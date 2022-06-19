@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/bottom_nav_tracklist_tracks"
+        android:icon="@drawable/ic_nav_tracklist_tracks"
+        android:id="@+id/nav_graph_tracklist_tracks" />
+    <item android:title="@string/bottom_nav_tracklist_artists"
+        android:icon="@drawable/ic_nav_tracklist_artists"
+        android:id="@+id/nav_graph_tracklist_artists" />
+</menu>

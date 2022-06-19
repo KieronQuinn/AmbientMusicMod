@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:background="@drawable/background_widget"
+    android:orientation="vertical"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8"
+        android:background="@drawable/background_widget_item"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_8">
+
+        <FrameLayout
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="@dimen/margin_8">
+
+            <ProgressBar
+                android:id="@+id/widget_icon_recognised"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/audioanim_animation_progress"
+                android:indeterminateTint="?android:textColorPrimary" />
+
+            <ProgressBar
+                android:id="@+id/widget_icon_no_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateDrawable="@drawable/audioanim_no_music_progress"
+                android:indeterminateTint="?android:textColorPrimary" />
+
+            <ProgressBar
+                android:id="@+id/widget_icon_waveform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateDrawable="@drawable/audioanim_waveform_progress"
+                android:indeterminateTint="?android:textColorPrimary" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/widget_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:textAllCaps="false"
+            android:text="@string/widget_loading"
+            android:textColor="?android:textColorPrimary"
+            tools:text="Clocks • Coldplay" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/widget_button_nnfp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:textAllCaps="false"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:clipChildren="false"
+            android:padding="@dimen/margin_16"
+            android:drawablePadding="@dimen/margin_8"
+            android:drawableTint="?android:textColorPrimary"
+            android:background="@drawable/background_widget_item"
+            android:text="@string/widget_button_nnfp"
+            android:drawableLeft="@drawable/ic_fab_recognise" />
+
+        <Button
+            android:id="@+id/widget_button_on_demand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:padding="@dimen/margin_16"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            android:drawablePadding="@dimen/margin_8"
+            android:drawableTint="?android:textColorPrimary"
+            android:background="@drawable/background_widget_item"
+            android:text="@string/widget_button_on_demand"
+            android:drawableLeft="@drawable/ic_source_picker_on_demand" />
+
+    </LinearLayout>
+
+</LinearLayout>

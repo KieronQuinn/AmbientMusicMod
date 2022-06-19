@@ -4,15 +4,8 @@
     android:height="192dp"
     android:viewportWidth="192"
     android:viewportHeight="192">
-    <group
-        android:pivotX="96"
-        android:pivotY="96"
-        android:scaleX="0.68"
-        android:scaleY="0.68">
 
-        <path
-            android:fillColor="#3C6ED7"
-            android:pathData="M96,46.3v59.3c-3.3-1.9-7.1-3.1-11.2-3.1c-12.4,0-22.5,10.1-22.5,22.5s10.1,22.5,22.5,22.5 s22.5-10.1,22.5-22.5V68.8h22.5V46.3H96z" />
-
-    </group>
+    <path
+        android:fillColor="@color/icon_accent"
+        android:pathData="M96,62.2l0,40.3c-2.3-1.3-4.9-2.1-7.6-2.1c-8.5,0-15.3,6.8-15.3,15.3S80,131,88.4,131s15.3-6.8,15.3-15.3V77.5 H119V62.2H96z M88.4,123.4c-4.2,0-7.6-3.4-7.6-7.6c0-4.2,3.4-7.6,7.6-7.6s7.6,3.4,7.6,7.6C96.1,119.9,92.6,123.4,88.4,123.4z" />
 </vector>

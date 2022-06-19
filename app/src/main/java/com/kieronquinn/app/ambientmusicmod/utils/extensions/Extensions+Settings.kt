@@ -1,23 +1,61 @@
 package com.kieronquinn.app.ambientmusicmod.utils.extensions
 
-import android.content.ComponentName
+import android.content.ContentResolver
 import android.content.Context
+import android.database.ContentObserver
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
-import android.text.TextUtils
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 
-/**
- * Based on [com.android.settingslib.accessibility.AccessibilityUtils.getEnabledServicesFromSettings]
- * @see [AccessibilityUtils](https://github.com/android/platform_frameworks_base/blob/d48e0d44f6676de6fd54fd8a017332edd6a9f096/packages/SettingsLib/src/com/android/settingslib/accessibility/AccessibilityUtils.java.L55)
- */
-fun isAccessibilityServiceEnabled(context: Context, accessibilityService: Class<*>): Boolean {
-    val expectedComponentName = ComponentName(context, accessibilityService)
-    val enabledServicesSetting: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) ?: return false
-    val colonSplitter = TextUtils.SimpleStringSplitter(':')
-    colonSplitter.setString(enabledServicesSetting)
-    while (colonSplitter.hasNext()) {
-        val componentNameString: String = colonSplitter.next()
-        val enabledService: ComponentName? = ComponentName.unflattenFromString(componentNameString)
-        if (enabledService != null && enabledService.equals(expectedComponentName)) return true
+fun <T> Context.getSettingAsFlow(uri: Uri, converter: (Context) -> T) = callbackFlow<T?> {
+    val observer = object: ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            super.onChange(selfChange)
+            trySend(converter(this@getSettingAsFlow))
+        }
     }
-    return false
+    trySend(converter(this@getSettingAsFlow))
+    contentResolver.safeRegisterContentObserver(uri, false, observer)
+    awaitClose {
+        contentResolver.unregisterContentObserver(observer)
+    }
+}
+
+fun Context.secureStringConverter(name: String): (Context) -> String? {
+    return { _: Context ->
+        Settings_Secure_getStringSafely(contentResolver, name)
+    }
+}
+
+fun Context.secureBooleanConverter(name: String): (Context) -> Boolean {
+    return { _: Context ->
+        Settings_Secure_getIntSafely(contentResolver, name, 0) == 1
+    }
+}
+
+fun Settings_Secure_getIntSafely(contentResolver: ContentResolver, setting: String, default: Int): Int {
+    return try {
+        Settings.Secure.getInt(contentResolver, setting, default)
+    }catch (e: Settings.SettingNotFoundException){
+        default
+    }
+}
+
+fun Settings_Secure_getStringSafely(contentResolver: ContentResolver, setting: String): String? {
+    return try {
+        Settings.Secure.getString(contentResolver, setting)
+    }catch (e: Settings.SettingNotFoundException){
+        null
+    }
+}
+
+fun Settings_Global_getIntSafely(contentResolver: ContentResolver, setting: String, default: Int): Int {
+    return try {
+        Settings.Global.getInt(contentResolver, setting, default)
+    }catch (e: Settings.SettingNotFoundException){
+        default
+    }
 }

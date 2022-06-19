@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="splash_image_size">200dp</dimen>
-    <dimen name="splash_image_radius">150dp</dimen>
-    <dimen name="splash_image_music">200dp</dimen>
-    <dimen name="app_bar_height">200dp</dimen>
-    <dimen name="padding_8">8dp</dimen>
-    <dimen name="padding_16">16dp</dimen>
-    <dimen name="padding_24">24dp</dimen>
-    <dimen name="button_padding">48dp</dimen>
-    <dimen name="activity_padding">@dimen/padding_16</dimen>
-    <dimen name="margin_extra_small">4dp</dimen>
-    <dimen name="bottom_navigation_height">64dp</dimen>
-    <dimen name="app_link_margin_bottom">80dp</dimen>
-    <dimen name="fab_margin_bottom">24dp</dimen>
-    <dimen name="toolbar_elevation">8dp</dimen>
-    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
-    <dimen name="app_link_height">72dp</dimen>
-    <dimen name="bottom_sheet_elevation">16dp</dimen>
-
+    <dimen name="app_bar_height">179dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="bottom_nav_height">80dp</dimen>
+    <dimen name="toolbar_expanded_title_margin">16dp</dimen>
+    <dimen name="shared_axis_x_slide_distance">96dp</dimen>
+    <dimen name="bottom_nav_height_margins">104dp</dimen>
+    <dimen name="fab_margin">96dp</dimen>
+    <dimen name="app_editor_header_elevation">4dp</dimen>
+    <dimen name="bottom_nav_elevation">1dp</dimen>
+    <dimen name="snackbar_corner_radius">16dp</dimen>
+    <dimen name="expanded_title_margin_start">24dp</dimen>
+    <dimen name="expanded_title_margin_end">24dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
     <dimen name="min_window_blur_radius">1px</dimen>
     <dimen name="max_window_blur_radius">150px</dimen>
-    <!-- TODO move to values-31 eventually -->
-    <dimen name="min_window_blur_radius_31">1px</dimen>
-    <dimen name="max_window_blur_radius_31">32px</dimen>
     <dimen name="search_box_height">48dp</dimen>
     <dimen name="clear_button_size">36dp</dimen>
     <dimen name="search_box_corners">24dp</dimen>
+
+    <dimen name="overlay_text_max_width">250dp</dimen>
+    <dimen name="overlay_text_max_width_half">125dp</dimen>
+    <dimen name="tab_min_width">350dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+
+    <dimen name="widget_4_1_text_width">175dp</dimen>
+    <dimen name="widget_4_2_text_width">350dp</dimen>
+    <dimen name="setup_image_size">160dp</dimen>
+    <dimen name="toolbar_padding_end">20dp</dimen>
+
 </resources>

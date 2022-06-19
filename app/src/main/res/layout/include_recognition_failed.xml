@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:minWidth="350dp"
+    android:padding="@dimen/margin_24"
+    tools:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/recognition_failed_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:gravity="center"
+        android:paddingTop="@dimen/margin_8"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.AmbientMusicMod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/recognition_failed_reason_no_match" />
+
+    <TextView
+        android:id="@+id/recognition_failed_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/margin_8"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recognition_failed_title"
+        tools:text="@string/recognition_failed_reason_content_no_match" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recognition_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:text="@string/recognition_failed_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        android:textColor="?android:textColorPrimaryInverse"
+        app:icon="@drawable/ic_recognition_retry"
+        app:iconTint="?android:textColorPrimaryInverse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recognition_failed_playback"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recognition_failed_content" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/recognition_failed_playback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:text="@string/recognition_success_playback"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:icon="@drawable/ic_recognition_success_playback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/recognition_retry"
+        app:layout_constraintTop_toTopOf="@id/recognition_retry" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
