@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_tracklist_artists"
+    app:startDestination="@id/tracklistArtistsFragment">
+
+    <fragment
+        android:id="@+id/tracklistArtistsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.TracklistArtistsFragment"
+        android:label="@string/tracklist_artists_title"
+        tools:layout="@layout/fragment_tracklist_generic" >
+        <action
+            android:id="@+id/action_tracklistArtistsFragment_to_tracklistArtistTracksFragment"
+            app:destination="@id/tracklistArtistTracksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tracklistArtistTracksFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.artisttracks.TracklistArtistTracksFragment"
+        android:label=" " >
+        <argument
+            android:name="artist"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_graph_now_playing"
+        android:icon="@drawable/ic_nav_now_playing"
+        android:title="@string/bottom_nav_now_playing"/>
+    <item android:id="@+id/nav_graph_updates"
+        android:icon="@drawable/ic_nav_updates"
+        android:title="@string/bottom_nav_updates"/>
+</menu>

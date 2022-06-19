@@ -2,82 +2,103 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kieronquinn.app.ambientmusicmod">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <uses-permission android:name="com.google.android.ambientindication.permission.AMBIENT_INDICATION"/>
+    <permission
+        android:name="com.kieronquinn.app.ambientmusicmod.ACCESS_SERVICE"
+        android:icon="@drawable/ic_fab_recognise"
+        android:label="@string/permission_label"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="com.kieronquinn.app.ambientmusicmod.ACCESS_SERVICE" />
+    <uses-permission android:name="com.kieronquinn.app.pixelambientmusic.ACCESS_SERVICE" />
 
     <application
+        android:name=".AmbientMusicMod"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".AmbientApplication"
-        android:theme="@style/Theme.Ambient">
-
-        <activity android:name=".app.ui.activities.AmbientActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!-- Optional launcher activity for History without needing to add a shortcut -->
-        <activity android:name=".app.ui.activities.HistoryLaunchActivity"
-            android:enabled="false"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:icon="@mipmap/ic_launcher_history"
+        android:theme="@style/Theme.AmbientMusicMod.Splash"
+        android:usesCleartextTraffic="${usesCleartextTraffic}">
+        <activity
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
-            android:label="@string/now_playing_history">
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="amm" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+
+        <activity
+            android:name=".ui.activities.RecognitionModalActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label=""
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.AmbientMusicMod.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".app.ui.activities.SettingsLockscreenOverlayPositionActivity"
-            android:theme="@style/Theme.Ambient.Fullscreen"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-
-        <activity android:name=".app.ui.activities.BootHelperLaunchActivity"/>
-
-        <activity android:name=".app.ui.activities.DatabaseViewerActivity"
-            android:screenOrientation="portrait"/>
-
-        <service android:name=".app.service.GetModelStateForegroundService" />
-
-        <receiver android:name=".app.receivers.BootCompletedReceiver"
-            android:exported="true">
+        <receiver
+            android:name=".receivers.BootReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="@string/xposed_module_desc" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="53" />
-        <meta-data
-                android:name="xposedscope"
-                android:resource="@array/scope"/>
+        <service android:name=".service.AmbientMusicModForegroundService" />
+
+        <service
+            android:name=".service.QuickSettingTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_quick_setting_enabled"
+            android:label="@string/quick_settings_tile_title"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.ShellProxyService"
+            android:exported="true"
+            android:permission="com.kieronquinn.app.ambientmusicmod.ACCESS_SERVICE">
+            <intent-filter>
+                <action android:name="com.kieronquinn.app.ambientmusicmod.SHELL_PROXY" />
+            </intent-filter>
+        </service>
 
         <provider
-            android:name=".providers.SharedPrefsProvider"
-            android:authorities="com.kieronquinn.app.ambientmusicmod.provider.sharedprefs"
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
             android:exported="true"
-            android:grantUriPermissions="true" />
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -86,13 +107,19 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
-        <service
-            android:name=".app.service.LockscreenOverlayAccessibilityService"
-            android:label="@string/accessibility_service_label"
+        <provider
+            android:name=".providers.SettingsProvider"
+            android:authorities="${applicationId}.settings"
             android:exported="true"
+            android:permission="com.kieronquinn.app.ambientmusicmod.ACCESS_SERVICE" />
+
+        <service
+            android:name=".service.LockscreenOverlayAccessibilityService"
+            android:exported="true"
+            android:label="@string/accessibility_service_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -103,9 +130,52 @@
                 android:resource="@xml/accessibilityservice" />
         </service>
 
+        <!-- Dynamic widget (Android 12+) -->
+        <receiver
+            android:name=".providers.AmbientMusicModWidgetDynamic"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidgetprovider_dynamic" />
+        </receiver>
+
+        <!-- 4x1 widget (< Android 12) -->
+        <receiver
+            android:name=".providers.AmbientMusicModWidget41"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidgetprovider_41" />
+        </receiver>
+
+        <!-- 4x2 widget (< Android 12) -->
+        <receiver
+            android:name=".providers.AmbientMusicModWidget42"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidgetprovider_42" />
+        </receiver>
+
+        <provider
+            android:name=".providers.AlbumArtProvider"
+            android:authorities="${applicationId}.albumart"
+            android:exported="true"
+            android:permission="com.kieronquinn.app.ambientmusicmod.ACCESS_SERVICE" />
+
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/AppTheme.ThirdPartyLicences" />
+
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/AppTheme.ThirdPartyLicences" />
@@ -113,10 +183,19 @@
     </application>
 
     <queries>
-        <package android:name="org.meowcat.edxposed.manager"/>
-        <package android:name="org.lsposed.manager"/>
-        <package android:name="com.google.intelligence.sense"/>
-        <package android:name="com.google.android.as"/>
+        <!-- Comms -->
+        <package android:name="com.kieronquinn.app.pixelambientmusic" />
+        <package android:name="com.google.android.googlequicksearchbox" />
+
+        <!-- Shizuku -->
+        <package android:name="moe.shizuku.privileged.api" />
+
+        <!-- Players for chips -->
+        <package android:name="com.spotify.music" />
+        <package android:name="com.google.android.youtube" />
+        <package android:name="com.google.android.apps.youtube.music" />
+        <package android:name="com.apple.android.music" />
+        <package android:name="deezer.android.app" />
     </queries>
 
 </manifest>

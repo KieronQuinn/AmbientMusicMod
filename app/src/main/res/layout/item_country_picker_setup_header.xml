@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_16"
+    android:background="@drawable/background_setup_country_picker_header"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_16">
+
+    <ImageView
+        android:id="@+id/country_picker_setup_header_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_info" />
+
+    <TextView
+        android:id="@+id/country_picker_setup_header_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        android:text="@string/setup_country_picker_header" />
+
+</LinearLayout>

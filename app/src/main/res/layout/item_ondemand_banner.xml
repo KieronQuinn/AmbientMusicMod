@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_16"
+    android:background="@drawable/background_nowplaying_banner"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_16">
+
+    <ImageView
+        android:id="@+id/on_demand_banner_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        tools:src="@drawable/ic_nowplaying_banner_attention_high" />
+
+    <TextView
+        android:id="@+id/on_demand_banner_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:textColor="?android:textColorPrimary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        tools:text="Downloading song database" />
+
+    <TextView
+        android:id="@+id/on_demand_banner_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        tools:text="Now playing will start recognising music soon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/on_demand_banner_button"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="0dp"
+            android:paddingTop="@dimen/margin_4"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/margin_4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+            tools:text="Settings" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/on_demand_banner_button_disable"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="0dp"
+            android:layout_marginStart="@dimen/margin_16"
+            android:paddingTop="@dimen/margin_4"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/margin_4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+            android:text="@string/on_demand_banner_disable" />
+
+    </LinearLayout>
+
+</LinearLayout>

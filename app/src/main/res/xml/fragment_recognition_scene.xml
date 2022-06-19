@@ -1,0 +1,1564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ConstraintSet android:id="@+id/fab">
+        <Constraint
+            android:id="@+id/background"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="@id/fake_fab_barrier"
+            app:layout_constraintEnd_toEndOf="@id/fake_fab_barrier"
+            app:layout_constraintStart_toStartOf="@id/fake_fab_barrier"
+            app:layout_constraintTop_toTopOf="@id/fake_fab_barrier"/>
+        <Constraint
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:id="@+id/fake_fab"
+            app:layout_constraintTop_toTopOf="@id/background"
+            app:layout_constraintBottom_toBottomOf="@id/background"
+            app:layout_constraintStart_toStartOf="@id/background"
+            app:layout_constraintEnd_toEndOf="@id/background"/>
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"  />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/initial">
+        <Constraint
+            android:id="@+id/background"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <Constraint
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:id="@+id/fake_fab"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/source_picker">
+        <Constraint
+            android:id="@+id/background"
+            android:alpha="1"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_source_picker"
+            app:layout_constraintEnd_toEndOf="@id/recognition_source_picker"
+            app:layout_constraintStart_toStartOf="@id/recognition_source_picker"
+            app:layout_constraintTop_toTopOf="@id/recognition_source_picker" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/loading">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_loading"
+            app:layout_constraintEnd_toEndOf="@id/recognition_loading"
+            app:layout_constraintStart_toStartOf="@id/recognition_loading"
+            app:layout_constraintTop_toTopOf="@id/recognition_loading" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"  />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/recording">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_recording"
+            app:layout_constraintEnd_toEndOf="@id/recognition_recording"
+            app:layout_constraintStart_toStartOf="@id/recognition_recording"
+            app:layout_constraintTop_toTopOf="@id/recognition_recording" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"  />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/recognising">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_loading"
+            app:layout_constraintEnd_toEndOf="@id/recognition_loading"
+            app:layout_constraintStart_toStartOf="@id/recognition_loading"
+            app:layout_constraintTop_toTopOf="@id/recognition_loading" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"  />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/recognising_icon">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_recording"
+            app:layout_constraintEnd_toEndOf="@id/recognition_recording"
+            app:layout_constraintStart_toStartOf="@id/recognition_recording"
+            app:layout_constraintTop_toTopOf="@id/recognition_recording" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"  />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/success">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_success"
+            app:layout_constraintEnd_toEndOf="@id/recognition_success"
+            app:layout_constraintStart_toStartOf="@id/recognition_success"
+            app:layout_constraintTop_toTopOf="@id/recognition_success" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="-40dp"
+            android:alpha="1"
+            app:layout_constraintEnd_toEndOf="@id/recognition_success"
+            app:layout_constraintStart_toStartOf="@id/recognition_success"
+            app:layout_constraintTop_toTopOf="@id/recognition_success" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="-40dp"
+            android:alpha="1"
+            app:layout_constraintEnd_toEndOf="@id/recognition_success"
+            app:layout_constraintStart_toStartOf="@id/recognition_success"
+            app:layout_constraintTop_toTopOf="@id/recognition_success" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/failed">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_failed"
+            app:layout_constraintEnd_toEndOf="@id/recognition_failed"
+            app:layout_constraintStart_toStartOf="@id/recognition_failed"
+            app:layout_constraintTop_toTopOf="@id/recognition_failed" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="-40dp"
+            android:alpha="1"
+            app:layout_constraintEnd_toEndOf="@id/recognition_failed"
+            app:layout_constraintStart_toStartOf="@id/recognition_failed"
+            app:layout_constraintTop_toTopOf="@id/recognition_failed" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="-40dp"
+            android:alpha="1"
+            app:layout_constraintEnd_toEndOf="@id/recognition_failed"
+            app:layout_constraintStart_toStartOf="@id/recognition_failed"
+            app:layout_constraintTop_toTopOf="@id/recognition_failed" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/playback">
+        <Constraint
+            android:id="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@id/recognition_playback"
+            app:layout_constraintEnd_toEndOf="@id/recognition_playback"
+            app:layout_constraintStart_toStartOf="@id/recognition_playback"
+            app:layout_constraintTop_toTopOf="@id/recognition_playback" />
+        <Constraint
+            android:id="@id/recognition_playback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/fake_fab"
+            android:alpha="0"
+            android:visibility="gone"  />
+        <Constraint
+            android:id="@id/recognition_source_picker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@id/recognition_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/recognition_circle_background"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <Transition
+        android:id="@+id/fab_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetStart="@+id/fab"
+        app:constraintSetEnd="@+id/initial">
+        <KeyFrameSet>
+            <KeyPosition
+                app:framePosition="50"
+                app:motionTarget="@id/fake_fab"
+                app:keyPositionType="parentRelative"
+                app:pathMotionArc="startHorizontal"
+                app:percentX="0.39"
+                app:percentY="0.55"/>
+            <KeyPosition
+                app:framePosition="50"
+                app:motionTarget="@id/background"
+                app:keyPositionType="parentRelative"
+                app:pathMotionArc="startHorizontal"
+                app:percentX="0.39"
+                app:percentY="0.55"/>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/fake_fab"
+                android:alpha="1"/>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionTarget="@id/fake_fab"
+                android:alpha="0"/>
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/initial_to_source_picker"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@id/source_picker"
+        app:constraintSetStart="@+id/initial">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_source_picker" />
+        </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        android:id="@+id/initial_to_loading"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@id/loading"
+        app:constraintSetStart="@+id/initial">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/source_picker_to_loading"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@id/loading"
+        app:constraintSetStart="@+id/source_picker">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/loading_to_recording"
+        app:constraintSetStart="@+id/loading"
+        app:constraintSetEnd="@+id/recording">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_recording" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recording_to_recognising"
+        app:constraintSetStart="@+id/recording"
+        app:constraintSetEnd="@+id/recognising">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recognising_to_recognising_icon"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/recognising_icon"
+        app:constraintSetStart="@+id/recognising">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle_background" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recognising_icon_to_success"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/success"
+        app:constraintSetStart="@+id/recognising_icon">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_success" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_success" />
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_success" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recognising_icon_to_failed"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/failed"
+        app:constraintSetStart="@+id/recognising_icon">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_failed" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/failed_to_loading"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/loading"
+        app:constraintSetStart="@+id/failed">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/source_picker_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/source_picker">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_source_picker" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_source_picker" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/loading_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/loading">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recording_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/recording">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_recording" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recognising_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/recognising">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_loading" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recognising_icon_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/recognising_icon">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/success_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/success">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_success" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_success" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_success" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/failed_to_initial"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/initial"
+        app:constraintSetStart="@+id/failed">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_failed" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/initial_to_fab"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetStart="@+id/initial"
+        app:constraintSetEnd="@+id/fab">
+        <KeyFrameSet>
+            <KeyPosition
+                app:framePosition="50"
+                app:motionTarget="@id/fake_fab"
+                app:keyPositionType="parentRelative"
+                app:pathMotionArc="startHorizontal"
+                app:percentX="0.39"
+                app:percentY="0.55"/>
+            <KeyPosition
+                app:framePosition="50"
+                app:motionTarget="@id/background"
+                app:keyPositionType="parentRelative"
+                app:pathMotionArc="startHorizontal"
+                app:percentX="0.39"
+                app:percentY="0.55"/>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionTarget="@id/fake_fab"
+                android:alpha="0"/>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionTarget="@id/fake_fab"
+                android:alpha="1"/>
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/recording_to_recognising_icon"
+        app:constraintSetStart="@+id/recording"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/recognising_icon">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_recording" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle_background" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/loading_to_recognising_icon"
+        app:constraintSetStart="@+id/loading"
+        app:duration="@integer/material_motion_duration_medium_2"
+        app:constraintSetEnd="@+id/recognising_icon">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_loading" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_circle_background" />
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_circle_background" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/success_to_playback"
+        app:constraintSetStart="@+id/success"
+        app:constraintSetEnd="@+id/playback">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_success" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_success" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_success" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/failed_to_playback"
+        app:constraintSetStart="@+id/failed"
+        app:constraintSetEnd="@+id/playback">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_failed" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_failed" />
+        </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/playback_to_initial"
+        app:constraintSetStart="@+id/playback"
+        app:constraintSetEnd="@+id/initial">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/recognition_playback" />
+            <KeyAttribute
+                android:scaleX="0.6"
+                android:scaleY="0.6"
+                app:framePosition="50"
+                app:motionTarget="@+id/recognition_playback" />
+            <KeyAttribute
+                android:scaleX="0"
+                android:scaleY="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/recognition_playback" />
+        </KeyFrameSet>
+    </Transition>
+
+</MotionScene>

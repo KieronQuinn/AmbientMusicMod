@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/bedtime_header_lottie"
+            app:motionProgress="0"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Constraint
+            android:id="@+id/bedtime_header_recognised"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="@id/bedtime_header_lottie"
+            app:layout_constraintEnd_toEndOf="@id/bedtime_header_lottie"
+            app:layout_constraintHorizontal_bias="0.32"
+            app:layout_constraintStart_toStartOf="@id/bedtime_header_lottie"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.825"/>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/loop_start">
+        <Constraint android:id="@id/bedtime_header_lottie"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:motionProgress="1" />
+
+        <Constraint
+            android:id="@+id/bedtime_header_recognised"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:motionProgress="0"
+            app:layout_constraintBottom_toBottomOf="@id/bedtime_header_lottie"
+            app:layout_constraintEnd_toEndOf="@id/bedtime_header_lottie"
+            app:layout_constraintHorizontal_bias="0.32"
+            app:layout_constraintStart_toStartOf="@id/bedtime_header_lottie"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.825"/>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/loop_end">
+        <Constraint android:id="@id/bedtime_header_lottie"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:motionProgress="0" />
+
+        <Constraint
+            android:id="@+id/bedtime_header_recognised"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="@id/bedtime_header_lottie"
+            app:layout_constraintEnd_toEndOf="@id/bedtime_header_lottie"
+            app:layout_constraintHorizontal_bias="0.32"
+            app:layout_constraintStart_toStartOf="@id/bedtime_header_lottie"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.825"/>
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/loop_start"
+        app:constraintSetStart="@+id/start"
+        android:id="@+id/start_to_loop_start"
+        app:duration="6600">
+        <KeyFrameSet>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionProgress="0"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionProgress="1"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+        </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        app:constraintSetEnd="@id/loop_end"
+        app:constraintSetStart="@+id/loop_start"
+        android:id="@+id/loop_start_to_loop_end"
+        app:duration="6600">
+        <KeyFrameSet>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionProgress="0"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionProgress="1"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+        </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        app:constraintSetEnd="@id/loop_start"
+        app:constraintSetStart="@+id/loop_end"
+        android:id="@+id/loop_end_to_loop_start"
+        app:duration="6600">
+        <KeyFrameSet>
+            <KeyAttribute
+                app:framePosition="0"
+                app:motionProgress="0"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+            <KeyAttribute
+                app:framePosition="99"
+                app:motionProgress="1"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+            <KeyAttribute
+                app:framePosition="100"
+                app:motionProgress="0"
+                app:motionTarget="@+id/bedtime_header_recognised"/>
+        </KeyFrameSet>
+    </Transition>
+
+</MotionScene>

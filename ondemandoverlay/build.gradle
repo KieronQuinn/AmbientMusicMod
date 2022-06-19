@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.application'
+}
+
+def getKeystoreProperties() {
+    def properties = new Properties()
+    properties.setProperty("keyAlias", "")
+    properties.setProperty("keyPassword", "")
+    properties.setProperty("storeFile", "")
+    properties.setProperty("storePassword", "")
+    try {
+        def propertiesFile = rootProject.file("local.properties")
+        if (propertiesFile.exists()) {
+            properties.load(new FileInputStream(propertiesFile))
+        }
+    } catch (Exception ignored) {
+        properties = null
+        println "Unable to read keystore"
+    }
+    return properties
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.kieronquinn.app.ondemandoverlay"
+        minSdk 31
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            def keystore = getKeystoreProperties()
+            if (keystore != null) {
+                storeFile file(keystore.getProperty("storeFile"))
+                storePassword keystore.getProperty("storePassword")
+                keyAlias keystore.getProperty("keyAlias")
+                keyPassword keystore.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildOutputs.all {
+                outputFileName = "OnDemandOverlay.apk"
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {}
+
+task copyOverlay(type: Copy, dependsOn: 'build') {
+    from buildDir.path + "/outputs/apk/release/OnDemandOverlay.apk"
+    into projectDir.path + "/module/system/product/overlay/OnDemandOverlay"
+}
+
+task buildOverlay(type: Zip, dependsOn: 'copyOverlay') {
+    from projectDir.path + "/module/"
+    include "**/*"
+    archiveFileName = "OnDemandOverlay.zip"
+    destinationDirectory = file("$buildDir/module")
+}

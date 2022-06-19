@@ -1,6 +1,0 @@
-id=AmbientMusicMod
-name=Ambient Music Mod
-version=%MODULEVERSION%
-versionCode=%MODULEVERSIONCODE%
-author=Kieron Quinn / Quinny899
-description=Port of Pixel Ambient Music to other, compatible devices. You MUST enable the Xposed module AS WELL as this module for it to work.

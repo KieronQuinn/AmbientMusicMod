@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_widget"
+    android:orientation="horizontal"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8"
+        android:layout_weight="1"
+        android:background="@drawable/background_widget_item"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/margin_8">
+
+        <FrameLayout
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="@dimen/margin_8">
+
+            <ProgressBar
+                android:id="@+id/widget_icon_recognised"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/audioanim_animation_progress"
+                android:indeterminateTint="?android:textColorPrimary" />
+
+            <ProgressBar
+                android:id="@+id/widget_icon_no_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/audioanim_no_music_progress"
+                android:indeterminateTint="?android:textColorPrimary"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/widget_icon_waveform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/audioanim_waveform_progress"
+                android:indeterminateTint="?android:textColorPrimary"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/widget_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:background="@android:color/transparent"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:lines="1"
+            android:padding="0dp"
+            android:text="@string/widget_loading"
+            android:textAllCaps="false"
+            android:textColor="?android:textColorPrimary"
+            tools:text="Clocks • Coldplay" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/widget_button_nnfp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:tint="?android:textColorPrimary"
+        android:background="@drawable/background_widget_item"
+        android:src="@drawable/ic_fab_recognise"
+        tools:ignore="UseAppTint" />
+
+    <ImageButton
+        android:id="@+id/widget_button_on_demand"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:tint="?android:textColorPrimary"
+        android:background="@drawable/background_widget_item"
+        android:src="@drawable/ic_source_picker_on_demand"
+        tools:ignore="UseAppTint" />
+
+</LinearLayout>

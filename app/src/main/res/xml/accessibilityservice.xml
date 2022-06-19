@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
     android:accessibilityFeedbackType="feedbackGeneric"
-    android:canRetrieveWindowContent="false"
-    android:settingsActivity="com.kieronquinn.app.ambientmusicmod.app.ui.activities.AmbientActivity"
+    android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows"
+    android:canRetrieveWindowContent="true"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:settingsActivity="com.kieronquinn.app.ambientmusicmod.app.activities.MainActivity"
     android:description="@string/accessibility_service_description" />

@@ -1,319 +1,508 @@
 <resources>
     <string name="app_name">Ambient Music Mod</string>
-    <string name="now_playing_history">Now Playing History</string>
 
-    <!-- Toolbar titles -->
-    <string name="tab_settings">@string/app_name</string>
-    <string name="tab_installer">Installer</string>
+    <string name="permission_label">Access Ambient Music Mod</string>
 
-    <string name="close">Close</string>
-
-    <string name="xposed_module_desc">Enables Ambient Music in Pixel Ambient Services &amp; adds mods to control it.\nImportant: You MUST have the Magisk module installed AS WELL for this to work.</string>
-    <string-array name="scope">
-        <item>android</item>
-        <item>com.google.intelligence.sense</item>
-        <item>com.google.android.as</item>
-        <item>com.kieronquinn.app.ambientmusicmod</item>
-    </string-array>
-
-    <!-- Nav bar -->
-    <string name="menu_settings">Settings</string>
-    <string name="menu_installer">@string/tab_installer</string>
-
-    <!-- Foreground service notification -->
-    <string name="foreground_service_notification_title">Ambient Music Mod</string>
-    <string name="foreground_service_notification_content">Ambient Music Mod is running in the background. Tap to hide this notification in the system settings.</string>
-    <string name="foreground_service_notification_channel_title">Background Service</string>
-    <string name="foreground_service_notification_channel_content">Keeps Ambient Music Mod running to periodically start recognition</string>
-
-    <!-- Foreground service boot notification -->
-    <string name="foreground_service_notification_boot_title">Start Ambient Music</string>
-    <string name="foreground_service_notification_boot_content">The Ambient Music app must be launched manually after a reboot to allow the music model to start, tap to launch</string>
-    <string name="foreground_service_notification_boot_channel_title">Ambient Music Boot Helper</string>
-    <string name="foreground_service_notification_boot_channel_content">Shows a helper notification after a reboot to remind you to start Ambient Music so recognition can start</string>
-
-    <!-- Main app link -->
-    <string name="app_link_title">Launch Ambient Music App</string>
-    <string name="app_link_content">For notification controls and Now Playing history</string>
-
-    <!-- Reverse link -->
-    <string name="mod_app_link_title">Ambient Music Mod</string>
-    <string name="mod_app_link_content">Launch Ambient Music Mod for more settings</string>
-
-    <!-- Xposed module status -->
-    <string name="settings_module_state_title_disabled">Xposed Module not enabled</string>
-    <string name="settings_module_state_title_disabled_desc">You must enable the Xposed module for Ambient Music to work</string>
-    <string name="settings_module_state_title_enabled">Xposed Module enabled</string>
-    <string name="settings_module_state_title_enabled_desc">Module is enabled and hooks are working</string>
-    <string name="settings_module_state_title_not_installed">Xposed not installed</string>
-    <string name="settings_module_state_title_not_installed_desc">Xposed is not installed. Magisk alone is not enough for this mod to work, tap for more info.\n<b>Note: If you have a repackaged or hidden Xposed Manager installed, you can ignore this and enable the module as normal.</b></string>
-
-    <!-- Battery optimisation prompt -->
-    <string name="settings_battery_optimisation">Disable Battery Optimisation</string>
-    <string name="settings_battery_optimisation_desc">Battery optimisation should be disabled for both Ambient Music Mod and Pixel Ambient Services for this mod to work properly</string>
-
-    <!-- Enabled switch -->
-    <string name="settings_enabled">Enable Ambient Music</string>
-
-    <!-- Test listen -->
-    <string name="settings_test_listen">Test Recognition</string>
-    <string name="settings_test_listen_desc">Manually start recognition to check input and amplification levels</string>
-
-    <!-- Mod Settings -->
-    <string name="settings_category_mod_settings">Mod Settings</string>
-    <string name="settings_mod_gain">Amplification</string>
-    <string name="settings_mod_gain_desc">Set how much the audio input should be amplified. Some devices have better microphones than others so may need less (or none at all), some need more.\n<b>Note: Amplifying the input also amplifies noise, so a higher value is not always better.</b></string>
-    <string name="settings_mod_job">Listen period</string>
-    <string name="settings_mod_job_desc">Set how often Ambient Music should listen for music playing (<b>default: never</b>)</string>
-    <string name="settings_mod_listen_on_wake">Listen when device is woken</string>
-    <string name="settings_mod_listen_on_wake_desc">Listen for music playing when the device is woken</string>
-    <string name="settings_mod_show_history_launcher">Now Playing History in apps</string>
-    <string name="settings_mod_show_history_launcher_desc">Show "Now Playing History" in your apps, rather than having to add a home screen shortcut</string>
-    <string name="settings_mod_show_on_lockscreen">Show Now Playing on Lock Screen</string>
-    <string name="settings_mod_show_on_lockscreen_desc">Overlay the current Now Playing track on the lock screen. Requires an Accessibility Service.</string>
-
-    <!-- Amplification dialog -->
-    <string name="slider_amplification_label">%1d%%</string>
-
-    <!-- Listen period labels -->
-    <string name="listen_period_never">Never</string>
-    <string name="listen_period_automatic">Automatic</string>
-    <string name="listen_period_1_minute">1 minute</string>
-    <string name="listen_period_2_minute">2 minutes</string>
-    <string name="listen_period_3_minute">3 minutes</string>
-    <string name="listen_period_4_minute">4 minutes</string>
-    <string name="listen_period_5_minute">5 minutes</string>
-    <string name="listen_period_10_minute">10 minutes</string>
-    <string name="listen_period_15_minute">15 minutes</string>
-    <string name="listen_period_20_minute">20 minutes</string>
-    <string name="listen_period_30_minute">30 minutes</string>
-    <string name="listen_period_60_minute">1 hour</string>
-
-    <!-- Manual trigger bottom sheet -->
-    <string name="bs_manual_trigger_state_awaiting_start">Waiting for recognition to start…</string>
-    <string name="bs_manual_trigger_state_listening">Listening…</string>
-    <string name="bs_manual_trigger_state_awaiting_response">Awaiting response…</string>
-    <string name="bs_manual_trigger_state_response_music">Music recognised!</string>
-    <string name="bs_manual_trigger_state_response_music_desc">%1s by %1s</string>
-    <string name="bs_manual_trigger_state_response_no_music">No music recognised</string>
-    <string name="bs_manual_trigger_state_response_not_music">Ambient Music detected that no music was playing</string>
-    <string name="bs_manual_trigger_state_response_unknown">Unknown response from Ambient Music</string>
-    <string name="bs_manual_trigger_state_error_desc">Please try again</string>
-    <string name="bs_manual_trigger_state_error_not_started">Ambient Music failed to start</string>
-    <string name="bs_manual_trigger_state_error_no_response">No response from Ambient Music</string>
-    <string name="bs_manual_trigger_state_error_bad_response">@string/bs_manual_trigger_state_response_unknown</string>
-    <string name="bs_manual_trigger_state_complete_tertiary">Play back input</string>
-    <string name="bs_manual_trigger_troubleshooting">Troubleshooting</string>
-    <string name="bs_manual_trigger_playback_note">Audio is deleted after the Test Recognition dialog is closed</string>
-    <string name="bs_manual_trigger_playback_file_info_menu">Opening the saved file</string>
-    <string name="bs_manual_trigger_playback_file_info_title">Audio Format</string>
-    <string name="bs_manual_trigger_playback_file_info_content">The saved file is in raw (PCM) format. You can open it in Audacity or similar programs by importing raw audio with the following settings:\n\n- Signed 16-bit PCM\n- Big-endian byte order\n- 1 Channel (Mono)\n- 16000Hz Sample Rate</string>
-
-    <!-- Manual trigger playback menu -->
-    <string name="bs_manual_trigger_playback_write_to_file">Save to file</string>
-    <string name="bs_manual_trigger_playback_write_to_file_saved">Input audio saved</string>
-
-    <!-- Manual trigger troubleshooting -->
-    <string name="bs_manual_trigger_troubleshooting_title">Troubleshooting</string>
-    <string name="bs_manual_trigger_troubleshooting_type_not_started">If Ambient Music fails to start:\n\n• Use the Launch Ambient Music App option to start the app, it may simply have been killed, then return to Ambient Music Mod and try again (this fixes it most of the time)\n• Reboot your phone, but make sure to start Ambient Music before trying again as above\n• Make sure you have \"Android\", \"Pixel Ambient Services\", \"Ambient Music Mod\" and \"Device Personalisation Services\" (if it\'s installed on your device) whitelisted in EdXposed, if you are using the app whitelist/Xposed Hide mode</string>
-    <string name="bs_manual_trigger_troubleshooting_type_no_music">If Ambient Music does not detect music playing:\n\n• Adjust the amplification setting to make the sound loud, but not long enough that it\'s distorted. Use the \"Play back input\" option to listen back and adjust it as required\n• Move closer to the speaker, you may simply be too far away\n• Don\'t get too close to the speaker, very high volumes cause peaking and distortion that can prevent music being recognised</string>
-    <string name="bs_manual_trigger_troubleshooting_type_not_music">If Ambient Music says the input is not music:\n\n• Make sure you have \"Android\", \"Pixel Ambient Services\" and \"Ambient Music Mod\" whitelisted in EdXposed.\n\nThe \"Not Music\" detection result is meant to happen Pixel devices with the official Ambient Music, but as the model is not optimised to tell the difference between "not music" and "no music" on other devices, it is disabled in this mod. If you see this response, it suggests the Xposed module is not working properly.</string>
-    <string name="bs_manual_trigger_troubleshooting_type_unknown">If Ambient Music returns an unknown response:\n\n• Make sure you are using the correct version of Pixel Ambient Services for the mod, and have not updated the app on Google Play or via another source. Only version 1.0.279736494 works with this mod.</string>
-    <string name="bs_manual_trigger_troubleshooting_type_no_result">If Ambient Music fails to respond:\n\n• Use the Launch Ambient Music App option to start the app, it may simply have been killed, then return to Ambient Music Mod and try again (this fixes it most of the time)\n• Reboot your phone, but make sure to start Ambient Music and wait a few minutes for the system to settle before trying again as above\n• Make sure you have \"Android\", \"Pixel Ambient Services\", \"Ambient Music Mod\" and \"Device Personalisation Services\" (if it\'s installed on your device) whitelisted in EdXposed, if you are using the app whitelist/Xposed Hide mode</string>
-
-    <!-- Advanced Settings -->
-    <string name="settings_advanced_run_on_little_cores_desc">Run the music recognition on the little CPU cores. May save some battery, may be buggy (<b>default: disabled</b>).</string>
-    <string name="settings_advanced_run_on_little_cores">Run on Little Cores</string>
-    <string name="settings_advanced_show_album_art_desc">Show album art from YouTube Music in Now Playing History. May be buggy.</string>
-    <string name="settings_advanced_show_album_art">Show Album Art in History</string>
-    <string name="settings_advanced_use_assistant">Assistant for Notification Click</string>
-    <string name="settings_advanced_use_assistant_desc">Launch Google Assistant when the music recognition notification is clicked, rather than Google Search.\nChanges take effect on the next notification.</string>
-    <string name="settings_advanced">Advanced</string>
-    <string name="settings_advanced_desc">Advanced options such as core usage and custom amplification levels</string>
-    <string name="settings_advanced_custom_amplification_desc">Set a custom amplification level, if the standard option is still too low for your device. <b>Use with caution, high amplification will also cause amplification of noise.</b></string>
-    <string name="settings_advanced_custom_amplification">Custom Amplification</string>
-
-    <!-- Custom amplification bottom sheet -->
-    <string name="bs_advanced_custom_amplification_hint">Amplification</string>
-    <string name="bs_advanced_custom_amplification_error">Invalid amplification value</string>
-
-    <!-- Accessibility service -->
-    <string name="accessibility_service_label">Ambient Music Mod</string>
-    <string name="accessibility_service_description">Display the current Now Playing track on the lock screen. Change position of the overlay in the Ambient Music Mod settings.\n\n<b>Important Note:</b>\nAmbient Music Mod does <b>not</b> collect or track any information from your device.</string>
-
-    <!-- Overlay settings -->
-    <string name="settings_lockscreen_overlay">Show on Lock Screen</string>
-    <string name="settings_lockscreen_overlay_sample_text">Song by Artist</string>
-    <string name="settings_lockscreen_overlay_sample_reset">Reset</string>
-    <string name="settings_lockscreen_overlay_sample_horizontal">Center Horizontally</string>
-    <string name="settings_lockscreen_overlay_enabled">Enable Lock Screen Overlay</string>
-    <string name="settings_lockscreen_overlay_enabled_desc">Overlay the current Now Playing track on the lock screen</string>
-    <string name="settings_lockscreen_overlay_position">Adjust Overlay Position</string>
-    <string name="settings_lockscreen_overlay_position_desc">Move the overlay around on the screen so it doesn\'t obstruct text or icons</string>
-    <string name="settings_lockscreen_overlay_enable_click">Launch Assistant on Click</string>
-    <string name="settings_lockscreen_overlay_enable_click_desc">Click on the overlay to ask Assistant for more info on a track</string>
-
-    <string name="settings_lockscreen_overlay_state_disabled_title">Accessibility Service Disabled</string>
-    <string name="settings_lockscreen_overlay_state_disabled_desc">Ambient Music Mod\'s Accessibility Service needs to be enabled to use this feature. Tap to go Settings to enable it.</string>
-    <string name="settings_lockscreen_overlay_state_enabled_title">Accessibility Service Enabled</string>
-
-    <!-- Installer Module Status -->
-    <string name="installer_module_status_title_installed">Magisk Module Installed</string>
-    <string name="installer_module_status_title_not_installed">Magisk Module not Installed</string>
-    <string name="installer_module_status_title_update">Magisk Module Update Available</string>
-    <string name="installer_module_status_content_version">Version %1s</string>
-    <string name="installer_module_status_content_not_installed">Create and install the module below</string>
-    <string name="installer_module_status_content_update">Current version: %1s, new version: %1s</string>
-    <string name="installer_module_compatibility_title">Compatibility</string>
-    <string name="installer_module_compatibility_help">What does this mean?</string>
-
-    <!-- Installer Module compatibility -->
-    <string name="installer_module_compatibility_check_sound_trigger_platform_text_compatible">Sound Trigger Platform compatible</string>
-    <string name="installer_module_compatibility_check_sound_trigger_platform_text_not_compatible">Sound Trigger Platform not compatible</string>
-    <string name="installer_module_compatibility_check_sound_trigger_text_compatible">Sound Trigger version: %1s</string>
-    <string name="installer_module_compatibility_check_sound_trigger_text_not_compatible">Sound Trigger version: %1s (requires at least %1s)</string>
-    <string name="installer_module_compatibility_check_sound_model_text_unknown">Unknown Sound Model compatibility (tap to check)</string>
-    <string name="installer_module_compatibility_check_sound_model_text_compatible">Sound Model compatible (tap to check again)</string>
-    <string name="installer_module_compatibility_check_sound_model_text_incompatible">Sound Model incompatible (tap to check again)</string>
-    <string name="installer_module_compatibility_check_xposed_text_installed">Xposed installed</string>
-    <string name="installer_module_compatibility_check_xposed_text_not_installed">Xposed not installed</string>
-
-    <string name="fab_build">Build Installer</string>
-    
-    <!-- Installer Not Compatible Page -->
-    <string name="installer_not_compatible_title">Not Compatible</string>
-    <string name="installer_not_compatible_sound_trigger_title">Sound Trigger Version</string>
-    <string name="installer_not_compatible_sound_trigger_content"><![CDATA[The sound trigger driver version on your device (%1s) is below the minimum required version for this mod to work (%1s).<br><b>Important note:</b> This CANNOT be fixed by a mod, or by flashing a different ROM. The driver is provided by your device\'s OEM, and is unlikely to be updated after the device is released.]]></string>
-    <string name="installer_not_compatible_sound_model_title">Sound Model Compatibility</string>
-    <string name="installer_not_compatible_sound_model_content">The compatibility check of the Sound Model failed on your device. This is usually because the driver does not support it, or at least not the model in this mod. It may be supported in the future, check back later for future updates!</string>
-    <string name="installer_not_compatible_sound_trigger_platform_title">Sound Trigger Platform</string>
-    <string name="installer_not_compatible_sound_trigger_platform_content">Your device does not have a compatible Sound Trigger platform (the software that loads sound trigger models), and therefore is unable to use this mod.\n<b>Important note:</b> This CANNOT be fixed by a mod, or by flashing a different ROM. The platform is provided by your device\'s OEM, and is unlikely to be updated or changed after the device is released.</string>
-    <string name="installer_not_compatible_xposed_title">Xposed</string>
-    <string name="installer_not_compatible_xposed_content">You do not have Xposed installed, and Xposed is required to use this mod. You can install Xposed via the Magisk App, by installing the Riru module and either EdXposed or LSposed modules.\n<b>Note:</b> If you are seeing this warning with Xposed installed and working, and you have the Xposed Manager app hidden, you can ignore it.</string>
-
-    <!-- Installer Xposed Warning -->
-    <string name="installer_warning_bottom_sheet_title">Xposed</string>
-    <string name="installer_warning_bottom_sheet_content">You need to have Xposed <b>and</b> Magisk installed to use this mod, it will <b>not</b> work with just Magisk.\n<b>Note:</b> If you plan to install Xposed later or have it installed but have hidden the Xposed Manager app, you can ignore this warning.</string>
-    <string name="installer_warning_bottom_sheet_ignore">Continue</string>
-
-    <!-- Installer Output Picker -->
-    <string name="installer_output_picker_toolbar_title">Output</string>
-    <string name="installer_output_picker_title">Choose Module Location</string>
-    <string name="installer_output_picker_content">Pick where to save the built Magisk module</string>
-    <string name="installer_output_picker_button">Choose Location</string>
-
-    <!-- Installer Build -->
-    <string name="installer_build_toolbar_title">Build Installer</string>
-    <string name="installer_build_title">Creating Module</string>
-    <string name="installer_build_error_title">Error Creating Module</string>
-    <string name="installer_build_building_module">Building module…</string>
-    <string name="installer_build_zipping_module">Zipping module…</string>
-    <string name="installer_build_copying_module">Copying module…</string>
-    <string name="installer_build_done">Module built</string>
-    <string name="installer_build_done_content">Install \"%1s\" in the Magisk App using the \"Install from Storage\" option</string>
-    <string name="installer_build_error_building">Error building module: %1s</string>
-    <string name="installer_build_error_building_already_installed">The module is already installed. Please disable or uninstall the module, reboot and try again.</string>
-    <string name="installer_build_error_building_incompatible">The builder hit an unexpected error creating a modified XML, please try again.</string>
-    <string name="installer_build_error_zipping">Error zipping the module. Please try again.</string>
-    <string name="installer_build_error_copying">Error copying the module. Please try again.</string>
-    <string name="installer_build_close">Close</string>
-
-    <!-- Battery Optimisation -->
-    <string name="battery_optimisation_toolbar_title">Battery Optimisation</string>
-    <string name="battery_optimisation_title">Disable Battery Optimisation</string>
-    <string name="battery_optimisation_content">Battery optimisation should be disabled for both Ambient Music Mod and Pixel Ambient Services for this mod to work properly, disable them in the settings below</string>
-    <string name="battery_optimisation_amm">Disable for Ambient Music Mod</string>
-    <string name="battery_optimisation_pas">Disable for Pixel Ambient Services</string>
-
-    <!-- Developer Options (ssh!) -->
-    <string name="developer_options">Developer Options</string>
-    <string name="developer_options_enabled">Developer options enabled</string>
-    <string name="developer_options_disabled">Developer options disabled</string>
-    <string name="developer_options_more">More…</string>
-    <string name="developer_options_phenotypes">Phenotypes</string>
-    <string name="developer_options_enable_logging">Enable Logging</string>
-    <string name="developer_options_enable_logging_desc">Change requires reboot</string>
-    <string name="developer_options_phenotypes_warning">Warning</string>
-    <string name="developer_options_phenotypes_warning_desc">These options are for testing purposes only and may cause Ambient Music to break, degraded performance, higher battery usage or simply not work on your device. Tap to reset the settings to default and close.\nReboot for changes to take effect.</string>
-    <string name="developer_options_dump_logs">Dump Logs</string>
-    <string name="developer_options_dump_logs_desc">Dump Ambient related logs for debugging &amp; reporting. Enable the Logging option and reboot first!</string>
-
-    <!-- Database Viewer -->
-    <string name="database_viewer">Track List</string>
-    <string name="database_viewer_desc">View &amp; search a list of tracks Ambient Music can recognise</string>
-    <string name="database_viewer_copy_warning_title">Copy &amp; Parse Databases</string>
-    <string name="database_viewer_copy_warning_content">This is quite an intensive task and may take up to a few minutes. Once complete, it will be much faster to load until Ambient Music\'s databases next update.</string>
-    <string name="database_viewer_copy_warning_start">Start</string>
-    <string name="database_viewer_copy_awaiting">Waiting for Ambient Music to respond…</string>
-    <string name="database_viewer_copy_content">Copying the databases, this may take up to a minute…</string>
-    <string name="database_viewer_read_offsets_content">Parsing the databases, this may take a while…</string>
-    <string name="database_viewer_error">Error: %1s</string>
-    <string name="database_viewer_read_offset_error">Failed to find offset in %1s</string>
-    <string name="database_viewer_unzip_error">Failed to unzip databases</string>
-    <string name="database_viewer_no_response">No response from Ambient Music (try restarting both apps)</string>
-    <string name="database_viewer_loading">Loading Databases…</string>
-    <string name="database_viewer_tracks_loading">Loading Tracks…</string>
-    <string name="database_viewer_artists_loading">Loading Artists…</string>
+    <string name="loading">Loading…</string>
     <string name="search">Search</string>
-    <string name="database_viewer_tracks_empty">No tracks found</string>
-    <string name="menu_tracks">Tracks</string>
-    <string name="menu_artists">Artists</string>
-    <string name="database_viewer_artists_empty">No artists found</string>
-    <string name="database_viewer_update_title">Newer Database Available</string>
-    <string name="database_viewer_update_content">Ambient Music has a newer version of the music database than is cached in Ambient Music mod. Tap to update.</string>
 
-    <!-- Developer Options -> Dump logs -->
-    <string name="developer_options_log_title">Dump Logs</string>
-    <string name="developer_options_log_content"><![CDATA[This option creates a zip of log files related to Sound Trigger & Ambient Music. Use it to report an issue on your device, ideally soon after rebooting (but launch the Ambient Music app and try a recognition first) or after a recent crash or error.<br><br><b>Please note that while error logs are useful to resolve bugs, the mod may not ever work on some devices.</b><br>The app will request root permissions as part of this process (required to access the system log). <a href="amm://logs">What\'s included in the log dump?</a>]]></string>
-    <string name="developer_options_log_button">Create Dump</string>
-    <string name="developer_options_log_contents_title">Dump Logs: Contents</string>
-    <string name="developer_options_log_contents_content">A log dump contains:\n\n• Metadata on the installed version of Ambient Music Mod, Pixel Ambient Services, Device Personalization Services, the Magisk module, the Sound Trigger version on the device, whether Xposed and the Xposed module are installed\n• A logcat, filtered on lines containing \"sound_trigger\" or \"soundtrigger\"\n• A logcat, filtered on lines coming from Pixel Ambient Services\n• A logcat, filtered on lines coming from Ambient Music Mod\n• The sound_trigger_platform.xml file installed on your device\n\n<b>Please note: While the log dump shouldn\'t contain any personal information as the logs are filtered to apps and lines that shouldn\'t contain any personal info, there is no guarantee that they will not if another app is logging lines containing \"soundtrigger\" or \"sound_trigger\".</b></string>
-
-    <string name="developer_options_log_dump_requesting_root">Requesting root…</string>
-    <string name="developer_options_log_dump_creating_dump">Creating dump…</string>
-    <string name="developer_options_log_dump_done">Dump created</string>
-    <string name="developer_options_log_dump_error">Error creating dump, please try again</string>
-    <string name="developer_options_log_dump_no_root">Root access was not granted, please try again and check the Superuser settings in the Magisk app if the problem persists.</string>
-
-    <string name="settings_category_about">About</string>
-
-    <!-- Frequently Asked Questions -->
-    <string name="faq_title">Frequently Asked Questions</string>
-    <string name="faq_title_short">FAQ</string>
-    <string name="faq_desc">Read these before reporting issues or asking questions on the XDA thread or GitHub</string>
-
-    <!-- About -->
-    <string name="about_title">About</string>
-    <string name="about_desc">Ambient Music Mod v%1s (%1s)\nCreated by Kieron Quinn / Quinny899 @ XDA</string>
-    <string name="donate">Donate</string>
-    <string name="twitter">Follow me on Twitter</string>
-    <string name="twitter_short">Twitter</string>
     <string name="xda_thread">XDA Thread</string>
     <string name="github">GitHub</string>
-    <string name="pixel_ambient_services_incompatible_title">Error</string>
-    <string name="pixel_ambient_services_incompatible_content">The version of Pixel Ambient Services installed on your device is newer than the version that works with Ambient Music Mod. Please uninstall updates for it in the app info or Ambient Music Mod will <b>NOT</b> work. Make sure to not update Pixel Ambient Services via the Play Store or other means, in order to not get this issue again, read the FAQ for more information.</string>
-    <string name="pixel_ambient_services_incompatible_app_info">App Info</string>
+    <string name="libraries">Third party libraries</string>
+    <string name="donate">Donate</string>
+    <string name="twitter">Follow me on Twitter</string>
+    <string name="about_version">Version %1s\nCreated by Kieron Quinn</string>
+    <string name="about_contributors">Contributors</string>
 
-    <!-- Update -->
-    <string name="bs_update_download">Download</string>
-    <string name="bs_update_title">Update available!</string>
-    <string name="bs_update_content"><![CDATA[<h2>A new update is available</h2><br><b>Current version:</b> %1s<br><b>New version:</b> %1s<br><b>Update date:</b> %1s<br><b>Changelog:</b><br>%1s]]></string>
+    <!-- Update downloader -->
+    <string name="snackbar_update">Update available</string>
+    <string name="snackbar_update_button">Update</string>
+
+    <string name="bottom_nav_now_playing">Now Playing</string>
+    <string name="bottom_nav_updates">Updates</string>
+
+    <!-- Foreground Notification -->
+    <string name="notification_channel_service_foreground_title">Background Service</string>
+    <string name="notification_channel_service_foreground_subtitle">Notifications shown when Ambient Music Mod is running</string>
+    <string name="notification_service_foreground_title">Ambient Music Mod</string>
+    <string name="notification_service_foreground_subtitle">Running in the background, tap to hide</string>
+
+    <!-- Update notification -->
+    <string name="notification_channel_updates_title">Updates</string>
+    <string name="notification_channel_updates_subtitle">Notifications shown when an update is available for the mod, app or database</string>
+    <string name="notification_update_title">@string/app_name</string>
+    <string name="notification_update_subtitle">An update is available, tap to view</string>
+
+    <!-- Shizuku Error notification -->
+    <string name="notification_channel_errors_title">Errors</string>
+    <string name="notification_channel_errors_subtitle">Notifications shown if an error occurs during background recognitions</string>
+    <string name="notification_error_shizuku_title">Error connecting to Shizuku</string>
+    <string name="notification_error_shizuku_subtitle">Make sure Shizuku has been started, then retry</string>
+    <string name="notification_error_timeout_title">Error running recognition</string>
+    <string name="notification_error_timeout_subtitle">Timed out connecting to service, please try again</string>
+    <string name="notification_error_api_title">Error connecting to Now Playing</string>
+    <string name="notification_error_api_subtitle">Incompatible Now Playing version installed, please update from the Updates page</string>
+    <string name="notification_error_needs_root_title">Error starting recognition</string>
+    <string name="notification_error_needs_root_subtitle">Root is required to run recognition on this device, please read the FAQ</string>
+    <string name="notification_error_button">Retry</string>
+
+    <!-- On Demand warning notification -->
+    <string name="notification_channel_warnings_title">Warnings</string>
+    <string name="notification_channel_warnings_subtitle">Notifications shown if compatibility issues arise</string>
+    <string name="notification_warning_on_demand_disabled_title">On Demand Disabled</string>
+    <string name="notification_warning_on_demand_disabled_subtitle">On Demand is no longer available on this device. Tap to fix.</string>
+
+    <!-- Now Playing settings -->
+    <string name="nowplaying_title">Now Playing</string>
+    <string name="now_playing_error_shizuku">Failed to connect to Shizuku</string>
+    <string name="now_playing_error_shizuku_subtitle">Make sure it has been started and try again</string>
+    <string name="now_playing_error_api">Now Playing Error</string>
+    <string name="now_playing_error_api_subtitle">Either Now Playing has been uninstalled or the version is not compatible with this version of Ambient Music Mod, please install/update it from the Updates page</string>
+    <string name="now_playing_error_generic">An Error Occurred</string>
+    <string name="now_playing_error_generic_subtitle">Please restart Ambient Music Mod and try again</string>
+    <string name="item_nowplaying_header_preview">Song • Artist</string>
+    <string name="item_nowplaying_header_switch">Identify songs playing nearby</string>
+    <string name="item_nowplaying_notifications_title">Notifications</string>
+    <string name="item_nowplaying_notifications_content_enabled">On</string>
+    <string name="item_nowplaying_notifications_content_disabled">Off</string>
+    <string name="item_nowplaying_lockscreen_title">Lock Screen</string>
+    <string name="item_nowplaying_lockscreen_content">Display identified songs on your lock screen</string>
+    <string name="item_nowplaying_ondemand_title">On Demand Recognition</string>
+    <string name="item_nowplaying_ondemand_content">Identify songs playing nearby that aren\'t recognised by your device</string>
+    <string name="item_nowplaying_history_title">Now Playing History</string>
+    <string name="item_nowplaying_history_content">%1s by %1s • %1s</string>
+    <string name="item_nowplaying_history_content_empty">No recognitions yet</string>
+    <string name="item_nowplaying_settings_title">Settings</string>
+    <string name="item_nowplaying_settings_content">Modify Now Playing options including how often recognition runs</string>
+
+    <string name="banner_message_settings_button">Settings</string>
+    <string name="banner_message_permissions_needed_title">Permissions needed</string>
+    <string name="banner_message_permissions_needed_content">Now Playing requires Microphone and Phone access to recognise music and know when a call is in progress</string>
+    <string name="banner_message_permissions_needed_button">Grant Permissions</string>
+    <string name="banner_message_downloading_title">Downloading song database</string>
+    <string name="banner_message_downloading_content">Now Playing will start recognising music soon</string>
+    <string name="banner_message_no_internet_title">Connect to Wi-Fi</string>
+    <string name="banner_message_no_internet_content">No internet</string>
+    <string name="banner_message_waiting_for_unmetered_internet_title">Connect to Wi-Fi</string>
+    <string name="banner_message_waiting_for_unmetered_internet_content">Waiting for unmetered Wi-Fi</string>
+    <string name="banner_message_search_button_being_set_up_title">The search button is being set up</string>
+    <string name="banner_message_search_button_being_set_up_content">It will be available soon</string>
+    <string name="banner_message_dnd_title">Do not disturb is on</string>
+    <string name="banner_message_dnd_content">Song recognition notifications may not be shown</string>
+    <string name="banner_message_app_using_device_audio_content">Songs aren\'t identified while device audio is being used by other apps</string>
+    <string name="banner_message_app_using_device_audio_title">An app is using device audio</string>
+    <string name="banner_message_app_recording_audio_content">Songs aren\'t identified while device audio is being used by other apps</string>
+    <string name="banner_message_app_recording_audio_title">An app is recording audio</string>
+    <string name="banner_message_google_app_invalid_title">Google App unsupported for On Demand</string>
+    <string name="banner_message_google_app_invalid_content">The version of the Google App installed on your device does not support On Demand. Read the FAQ for info on how to fix this.</string>
+    <string name="banner_message_microphone_disabled_title">The microphone is disabled</string>
+    <string name="banner_message_microphone_disabled_content">Ambient recognitions are paused</string>
+    <string name="banner_message_battery_optimisations_title">Battery Optimisations</string>
+    <string name="banner_message_battery_optimisations_content">Battery Optimisations are enabled for Ambient Music Mod, this will impact recognitions</string>
+    <string name="banner_message_battery_optimisations_button">Disable</string>
+
+    <string name="footer_nowplaying">Now Playing recognises music using a song database stored on your phone. To protect your privacy, the automatic recognition process never sends audio or background conversations to Google. Now Playing uses privacy-preserving analytics.\n\nIf you turn on \"On Demand\", each time you tap to search Google receives a short, digital audio fingerprint to identify what\'s playing.\n\nBecause Now Playing is run through a privileged System Service (via Shizuku), it does not show a mic indicator and will not appear on your Privacy dashboard.</string>
+    <string name="footer_nowplaying_learn_more">Learn more</string>
+
+    <string name="fab_nowplaying_recognise">Recognise</string>
+
+    <!-- Recognition dialog -->
+    <string name="recognition_source_picker_nnfp">On Device</string>
+    <string name="recognition_source_picker_nnfp_content">Runs on device, no internet connection required. May not recognise all songs.</string>
+    <string name="recognition_source_picker_on_demand">Online</string>
+    <string name="recognition_source_picker_online_content">Backed by Google Assistant, recognises most songs but requires an internet connection.</string>
+    <string name="recognition_success_title">Song Recognised</string>
+    <string name="recognition_success_content">%1s by %1s</string>
+    <string name="recognition_success_playback">Playback</string>
+    <string name="recognition_failed_button">Retry</string>
+    <string name="recognition_failed_reason_no_match">No Track Matched</string>
+    <string name="recognition_failed_reason_skipped">Recognition Skipped</string>
+    <string name="recognition_failed_reason_generic">Recognition Failed</string>
+    <string name="recognition_failed_reason_content_no_match">Please try again</string>
+    <string name="recognition_failed_reason_content_on_call">Device is being used for a call</string>
+    <string name="recognition_failed_reason_content_system_user">Recognition only works as the primary user</string>
+    <string name="recognition_failed_reason_content_music_playing">Music is playing</string>
+    <string name="recognition_failed_reason_content_audio_record_failed">Failed to record audio, please try again</string>
+    <string name="recognition_failed_reason_content_busy">A recognition is already running and could not be re-used, please try again</string>
+    <string name="recognition_failed_reason_content_code_unknown">An unknown error occurred, please try again</string>
+    <string name="recognition_failed_reason_content_code_not_found">No track matched, please try again</string>
+    <string name="recognition_failed_reason_content_code_no_connectivity">No network connection, try again or use on device recognition</string>
+    <string name="recognition_failed_reason_content_code_service_unavailable">The recognition service is unavailable, please try again</string>
+    <string name="recognition_failed_reason_content_code_timeout">The recognition timed out, please try again</string>
+    <string name="recognition_failed_reason_content_code_audio_unavailable">@string/recognition_failed_reason_content_audio_record_failed</string>
+    <string name="recognition_error_title">Recognition Failed</string>
+    <string name="recognition_error_content_shizuku">Failed to connect to Shizuku service</string>
+    <string name="recognition_error_content_timeout">Timed out waiting for response</string>
+    <string name="recognition_error_api_version">Incompatible Now Playing version, please update Now Playing from the Updates page</string>
+    <string name="recognition_error_needs_root">Recognition on this device requires root, please read the FAQ for more info</string>
+    <string name="recognition_error_disabled">Recognition is disabled</string>
+    <string name="recognition_playback_play">Play</string>
+    <string name="recognition_playback_stop">Stop</string>
+    <string name="recognition_playback_save">Save</string>
+    <string name="recognition_playback_saved_toast">Audio saved. Read the FAQ for info about how to open the file</string>
+
+    <!-- Recognition Chips -->
+    <string name="recognition_chip_assistant">Ask Google</string>
+    <string name="recognition_chip_spotify">Spotify</string>
+    <string name="recognition_chip_youtube">YouTube</string>
+    <string name="recognition_chip_youtube_music">YouTube Music</string>
+    <string name="recognition_chip_apple_music">Apple Music</string>
+    <string name="recognition_chip_deezer">Deezer</string>
+
+    <!-- Tracklist -->
+    <string name="bottom_nav_tracklist_tracks">Tracks</string>
+    <string name="bottom_nav_tracklist_artists">Artists</string>
+    <string name="tracklist_tracks_title">Tracks</string>
+    <string name="tracklist_artists_title">Artists</string>
+    <string name="tracklist_artisttracks_album_year">%1s (%1d)</string>
+    <plurals name="tracklist_item_artist_content">
+        <item quantity="one">%1d track</item>
+        <item quantity="other">%1d tracks</item>
+    </plurals>
+    <string name="tracklist_snackbar_ondemand">Stored or updated by an On Demand recognition</string>
+
+    <!-- On Demand -->
+    <string name="on_demand_title">On Demand</string>
+    <string name="on_demand_switch">Enable On Demand</string>
+    <string name="on_demand_banner_unsupported_title">Device Unsupported</string>
+    <string name="on_demand_banner_unsupported_content">This device is not compatible with On Demand. Please read the FAQs for more details.</string>
+    <string name="on_demand_banner_unsupported_button">FAQs</string>
+    <string name="on_demand_banner_needs_split_title">Google App Update Required</string>
+    <string name="on_demand_banner_needs_split_content">The version of the Google App installed on this device is not compatible with On Demand, please follow the steps on the setup page to replace it with a version that is.</string>
+    <string name="on_demand_banner_needs_split_button">Setup</string>
+    <string name="on_demand_banner_needs_overlay_title">Firmware Incompatible</string>
+    <string name="on_demand_banner_needs_overlay_content">The firmware on your device is missing a crucial configuration to point to the On Demand service. This can be fixed with a Magisk Module if your device is rooted, please follow the steps on the setup page to install.</string>
+    <string name="on_demand_banner_needs_overlay_button">Setup</string>
+    <string name="on_demand_banner_disable">Disable</string>
+    <string name="on_demand_save_title">Save On Demand Recognitions</string>
+    <string name="on_demand_save_content">Store the fingerprints of On Demand recognised songs locally so they can be recognised in future without an internet connection</string>
+    <string name="on_demand_vibrate_title">Vibrate</string>
+    <string name="on_demand_vibrate_content">Vibrate when an on-demand returns a result (successful or failure)</string>
+
+    <string name="lockscreen_overlay_song">%1s • %1s</string>
+    <string name="lockscreen_overlay_ondemand_searching">Searching for track…</string>
+    <string name="lockscreen_overlay_ondemand_no_result">No track found</string>
+
+    <!-- Lock Screen Settings -->
+    <string name="lockscreen_title">Lock Screen</string>
+    <string name="lockscreen_enabled">Show on Lock Screen</string>
+    <string name="lockscreen_style_new">Pixel</string>
+    <string name="lockscreen_style_classic">Classic</string>
+    <string name="lockscreen_position">Change Position</string>
+    <string name="lockscreen_show_on_demand">On Demand</string>
+    <string name="lockscreen_show_on_demand_content">Show a button to start an On Demand recognition when no track is recognised</string>
+    <string name="lockscreen_enhanced">Adaptive Lock Screen Overlay</string>
+    <string name="lockscreen_enhanced_content">Hide the overlay when notifications, quick settings or an app is displaying over the lockscreen. This may not work on all devices.</string>
+    <string name="lockscreen_overlay_on_clicked">Tap Action</string>
+    <string name="lockscreen_overlay_on_clicked_content">Select an action to open when a track is clicked: %1s</string>
+    <string name="lockscreen_enable_toast">Enable "Ambient Music Mod"</string>
+    <string name="lockscreen_disable_toast">Disable "Ambient Music Mod"</string>
+    <string name="lockscreen_owner_info">Show tracks as Owner Info</string>
+    <string name="lockscreen_owner_info_title">Owner Info</string>
+    <string name="lockscreen_owner_info_content">Alternative to the overlay, shows the currently recognised track in the Owner Info field on the lockscreen</string>
+    <string name="footer_lockscreen_owner_info">This option replaces your device\'s regular \"Owner Info\" on the lock screen with the current recognised song.\n\n<b>Please note this has some drawbacks:</b>\n- The track info will not update while the lockscreen is showing (turn the screen off and back on to refresh)\n- The track info will not be clickable\n- Your normal Owner Info will not be displayed when a song is recognised\n- This option will ignore the Owner Info set in your system settings, use the "Default" option to set the fallback text shown when a track is not recognised\n\n<b>This option may be buggy on some devices - this cannot be resolved. If a track gets stuck, disable the option and set your desired Owner Info in the System Settings.</b></string>
+    <string name="lockscreen_owner_info_banner_title">This option requires root</string>
+    <string name="lockscreen_owner_info_banner_content">Due to system restrictions, this option requires Ambient Music Mod to be running as root. If your device is rooted, please read the FAQ for more info.</string>
+    <string name="lockscreen_owner_info_note">🎶 %1s</string>
+    <string name="lockscreen_owner_info_enabled">Show in Owner Info</string>
+    <string name="lockscreen_owner_info_show_note">Show Music Note 🎶</string>
+    <string name="lockscreen_owner_info_show_note_content">Show a music note emoji before the track information</string>
+    <string name="lockscreen_owner_info_fallback">Default Owner Info</string>
+    <string name="lockscreen_owner_info_fallback_content_empty">[Empty]</string>
+    <string name="lockscreen_owner_info_fallback_reset">Reset</string>
+
+    <string name="lockscreen_position_toast">Drag to move, long press background to reset</string>
+
+    <string name="lockscreen_overlay_on_clicked_title">Tap Action</string>
+    <string name="lockscreen_on_track_clicked_assistant_title">Ask Google</string>
+    <string name="lockscreen_on_track_clicked_assistant_content">Open the Assistant to the recognised track, with lyrics and more info</string>
+    <string name="lockscreen_on_track_clicked_history_title">Now Playing History</string>
+    <string name="lockscreen_on_track_clicked_history_content">Show your Now Playing History</string>
+    <string name="lockscreen_on_track_clicked_nothing_title">Do Nothing</string>
+    <string name="lockscreen_on_track_clicked_nothing_content">Do nothing when tapped. If you are struggling to find a location on the lockscreen which does not interfere with buttons, use this option</string>
+
+    <string name="lockscreen_unlock_message_history">Unlock to show your Now Playing History</string>
+
+    <string name="accessibility_service_label">Ambient Music Mod</string>
+    <string name="accessibility_service_description">Display the current Now Playing track on the lock screen. Change position of the overlay in the Ambient Music Mod settings.\n\n<b>Important Note:</b>\nAmbient Music Mod does <b>not</b> collect or track any information from your device.</string>
+    <string name="footer_lockscreen">In order to display the recognised song, <b>Ambient Music Mod uses an Accessibility Service</b>. This service is required as Android does not otherwise allow apps to overlay on top of the lock screen. <b>Ambient Music Mod does not collect your data or monitor interactions</b>, unless you enable Adaptive Lock Screen Overlay, when interactions with the Status Bar and Quick Settings while the device is locked are monitored. <b>No other data is processed</b>.</string>
+
+    <string name="settings_title">Settings</string>
+
+    <string name="settings_recognition_period">Recognition Period</string>
+    <string name="settings_recognition_period_content">Specify the time between recognitions: %1s</string>
+    <string name="settings_recognition_buffer">Recognition Buffer</string>
+    <string name="settings_recognition_buffer_content">Additional time added between recognitions, for example to account for a radio DJ talking: %1s</string>
+
+    <string name="title_settings_recognition_period">Recognition Period</string>
+    <string name="settings_recognition_period_adaptive">Adaptive Recognition Period</string>
+    <string name="settings_recognition_period_adaptive_content">When a track is recognised, automatically delay the next recognition until after it is estimated to have finished</string>
+    <string name="settings_recognition_period_never">Never</string>
+    <string name="settings_recognition_period_never_content">Requires manually triggering a recognition</string>
+    <string name="settings_recognition_period_30_seconds">30 seconds</string>
+    <string name="settings_recognition_period_30_seconds_content">Uses more battery</string>
+    <string name="settings_recognition_period_1_minute">1 minute</string>
+    <string name="settings_recognition_period_2_minutes">2 minutes</string>
+    <string name="settings_recognition_period_3_minutes">3 minutes</string>
+    <string name="settings_recognition_period_5_minutes">5 minutes</string>
+    <string name="settings_recognition_period_5_minutes_content">Unlikely to capture all tracks</string>
+
+    <string name="title_settings_recognition_buffer">Recognition Buffer</string>
+    <string name="settings_recognition_buffer_0_seconds">Disabled</string>
+    <string name="settings_recognition_buffer_5_seconds">5 seconds</string>
+    <string name="settings_recognition_buffer_10_seconds">10 seconds</string>
+    <string name="settings_recognition_buffer_20_seconds">20 seconds</string>
+    <string name="settings_recognition_buffer_30_seconds">30 seconds</string>
+
+    <string name="settings_trigger_when_screen_on">Trigger when Screen On</string>
+    <string name="settings_trigger_when_screen_on_content">Trigger a recognition when the screen is turned on. Use this option when the Recognition Period is set to \"Never\" to only trigger recognitions when required.</string>
+
+    <string name="settings_battery_saver">Run on Battery Saver</string>
+    <string name="settings_battery_saver_content">Allow automatic recognitions while battery saver is enabled</string>
+
+    <string name="settings_show_album_art">Show Album Art</string>
+    <string name="settings_show_album_art_content">Show album art in Now Playing History</string>
+
+    <string name="settings_bedtime">Disable at Bedtime</string>
+    <string name="settings_bedtime_content">Prevent automatic recognitions from happening overnight to save battery: %1s</string>
+    <string name="settings_bedtime_content_enabled">Enabled</string>
+    <string name="settings_bedtime_content_disabled">Disabled</string>
+
+    <string name="settings_advanced">Advanced</string>
+    <string name="settings_advanced_content">Change the audio recording gain and more</string>
+
+    <string name="settings_advanced_gain">Gain</string>
+    <string name="settings_advanced_gain_content">Apply a gain to audio recordings.\n<b>Note:</b> A higher gain also increases noise, use with care</string>
+    <string name="settings_advanced_gain_reset">Reset</string>
+    <string name="settings_advanced_gain_formatter">%1sx</string>
+
+    <string name="settings_advanced_small_cores">Run on Little Cores</string>
+    <string name="settings_advanced_small_cores_content">Run recognition on the little CPU cores. May use less battery, may not work on all devices</string>
+
+    <string name="settings_advanced_nnfp_v3">Experimental Model</string>
+    <string name="settings_advanced_nnfp_v3_content">Use experimental (NNFP v3) recognition model. May not work, may be unstable\n<b>Note:</b> If you have \'Save On Demand Recognitions\' enabled, NNFP v3 uses a separate list of recognitions, so your list will be effectively reset.</string>
+
+    <string name="settings_advanced_superpacks_require_wifi">Database Downloads on Wi-Fi only</string>
+    <string name="settings_advanced_superpacks_require_wifi_short">Wi-Fi only</string>
+    <string name="settings_advanced_superpacks_require_wifi_content">Require <b>unmetered</b> Wi-Fi to download updates to the Music Database. You may need to reboot after changing this setting for it to take effect.</string>
+    <string name="settings_advanced_superpacks_require_wifi_content_short">Require <b>unmetered</b> Wi-Fi to download content.</string>
+
+    <string name="settings_advanced_superpacks_require_charging">Require Charging for Database Downloads</string>
+    <string name="settings_advanced_superpacks_require_charging_short">Require Charging</string>
+    <string name="settings_advanced_superpacks_require_charging_content">Require the device be charging to download updates to the Music Database. You may need to reboot after changing this setting for it to take effect.</string>
+    <string name="settings_advanced_superpacks_require_charging_content_short">Require the device be charging to download content.</string>
+
+    <string name="settings_advanced_clear_album_art_cache">Clear Album Art Cache</string>
+    <string name="settings_advanced_clear_album_art_cache_content">Clear album art cache for Now Playing History</string>
+    <string name="settings_advanced_clear_album_art_cache_toast">Cache cleared</string>
+
+    <string name="settings_advanced_enable_logging">Enable Verbose Logging</string>
+    <string name="settings_advanced_enable_logging_content">Enables logging in both Ambient Music Mod and Now Playing</string>
+
+    <string name="title_settings_bedtime">Bedtime</string>
+    <string name="settings_bedtime_switch">Disable at Bedtime</string>
+    <string name="settings_bedtime_start">Start Time</string>
+    <string name="settings_bedtime_end">End Time</string>
+
+    <string name="shard_country_argentina">Argentina</string>
+    <string name="shard_country_australia">Australia</string>
+    <string name="shard_country_brazil">Brazil</string>
+    <string name="shard_country_canada">Canada</string>
+    <string name="shard_country_switzerland">Switzerland</string>
+    <string name="shard_country_germany">Germany</string>
+    <string name="shard_country_spain">Spain</string>
+    <string name="shard_country_france">France</string>
+    <string name="shard_country_united_kingdom">United Kingdom</string>
+    <string name="shard_country_ireland">Ireland</string>
+    <string name="shard_country_india">India</string>
+    <string name="shard_country_italy">Italy</string>
+    <string name="shard_country_japan">Japan</string>
+    <string name="shard_country_mexico">Mexico</string>
+    <string name="shard_country_netherlands">Netherlands</string>
+    <string name="shard_country_russia">Russia</string>
+    <string name="shard_country_united_states">United States</string>
+
+    <!-- Updates -->
+    <string name="updates_title">Updates</string>
+    <string name="updates_version">Version: %1s</string>
+    <string name="updates_version_update">Version: %1s (Installed: %1s)</string>
+    <string name="updates_version_failed">Failed to connect to server</string>
+    <string name="updates_update">Update</string>
+    <string name="updates_install">Install</string>
+    <string name="updates_status_up_to_date">Up to Date</string>
+    <string name="updates_status_update_available">Update Available</string>
+    <string name="updates_status_not_installed">Not Installed</string>
+    <string name="updates_status_installed">Installed</string>
+
+    <string name="updates_shards_title">Music Database</string>
+    <string name="updates_shards_date">Build date: %1s</string>
+    <string name="updates_shards_date_update">Build date: %1s (Installed: %1s)</string>
+    <string name="updates_shards_track_count_label">Tracks in Database</string>
+    <string name="updates_shards_track_count_label_personalised">Stored On Demand Tracks</string>
+    <string name="updates_shards_view_tracks">View Track List</string>
+    <string name="updates_shards_status_updating">Updating</string>
+    <string name="updates_shards_status_waiting_for_wifi">Waiting for suitable Wi-Fi</string>
+    <string name="updates_shards_status_waiting_for_charging">Waiting until device is charging</string>
+
+    <string name="updates_amm_title">Ambient Music Mod</string>
+    <string name="updates_pam_title">Now Playing</string>
+    <string name="updates_download_heading">%1s version %1s</string>
+    <string name="updates_download_subheading">Current version %1s</string>
+    <string name="updates_download_changes">Changes</string>
+    <string name="update_downloader_github">Download via browser</string>
+    <string name="update_downloader_downloading_title">Downloading update…</string>
+    <string name="updates_download_open_installer">Start Install</string>
+    <string name="updates_download_fab">Download</string>
     <string name="download_manager_description">Downloading update…</string>
-    <string name="bs_update_download_title">Downloading update…</string>
-    <string name="bs_update_download_failed">Download failed</string>
-    <string name="bs_update_download_github">Download via browser</string>
+    <string name="download_manager_description_initial">Downloading APK…</string>
+    <string name="updates_download_loading">Loading…</string>
+    <string name="updates_download_done">Download Complete</string>
+    <string name="updates_download_failed">Download Failed</string>
 
-    <!-- Get Model State check -->
-    <string name="installer_get_model_state_check_title">Model Compatibility</string>
-    <string name="installer_get_model_state_check_state_awaiting_title">Starting check…</string>
-    <string name="installer_get_model_state_check_state_awaiting_content">You may be asked to grant root permissions</string>
-    <string name="installer_get_model_state_check_state_running_title">Running check…</string>
-    <string name="installer_get_model_state_check_state_result_title_compatible">Model compatible</string>
-    <string name="installer_get_model_state_check_state_result_title_incompatible">Model incompatible</string>
-    <string name="installer_get_model_state_check_state_result_content">Result code %1d</string>
-    <string name="installer_get_model_state_check_state_result_content_failed">Result code %1d\nIf you think this is an error, you can override the check and proceed anyway (but the mod may not work)</string>
-    <string name="installer_get_model_state_check_state_result_content_failed_check">I understand the module may not work and I am proceeding at my own risk</string>
-    <string name="installer_get_model_state_check_state_result_content_failed_override">Override</string>
-    <string name="installer_get_model_state_run_toast">Run the "Sound Model compatibility" check first before building!</string>
+    <string name="updates_automatic_database_downloads">Automatic Music Database Updates</string>
+    <string name="updates_automatic_database_downloads_content">Automatically download database updates, when available</string>
+
+    <string name="country_picker_title">Database Country</string>
+    <string name="country_picker_automatic">Automatic</string>
+
+    <string name="widget_loading">Loading…</string>
+    <string name="widget_button_nnfp">Recognise</string>
+    <string name="widget_button_on_demand">Online</string>
+    <string name="widget_recognised">%1s • %1s</string>
+    <string name="widget_not_recognised">No Music Recognised</string>
+    <string name="widget_recognising">Recognising</string>
+    <string name="widget_error">Error Recognising Music</string>
+    <string name="widget_error_disabled">Recognition is disabled</string>
+
+    <!-- Setup -->
+    <string name="landing_title">@string/app_name</string>
+    <string name="landing_button_get_started">Get Started</string>
+
+    <string name="setup_shizuku_title">Shizuku</string>
+    <string name="setup_shizuku_error_shizuku">Failed to connect to Shizuku</string>
+    <string name="setup_shizuku_error_shizuku_subtitle">Make sure Shizuku is set up and has been started. If you have not got Shizuku installed, get it from Google Play.\n\nRooted users can alternatively use the \"Sui\" Magisk module.</string>
+    <string name="setup_shizuku_loading">Connecting to Shizuku…</string>
+    <string name="setup_shizuku_get">Get Shizuku</string>
+    <string name="setup_shizuku_open">Open Shizuku</string>
+    <string name="setup_shizuku_needs_root">Recognition requires root</string>
+    <string name="setup_shizuku_needs_root_subtitle">Due to system limitations, recognition on this device requires root. If your device is rooted, please use the \"Start (for rooted devices)\" option in Shizuku, or the Sui Magisk module. Read the FAQ for more details.</string>
+    <string name="setup_shizuku_faq">FAQ</string>
+
+    <string name="setup_data_usage_title">Data Usage</string>
+    <string name="setup_data_usage_content">Ambient Music Mod needs to download additional content to allow offline recognition. This consists of an APK and Music Database, totalling up to 400MB. This is best done on fast Wi-Fi while charging, but you can allow it on other connections using the options below.\n\nYou can change these options later in <b>Settings > Advanced</b></string>
+    <string name="setup_data_usage_next">Next</string>
+    <string name="setup_data_usage_loading">Loading…</string>
+    <string name="setup_data_usage_warning_charging">Connect your charger to continue</string>
+    <string name="setup_data_usage_warning_network_unmetered">Connect to unmetered Wi-Fi to continue</string>
+    <string name="setup_data_usage_warning_network">Connect to a network to continue</string>
+
+    <string name="setup_country_picker_title">Select a Country</string>
+    <string name="setup_country_picker_header">Choose your country, or if not available the one with the most similar music. Different country\'s databases contain different tracks that can be recognised.</string>
+    <string name="setup_country_picker_next">Next</string>
+    <string name="setup_country_picker_loading">Loading…</string>
+
+    <string name="setup_install_pam_title">Now Playing</string>
+    <string name="setup_install_pam_error_title">Error</string>
+    <string name="setup_install_pam_error_subtitle">An error occurred downloading the APK, please try again</string>
+    <string name="setup_install_pam_retry">Retry</string>
+    <string name="setup_install_pam_loading">Loading…</string>
+    <string name="setup_install_pam_downloading">Downloading Now Playing APK</string>
+    <string name="setup_install_pam_downloading_subtitle">This may take a while</string>
+    <string name="setup_install_pam_install_title">Download Complete</string>
+    <string name="setup_install_pam_install_subtitle">Tap the start install button to open your device\'s installer and install the APK</string>
+    <string name="setup_install_pam_start_install">Start Install</string>
+
+    <string name="setup_permissions_title">Permissions</string>
+    <string name="setup_permissions_grant">Grant Permissions</string>
+    <string name="setup_permissions_loading">Loading…</string>
+    <string name="setup_permissions_content">Now Playing requires two permissions to run:</string>
+    <string name="setup_permissions_phone_title">Phone</string>
+    <string name="setup_permissions_phone_content">Required to access the state of the device to prevent recognition during phone calls or during other sensitive times.\n<b>This does not allow Now Playing to make phone calls.</b></string>
+    <string name="setup_permissions_audio_title">Record Audio</string>
+    <string name="setup_permissions_audio_content">Required to record audio to recognise music</string>
+    <string name="close">Close</string>
+    <string name="setup_complete_title">Setup Complete</string>
+    <string name="setup_complete_content">Now Playing will download the Music Database in the background, and then automatically start recognising tracks. You can change the automatic recognition period in the settings.\n\n<b>Note: If downloading databases appears to get stuck, reboot your device.</b></string>
+
+    <!-- Backup & Restore -->
+    <string name="backup_restore_title">Backup &amp; Restore</string>
+    <string name="backup_restore_content">Backup and restore your settings, Now Playing History and Favourites to your device or the cloud</string>
+    <string name="backup_restore_backup_title">Backup</string>
+    <string name="backup_restore_backup_content">Make a new backup</string>
+    <string name="backup_restore_restore_title">Restore</string>
+    <string name="backup_restore_restore_content">Restore an existing backup</string>
+
+    <string name="backup_restore_restore_options_title">Restore Options</string>
+    <string name="backup_restore_restore_options_restore">Restore</string>
+    <string name="backup_restore_restore_options_restore_favourites_title">Restore Favourites</string>
+    <string name="backup_restore_restore_options_restore_favourites_content">Restore Now Playing Favourites</string>
+    <string name="backup_restore_restore_options_restore_clear_favourites_title">Clear Favourites</string>
+    <string name="backup_restore_restore_options_restore_clear_favourites_content">Clear any existing favourites before restoring</string>
+    <string name="backup_restore_restore_options_restore_history_title">Restore History</string>
+    <string name="backup_restore_restore_options_restore_history_content">Restore Now Playing History</string>
+    <string name="backup_restore_restore_options_restore_clear_history_title">Clear History</string>
+    <string name="backup_restore_restore_options_restore_clear_history_content">Clear existing history before restoring</string>
+    <string name="backup_restore_restore_options_restore_linear_title">Restore Stored On Demand Tracks</string>
+    <string name="backup_restore_restore_options_restore_linear_content">Restore tracks previously stored by On Demand (if available)</string>
+    <string name="backup_restore_restore_options_restore_clear_linear_title">Clear Stored On Demand Tracks</string>
+    <string name="backup_restore_restore_options_restore_clear_linear_content">Clear tracks previously stored by On Demand (if available)</string>
+    <string name="backup_restore_restore_options_restore_settings_title">Restore Settings</string>
+    <string name="backup_restore_restore_options_restore_settings_content">Restore Ambient Music Mod settings</string>
+
+    <string name="backup_loading_history">Loading Now Playing History…</string>
+    <string name="backup_loading_favourites">Loading Now Playing Favourites…</string>
+    <string name="backup_loading_linear">Loading Stored On Demand Tracks…</string>
+    <string name="backup_loading_settings">Loading Settings…</string>
+    <string name="backup_loading_writing">Saving Backup…</string>
+    <string name="backup_success_title">Success</string>
+    <string name="backup_success_content">Backup created</string>
+    <string name="backup_failed_to_connect_title">Error</string>
+    <string name="backup_failed_to_connect_content">Failed to connect to Now Playing to backup settings</string>
+    <string name="backup_failed_to_write_title">Error</string>
+    <string name="backup_failed_to_write_content">Failed to write to backup</string>
+    <string name="backup_restore_backup_close">Close</string>
+
+    <string name="restore_title">Restore</string>
+    <string name="restore_loading_backup">Loading Backup…</string>
+    <string name="restore_clearing_history">Clearing Now Playing History…</string>
+    <string name="restore_restoring_history">Restoring Now Playing History…</string>
+    <string name="restore_clearing_favourites">Clearing Now Playing Favourites…</string>
+    <string name="restore_restoring_favourites">Restoring Now Playing Favourites…</string>
+    <string name="restore_clearing_linear">Clearing Stored On Demand Tracks…</string>
+    <string name="restore_restoring_linear">Restoring Stored On Demand Tracks…</string>
+    <string name="restore_restoring_settings">Restoring Settings…</string>
+    <string name="restore_success_title">Success</string>
+    <string name="restore_success_content">Backup restored</string>
+    <string name="restore_failed_to_open_title">Error</string>
+    <string name="restore_failed_to_open_content">Failed to open backup file</string>
+    <string name="restore_failed_to_read_title">Error</string>
+    <string name="restore_failed_to_read_content">Failed to read backup file</string>
+    <string name="restore_failed_incompatible_title">Error</string>
+    <string name="restore_failed_incompatible_content">The selected backup is not compatible with this version of Ambient Music Mod</string>
+    <string name="backup_restore_restore_close">Close</string>
+
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="faq_content">Please read these questions and answers before submitting a question or issue on GitHub or XDA</string>
+    <string name="faq_title_short">FAQ</string>
+
+    <string name="about_contributors_icons">Icons</string>
+    <string name="about_contributors_icons_content"><![CDATA[Icons by <b><a href="https://material.io/resources/icons">Material Icons</a></b> (<a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache Licence 2.0</a>)<br><b><a href="https://github.com/Templarian/MaterialDesign">Material Design Icons</a></b> (<a href="https://github.com/Templarian/MaterialDesign/blob/master/LICENSE">Pictogrammers Free Licence</a>)<br><b><a href="https://lottiefiles.com/3660-night-mode">Night Mode by James Storm</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://lottiefiles.com/78453-recording">Recording by Ashish Khan</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://lottiefiles.com/54141-google-pay-success">Success by Rohith R Krishnan</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://github.com/HatScripts/circle-flags>circle-flags</a></b> (<a href="https://github.com/HatScripts/circle-flags/blob/gh-pages/LICENSE.md">MIT license</a>)]]></string>
+    <string name="about_translators">Translators</string>
+
+    <string name="wallpaper_colour_picker_menu">Wallpaper Colour Picker</string>
+    <string name="wallpaper_colour_picker_title">Wallpaper Colour</string>
+    <string name="color_picker_unavailable">Wallpaper Colour Picker unavailable for the currently selected wallpaper</string>
+
+    <string name="battery_optimisation_title">Battery Optimisation</string>
+    <string name="battery_optimisation_system_title">Disable Battery Optimisation</string>
+    <string name="battery_optimisation_system_content">This is required for Ambient Music Mod to work</string>
+    <string name="battery_optimisation_oem_title">OEM Battery Optimisation</string>
+    <string name="battery_optimisation_oem_content">Your device appears to have some OEM-specific battery optimisations. These cannot be disabled automatically, tap to open OEM battery settings.</string>
+    <string name="battery_optimisation_footer">Ambient Music Mod runs in the background, so to prevent it being killed by the system, Battery Optimisations must be disabled.</string>
+    <string name="battery_optimisation_footer_link">Learn More</string>
+
+    <string name="quick_settings_tile_title">Now Playing</string>
+    <string name="quick_settings_tile_enabled">Enabled</string>
+    <string name="quick_settings_tile_disabled">Disabled</string>
 
 </resources>

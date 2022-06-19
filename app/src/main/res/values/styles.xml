@@ -1,69 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="TextAppearance.MaterialComponents.BottomNavigationView.Text" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="TextAppearance.AppCompat.Small.AmbientMusicMod" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/google_sans_text</item>
     </style>
 
-    <style name="BottomNavigation">
-        <item name="colorPrimary">@color/accent</item>
-        <item name="itemTextAppearanceActive">@style/TextAppearance.MaterialComponents.BottomNavigationView.Text</item>
-        <item name="itemTextAppearanceInactive">@style/TextAppearance.MaterialComponents.BottomNavigationView.Text</item>
+    <style name="TextAppearance.AppCompat.Small.AmbientMusicMod.Medium" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/google_sans_text</item>
+        <item name="android:textFontWeight">500</item>
     </style>
 
-    <style name="TextAppearance.AppCompat.Large.Ambient" parent="TextAppearance.AppCompat.Large">
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+    <style name="TextAppearance.AppCompat.Small.AmbientMusicMod.Medium.Forced" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/google_sans_text_medium</item>
     </style>
 
-    <style name="TextAppearance.AppCompat.Medium.Ambient" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:fontFamily">@font/google_sans</item>
+    <style name="TextAppearance.AppCompat.Medium.AmbientMusicMod" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">@font/google_sans_text</item>
+        <item name="android:textFontWeight">500</item>
     </style>
 
-    <style name="TextAppearance.AppCompat.Small.Ambient" parent="TextAppearance.AppCompat.Small">
-        <item name="android:fontFamily">@font/google_sans</item>
+    <style name="TextAppearance.AppCompat.Medium.AmbientMusicMod.Lighter" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">@font/google_sans_text</item>
     </style>
 
-    <style name="TextAppearance.AppCompat.Medium.Ambient.Medium" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:fontFamily">@font/google_sans_medium</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
+    <style name="TextAppearance.AppCompat.Large.AmbientMusicMod" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">@font/google_sans_text</item>
+        <item name="android:textFontWeight">500</item>
     </style>
 
-    <style name="TextAppearance.AppCompat.Small.Ambient.Medium" parent="TextAppearance.AppCompat.Small">
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+    <style name="TextAppearance.AppCompat.Large.AmbientMusicMod.Lighter" parent="TextAppearance.AppCompat.Large.AmbientMusicMod">
+        <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="CardView.Ambient" parent="CardView">
-        <item name="strokeWidth">1dp</item>
-        <item name="strokeColor">@color/card_outlined</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardBackgroundColor">?android:windowBackground</item>
-        <item name="cardCornerRadius">@dimen/padding_8</item>
+    <style name="TextAppearance.AppCompat.ExtraLarge.AmbientMusicMod" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">@font/google_sans_text_medium</item>
+        <item name="android:textSize">32sp</item>
     </style>
 
-    <style name="AppTheme.ThirdPartyLicences" parent="Theme.MaterialComponents.DayNight">
-        <item name="actionBarStyle">@style/ThirdPartyLicencesToolbarTheme</item>
-        <item name="android:statusBarColor">?android:windowBackground</item>
-        <item name="android:windowLightStatusBar">@bool/lightSystemUI</item>
-        <item name="android:textViewStyle">@style/ThirdPartyLicencesTextViewStyle</item>
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
-        <item name="colorAccent">@color/accent</item>
+    <style name="Widget.Material3.CardView.Filled.AmbientMusicMod" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardBackgroundColor">?android:colorControlHighlight</item>
     </style>
 
-    <style name="ThirdPartyLicencesToolbarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="background">?android:windowBackground</item>
-        <item name="titleTextStyle">@style/ThirdPartyLicencesToolbarTitleStyle</item>
-        <item name="colorControlNormal">@android:color/black</item>
-        <item name="homeAsUpIndicator">@drawable/ic_back</item>
+    <style name="Widget.Material3.TextInputLayout.OutlinedBox.AmbientMusicMod" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/margin_16</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/margin_16</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/margin_16</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/margin_16</item>
+        <item name="boxStrokeWidth">2dp</item>
     </style>
 
-    <style name="ThirdPartyLicencesToolbarTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+    <style name="Widget.Material3.Chip.Icon.AmbientMusicMod" parent="@style/Widget.Material3.Chip.Assist">
+        <item name="chipIconVisible">true</item>
+        <item name="chipStrokeColor">@android:color/transparent</item>
     </style>
 
-    <style name="ThirdPartyLicencesTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/google_sans</item>
+    <style name="TextAppearance.Tabs" parent="TextAppearance.AppCompat.Small.AmbientMusicMod">
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="CollapsingToolbarTitle.Collapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="CollapsingToolbarTitle.Expanded" parent="CollapsingToolbarTitle.Collapsed">
+        <item name="android:textSize">36dp</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Material3.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/lightStatusNav</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog.Dark" parent="@style/Theme.Material3.Dark.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet.Dark</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">@bool/lightStatusNav</item>
+        <item name="android:navigationBarColor">@color/cardview_dark_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_rounded_bg_light</item>
+    </style>
+
+    <style name="BottomSheet.Dark" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_rounded_bg_dark</item>
+    </style>
+
+    <style name="AmbientMusicModOverflowMenu" parent="@style/Widget.MaterialComponents.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/background_menu</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+        <item name="fontFamily">@font/google_sans_text</item>
     </style>
 
 </resources>

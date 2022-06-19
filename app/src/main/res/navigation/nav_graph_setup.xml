@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_setup"
+    app:startDestination="@id/setupShizukuFragment">
+    <fragment
+        android:id="@+id/setupShizukuFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.shizuku.SetupShizukuFragment"
+        android:label="@string/setup_shizuku_title"
+        tools:layout="@layout/fragment_setup_shizuku" >
+        <action
+            android:id="@+id/action_setupShizukuFragment_to_setupDataUsageFragment"
+            app:destination="@id/setupDataUsageFragment"
+            app:popUpTo="@id/nav_graph_setup"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupDataUsageFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.datausage.SetupDataUsageFragment"
+        android:label="@string/setup_data_usage_title"
+        tools:layout="@layout/fragment_setup_data_usage" >
+        <action
+            android:id="@+id/action_setupDataUsageFragment_to_setupCountryPickerFragment"
+            app:destination="@id/setupCountryPickerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupCountryPickerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.countrypicker.SetupCountryPickerFragment"
+        android:label="@string/setup_country_picker_title"
+        tools:layout="@layout/fragment_setup_country_picker" >
+        <action
+            android:id="@+id/action_setupCountryPickerFragment_to_setupInstallPAMFragment"
+            app:destination="@id/setupInstallPAMFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupInstallPAMFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.installpam.SetupInstallPAMFragment"
+        android:label="@string/setup_install_pam_title"
+        tools:layout="@layout/fragment_setup_install_pam">
+        <action
+            android:id="@+id/action_setupInstallPAMFragment_to_setupPermissionsFragment"
+            app:destination="@id/setupPermissionsFragment"
+            app:popUpTo="@id/setupCountryPickerFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/setupPermissionsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.permissions.SetupPermissionsFragment"
+        android:label="@string/setup_permissions_title"
+        tools:layout="@layout/fragment_setup_permissions">
+        <action
+            android:id="@+id/action_setupPermissionsFragment_to_setupBatteryOptimisationFragment"
+            app:destination="@id/setupBatteryOptimisationFragment"
+            app:popUpTo="@id/setupCountryPickerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupFaqFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.faq.FaqFragment"
+        android:label="@string/faq_title"
+        tools:layout="@layout/fragment_faq" />
+    <action
+        android:id="@+id/action_global_setupFaqFragment"
+        app:destination="@id/setupFaqFragment"/>
+    <fragment
+        android:id="@+id/setupBatteryOptimisationFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.setup.batteryoptimisation.SetupBatteryOptimisationFragment"
+        android:label="@string/battery_optimisation_title"
+        tools:layout="@layout/fragment_settings_base" />
+</navigation>

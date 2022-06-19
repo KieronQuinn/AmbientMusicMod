@@ -5,28 +5,16 @@
     android:viewportWidth="192"
     android:viewportHeight="192">
 
-    <group
-        android:pivotX="96"
-        android:pivotY="96"
-        android:scaleX="0.68"
-        android:scaleY="0.68">
-
-        <path
-            android:fillColor="#FFFFFF"
-            android:pathData="M 0 0 H 192 V 192 H 0 V 0 Z" />
-
-        <path android:pathData="M0,0v65c65.3,0,118.3,56.8,118.3,127H192V0H0z" />
-        <path
-            android:fillColor="#C7DAFB"
-            android:pathData="M0,65v29.8c50,0,90.6,43.5,90.6,97.2h27.7C118.3,121.9,65.3,65,0,65z" />
-        <path
-            android:fillColor="#7DABF5"
-            android:pathData="M0,94.8v29.3c34.9,0,63.2,30.4,63.2,67.9h27.3C90.6,138.3,50,94.8,0,94.8z" />
-        <path
-            android:fillColor="#3C6ED7"
-            android:pathData="M0,124.1V192h63.2C63.2,154.5,34.9,124.1,0,124.1z" />
-
-    </group>
-
-
+    <path
+        android:fillColor="@color/icon_background"
+        android:pathData="M 0 0 H 192 V 192 H 0 V 0 Z" />
+    <path
+        android:fillColor="@color/icon_circle_light"
+        android:pathData="M 29 74.9 C 74.3425779611 74.9 111.1 113.000567789 111.1 160 C 111.1 206.999432211 74.3425779611 245.1 29 245.1 C -16.3425779611 245.1 -53.1 206.999432211 -53.1 160 C -53.1 113.000567789 -16.3425779611 74.9 29 74.9 Z" />
+    <path
+        android:fillColor="@color/icon_circle_mid"
+        android:pathData="M 30 95.2 C 64.4073399145 95.2 92.3 124.614891936 92.3 160.9 C 92.3 197.185108064 64.4073399145 226.6 30 226.6 C -4.40733991446 226.6 -32.3 197.185108064 -32.3 160.9 C -32.3 124.614891936 -4.40733991446 95.2 30 95.2 Z" />
+    <path
+        android:fillColor="@color/icon_circle_dark"
+        android:pathData="M 30.1 115 C 54.1796150926 115 73.7 135.550129983 73.7 160.9 C 73.7 186.249870017 54.1796150926 206.8 30.1 206.8 C 6.02038490738 206.8 -13.5 186.249870017 -13.5 160.9 C -13.5 135.550129983 6.02038490738 115 30.1 115 Z" />
 </vector>

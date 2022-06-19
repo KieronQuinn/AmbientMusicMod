@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_updates"
+    app:startDestination="@id/updatesFragment">
+
+    <fragment
+        android:id="@+id/updatesFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.updates.UpdatesFragment"
+        android:label="@string/updates_title"
+        tools:layout="@layout/fragment_settings_base">
+        <action
+            android:id="@+id/action_updatesFragment_to_updatesDownloadFragment"
+            app:destination="@id/updatesDownloadFragment" />
+        <action
+            android:id="@+id/action_updatesFragment_to_countryPickerFragment"
+            app:destination="@id/countryPickerFragment" />
+        <action
+            android:id="@+id/action_updatesFragment_to_ossLicensesMenuActivity"
+            app:destination="@id/ossLicensesMenuActivity" />
+        <action
+            android:id="@+id/action_updatesFragment_to_contributorsFragment"
+            app:destination="@id/contributorsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updatesDownloadFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.updates.download.UpdatesDownloadFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_updates_download_fragment">
+        <argument
+            android:name="release"
+            app:argType="com.kieronquinn.app.ambientmusicmod.model.update.Release" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryPickerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.updates.country.CountryPickerFragment"
+        android:label="@string/country_picker_title"
+        tools:layout="@layout/fragment_settings_base" />
+    <deepLink
+        android:id="@+id/deepLink"
+        app:action="ACTION_VIEW"
+        app:uri="amm://updates" />
+    <activity
+        android:id="@+id/ossLicensesMenuActivity"
+        android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+        tools:layout="@layout/libraries_social_licenses_license_menu_activity" />
+    <fragment
+        android:id="@+id/contributorsFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.contributors.ContributorsFragment"
+        android:label="@string/about_contributors"
+        tools:layout="@layout/fragment_settings_base" />
+
+</navigation>

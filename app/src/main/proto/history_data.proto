@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_package = "com.google.audio.ambientmusic";
+option java_outer_classname = "HistoryData";
+
+message Item {
+
+	string timezone = 7;
+	Track track = 9;
+	string source = 11;
+
+	message Track {
+		string title = 3;
+		string artist = 4;
+		string album = 13;
+		string year = 14;
+		repeated Player player = 9;
+
+		message Player {
+			string url = 2;
+		}
+	}
+
+}

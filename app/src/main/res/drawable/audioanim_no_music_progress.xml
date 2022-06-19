@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/audioanim_no_music_progress"
+    android:oneshot="true">
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_00" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_01" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_02" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_03" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_04" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_05" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_06" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_07" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_08" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_09" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_10" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_11" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_12" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_13" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_14" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_no_music_progress_sprite_15" android:duration="33" />
+</animation-list>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/audioanim_waveform_progress"
+    android:oneshot="false">
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_00" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_01" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_02" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_03" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_04" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_05" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_06" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_07" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_08" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_09" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_10" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_11" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_12" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_13" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_14" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_15" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_16" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_17" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_18" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_19" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_20" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_21" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_22" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_23" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_24" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_25" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_26" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_27" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_28" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_30" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_31" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_32" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_33" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_34" android:duration="33" />
+    <item android:drawable="@drawable/audioanim_waveform_progress_sprite_35" android:duration="33" />
+</animation-list>

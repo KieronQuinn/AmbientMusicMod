@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_16"
+    android:layout_marginTop="@dimen/margin_16"
+    android:layout_marginEnd="@dimen/margin_16">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/bedtime_header_motion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_lockscreen_header"
+        android:outlineProvider="background"
+        app:layoutDescription="@xml/item_settings_bedtime_header_scene"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="275dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:clipToOutline="true">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/bedtime_header_lottie"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/lottie_bedtime" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/bedtime_header_recognised"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="@id/bedtime_header_lottie"
+            app:layout_constraintEnd_toEndOf="@id/bedtime_header_lottie"
+            app:layout_constraintHorizontal_bias="0.32"
+            app:layout_constraintStart_toStartOf="@id/bedtime_header_lottie"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.825"
+            tools:lottie_rawRes="@raw/lottie_bedtime_note_2" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

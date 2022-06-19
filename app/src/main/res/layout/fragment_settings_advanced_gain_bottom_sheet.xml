@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margin_16"
+    tools:background="@drawable/bottom_sheet_rounded_bg_dark"
+    tools:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/settings_advanced_gain_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_16"
+        android:text="@string/settings_advanced_gain"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.AmbientMusicMod"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/settings_advanced_gain_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
+        android:text="@string/settings_advanced_gain_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        app:layout_constraintTop_toBottomOf="@id/settings_advanced_gain_title" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/settings_advanced_gain_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16"
+        android:valueFrom="1.0"
+        android:valueTo="2.0"
+        android:stepSize="0.05"
+        app:layout_constraintBottom_toTopOf="@id/settings_advanced_gain_positive"
+        app:layout_constraintTop_toBottomOf="@id/settings_advanced_gain_content" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/settings_advanced_gain_positive"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:text="@android:string/ok"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settings_advanced_gain_slider" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/settings_advanced_gain_negative"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:text="@android:string/cancel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/settings_advanced_gain_positive"
+        app:layout_constraintTop_toTopOf="@id/settings_advanced_gain_positive" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/settings_advanced_gain_neutral"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:text="@string/settings_advanced_gain_reset"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/settings_advanced_gain_positive" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

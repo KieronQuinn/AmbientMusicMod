@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margin_16"
+    tools:background="@drawable/bottom_sheet_rounded_bg_dark"
+    tools:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/lockscreen_owner_info_fallback_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_16"
+        android:text="@string/lockscreen_owner_info_fallback"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.AmbientMusicMod"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lockscreen_owner_info_fallback_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        app:counterMaxLength="100"
+        app:counterEnabled="true"
+        app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        app:boxCornerRadiusTopStart="@dimen/margin_16"
+        app:boxCornerRadiusTopEnd="@dimen/margin_16"
+        app:boxCornerRadiusBottomStart="@dimen/margin_16"
+        app:boxCornerRadiusBottomEnd="@dimen/margin_16"
+        app:layout_constraintTop_toBottomOf="@+id/lockscreen_owner_info_fallback_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lockscreen_owner_info_fallback_edit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:lines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lockscreen_owner_info_fallback_positive"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_8"
+        android:text="@android:string/ok"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lockscreen_owner_info_fallback_input" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lockscreen_owner_info_fallback_negative"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:text="@android:string/cancel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/lockscreen_owner_info_fallback_positive"
+        app:layout_constraintTop_toTopOf="@id/lockscreen_owner_info_fallback_positive" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lockscreen_owner_info_fallback_neutral"
+        style="@style/Widget.Material3.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:text="@string/lockscreen_owner_info_fallback_reset"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lockscreen_owner_info_fallback_positive" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
