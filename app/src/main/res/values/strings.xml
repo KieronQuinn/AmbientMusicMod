@@ -276,6 +276,9 @@
     <string name="settings_advanced_gain_reset">Reset</string>
     <string name="settings_advanced_gain_formatter">%1sx</string>
 
+    <string name="settings_advanced_alternative_encoding">Use Alternative Encoding</string>
+    <string name="settings_advanced_alternative_encoding_content">Enable the use of an alternative encoding method which may fix distortion on some devices.\n<b>Note:</b> A higher gain value may be required in combination with this option</string>
+
     <string name="settings_advanced_small_cores">Run on Little Cores</string>
     <string name="settings_advanced_small_cores_content">Run recognition on the little CPU cores. May use less battery, may not work on all devices</string>
 

@@ -136,6 +136,7 @@ class RecognitionRepositoryImpl(
         }
         val metadata = RecognitionCallbackMetadata(source, includeAudio)
         val service = getService() ?: run {
+            hasStarted = true
             trySend(RecognitionState.Error(ErrorReason.API_INCOMPATIBLE))
             close()
             return@callbackFlow

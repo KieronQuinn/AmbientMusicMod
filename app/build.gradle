@@ -13,7 +13,8 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 String DEFAULT_MANIFEST = "215:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20220612-030100/manifest.json"
 
-def tagName = '2.0.1'
+def tagName = '2.0.2'
+def version = 202
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -40,7 +41,7 @@ android {
         applicationId "com.kieronquinn.app.ambientmusicmod"
         minSdk 28
         targetSdk 32
-        versionCode 201
+        versionCode version
         versionName tagName
 
         buildConfigField "String", "DEFAULT_MANIFEST", "\"" + DEFAULT_MANIFEST + "\""
@@ -69,6 +70,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
             manifestPlaceholders = [usesCleartextTraffic:"true"]
         }
     }

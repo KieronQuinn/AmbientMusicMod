@@ -134,6 +134,9 @@ suspend fun NavHostFragment.setupWithNavigation(navigation: BaseNavigation) {
                 }
                 ProcessPhoenix.triggerRebirth(requireContext(), mainIntent)
             }
+            is NavigationEvent.ContextInjectedMethod -> {
+                it.method.invoke(requireContext())
+            }
         }
     }
 }

@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_16"
         android:valueFrom="0.1"
-        android:valueTo="2.0"
+        android:valueTo="3.0"
         android:stepSize="0.05"
         app:layout_constraintBottom_toTopOf="@id/settings_advanced_gain_positive"
         app:layout_constraintTop_toBottomOf="@id/settings_advanced_gain_content" />

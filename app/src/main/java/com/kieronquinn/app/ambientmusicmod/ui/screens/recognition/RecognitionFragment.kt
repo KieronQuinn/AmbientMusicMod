@@ -477,6 +477,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun runSuccess(state: State.Success) = with(binding.recognitionSuccess) {
+        root.bringToFront()
         binding.recognitionCircle.root.setImageResource(R.drawable.ic_recognition_circle_success)
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             recognitionSuccessPlayback.onClicked().collect {
@@ -489,6 +490,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun runFailed(state: State.Failed) = with(binding.recognitionFailed) {
+        root.bringToFront()
         binding.recognitionCircle.root.setImageResource(R.drawable.ic_recognition_circle_failed)
         prepFailed(state.result)
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -509,6 +511,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun runError(state: State.Error) = with(binding.recognitionFailed) {
+        root.bringToFront()
         binding.recognitionCircle.root.setImageResource(R.drawable.ic_recognition_circle_failed)
         prepError(state.result)
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -522,6 +525,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun runPlayback(state: State.Playback) = with(binding.recognitionPlayback) {
+        root.bringToFront()
         //Apply a gain just to the UI to make the waveform useful
         recognitionPlaybackWaveform.setRawData(state.audio.clone().applyGain(4f).toByteArray())
         recognitionPlaybackPlay.updatePlayingState(
