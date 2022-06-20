@@ -55,3 +55,7 @@ keyPassword=<key password>
 ## Sources
 
 This repository contains a local version of [google/private-compute-services](https://github.com/google/private-compute-services) ([Apache 2.0 licence](https://github.com/google/private-compute-services/blob/master/LICENSE))
+
+## Read More
+
+Read more, including about how Now Playing works and how it protects your privacy [here](https://medium.com/@KieronQuinn/now-playing-ambient-music-mod-v2-93cd4042cc11)
