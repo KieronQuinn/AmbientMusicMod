@@ -440,14 +440,14 @@ class AmbientMusicModForegroundService: LifecycleService() {
         val launchIntent = Intent(this, MainActivity::class.java)
         val title = when(error.errorReason) {
             ErrorReason.SHIZUKU_ERROR -> R.string.notification_error_shizuku_title
-            ErrorReason.TIMEOUT -> R.string.notification_error_timeout_title
+            ErrorReason.TIMEOUT -> return
             ErrorReason.API_INCOMPATIBLE -> R.string.notification_error_api_title
             ErrorReason.NEEDS_ROOT -> R.string.notification_error_needs_root_title
             ErrorReason.DISABLED -> return
         }
         val subtitle = when(error.errorReason){
             ErrorReason.SHIZUKU_ERROR -> R.string.notification_error_shizuku_subtitle
-            ErrorReason.TIMEOUT -> R.string.notification_error_timeout_subtitle
+            ErrorReason.TIMEOUT -> return
             ErrorReason.API_INCOMPATIBLE -> R.string.notification_error_api_subtitle
             ErrorReason.NEEDS_ROOT -> R.string.notification_error_needs_root_subtitle
             ErrorReason.DISABLED -> return

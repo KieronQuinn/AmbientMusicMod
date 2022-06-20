@@ -19,6 +19,7 @@ abstract class SettingsAdvancedViewModel: ViewModel() {
     abstract val state: StateFlow<State>
 
     abstract fun onGainClicked()
+    abstract fun onAlternativeEncodingChanged(enabled: Boolean)
     abstract fun onRunOnLittleCoresChanged(enabled: Boolean)
     abstract fun onNnfpv3Changed(enabled: Boolean)
     abstract fun onSuperpacksRequireWiFiChanged(enabled: Boolean)
@@ -29,6 +30,7 @@ abstract class SettingsAdvancedViewModel: ViewModel() {
     sealed class State {
         object Loading: State()
         data class Loaded(
+            val alternativeEncoding: Boolean,
             val runOnSmallCores: Boolean,
             val nnfpv3: Boolean,
             val superpacksRequireWifi: Boolean,
@@ -50,15 +52,23 @@ class SettingsAdvancedViewModelImpl(
     private val superpacksRequireWifi = deviceConfigRepository.superpacksRequireWiFi
     private val superpacksRequireCharging = deviceConfigRepository.superpacksRequireCharging
     private val enableLogging = deviceConfigRepository.enableLogging
+    private val alternativeEncoding = deviceConfigRepository.alternativeEncoding
+
+    private val superpacksConfig = combine(
+        superpacksRequireWifi.asFlow(),
+        superpacksRequireCharging.asFlow()
+    ) { wifi, charging ->
+        Pair(wifi, charging)
+    }
 
     override val state = combine(
         runOnSmallCores.asFlow(),
         nnfpv3.asFlow(),
-        superpacksRequireWifi.asFlow(),
-        superpacksRequireCharging.asFlow(),
-        enableLogging.asFlow()
-    ) { small, nnfpv3, requireWifi, requireCharging, logging ->
-        State.Loaded(small, nnfpv3, requireWifi, requireCharging, logging)
+        superpacksConfig,
+        enableLogging.asFlow(),
+        alternativeEncoding.asFlow(),
+    ) { small, nnfpv3, superpacks, logging, alternative ->
+        State.Loaded(alternative, small, nnfpv3, superpacks.first, superpacks.second, logging)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
     override fun onGainClicked() {
@@ -94,6 +104,12 @@ class SettingsAdvancedViewModelImpl(
     override fun onEnableLoggingChanged(enabled: Boolean) {
         viewModelScope.launch {
             enableLogging.set(enabled)
+        }
+    }
+
+    override fun onAlternativeEncodingChanged(enabled: Boolean) {
+        viewModelScope.launch {
+            alternativeEncoding.set(enabled)
         }
     }
 

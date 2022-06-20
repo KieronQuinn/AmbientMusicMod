@@ -23,6 +23,7 @@ interface DeviceConfigRepository {
     val recordingGain: AmbientMusicModSetting<Float>
     val showAlbumArt: AmbientMusicModSetting<Boolean>
     val enableLogging: AmbientMusicModSetting<Boolean>
+    val alternativeEncoding: AmbientMusicModSetting<Boolean>
 
     fun getAllDeviceConfigValues(): List<Pair<String, String>>
     suspend fun sendValues()
@@ -79,6 +80,10 @@ class DeviceConfigRepositoryImpl(
         private const val ENABLE_LOGGING = "NowPlaying__enable_logging"
         private const val ENABLE_LOGGING_DEFAULT = false
 
+        //Custom, enables BIG_ENDIAN encoding to fix crackle on some devices
+        private const val ALTERNATIVE_ENCODING = "NowPlaying__alternative_audio_encoding"
+        private const val ALTERNATIVE_ENCODING_DEFAULT = false
+
         private val KEY_MAP = mapOf(
             CACHE_SHARD_ENABLED to DeviceConfigRepositoryImpl::cacheShardEnabled,
             INDEX_MANIFEST to DeviceConfigRepositoryImpl::indexManifest,
@@ -90,7 +95,8 @@ class DeviceConfigRepositoryImpl(
             SUPERPACKS_REQUIRE_WIFI to DeviceConfigRepositoryImpl::superpacksRequireWiFi,
             RECORDING_GAIN to DeviceConfigRepositoryImpl::recordingGain,
             SHOW_ALBUM_ART to DeviceConfigRepositoryImpl::showAlbumArt,
-            ENABLE_LOGGING to DeviceConfigRepositoryImpl::enableLogging
+            ENABLE_LOGGING to DeviceConfigRepositoryImpl::enableLogging,
+            ALTERNATIVE_ENCODING to DeviceConfigRepositoryImpl::alternativeEncoding
         )
 
         /**
@@ -164,6 +170,10 @@ class DeviceConfigRepositoryImpl(
 
     override val enableLogging = boolean(
         ENABLE_LOGGING, ENABLE_LOGGING_DEFAULT, onChange
+    )
+
+    override val alternativeEncoding = boolean(
+        ALTERNATIVE_ENCODING, ALTERNATIVE_ENCODING_DEFAULT, onChange
     )
 
     override fun getAllDeviceConfigValues(): List<Pair<String, String>> {

@@ -113,9 +113,12 @@ class ShizukuService: IShellProxy.Stub() {
 
     override fun AudioRecord_read(audioData: ByteArray, offsetInShorts: Int, sizeInShorts: Int): Int {
         val outShorts = ShortArray(sizeInShorts)
-        return audioRecord.read(outShorts, offsetInShorts, sizeInShorts).also {
+        val result = audioRecord.read(outShorts, offsetInShorts, sizeInShorts).also {
             outShorts.toByteArray().copyInto(audioData)
         }
+        val bufferSize = AudioRecord_getBufferSizeInFrames()
+        if(result <= 0) return result //Error or empty, don't process
+        return bufferSize
     }
 
     override fun AudioRecord_startRecording() {

@@ -59,6 +59,13 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             viewModel::onGainClicked
         ),
         GenericSettingsItem.SwitchSetting(
+            state.alternativeEncoding,
+            getString(R.string.settings_advanced_alternative_encoding),
+            getString(R.string.settings_advanced_alternative_encoding_content),
+            R.drawable.ic_settings_advanced_alternative_encoding,
+            onChanged = viewModel::onAlternativeEncodingChanged
+        ),
+        GenericSettingsItem.SwitchSetting(
             state.runOnSmallCores,
             getString(R.string.settings_advanced_small_cores),
             getString(R.string.settings_advanced_small_cores_content),
