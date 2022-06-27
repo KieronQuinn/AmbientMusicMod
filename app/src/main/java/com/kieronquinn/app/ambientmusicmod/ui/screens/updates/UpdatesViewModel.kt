@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 abstract class UpdatesViewModel: ViewModel() {
 
-    abstract fun reload()
+    abstract fun reload(clearCache: Boolean = false)
     abstract val state: StateFlow<State>
 
     abstract fun onShardsUpdateClicked(shardsState: ShardsState)
@@ -112,15 +112,15 @@ class UpdatesViewModelImpl(
         private const val LINK_DONATE = "https://kieronquinn.co.uk/redirect/AmbientMusicMod/donate"
     }
 
-    private val reloadBus = MutableStateFlow(System.currentTimeMillis())
+    private val reloadBus = MutableStateFlow(Pair(System.currentTimeMillis(), false))
     private val automaticDatabaseUpdates = settingsRepository.automaticMusicDatabaseUpdates
 
-    private val ammState = flow {
-        emit(updatesRepository.getAMMUpdateState())
+    private fun getAmmState(clearCache: Boolean) = flow {
+        emit(updatesRepository.getAMMUpdateState(clearCache))
     }.flowOn(Dispatchers.IO)
 
-    private val pamState = flow {
-        emit(updatesRepository.getPAMUpdateState())
+    private fun getPamState(clearCache: Boolean) = flow {
+        emit(updatesRepository.getPAMUpdateState(clearCache))
     }.flowOn(Dispatchers.IO)
 
     private val downloadState = combine(
@@ -147,12 +147,12 @@ class UpdatesViewModelImpl(
 
     override val state = reloadBus.flatMapLatest {
         combine(
-            ammState,
-            pamState,
+            getAmmState(it.second),
+            getPamState(it.second),
             downloadState,
             automaticDatabaseUpdates.asFlow()
         ) { amm, pam, download, automaticUpdates ->
-            val shards = shardsRepository.getShardsState().firstNotNull().apply {
+            val shards = shardsRepository.getShardsState(it.second).firstNotNull().apply {
                 downloadState = download
             }
             if(automaticUpdates && shards.updateAvailable && shards.remote != null){
@@ -163,9 +163,9 @@ class UpdatesViewModelImpl(
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
-    override fun reload() {
+    override fun reload(clearCache: Boolean) {
         viewModelScope.launch {
-            reloadBus.emit(System.currentTimeMillis())
+            reloadBus.emit(Pair(System.currentTimeMillis(), clearCache))
         }
     }
 

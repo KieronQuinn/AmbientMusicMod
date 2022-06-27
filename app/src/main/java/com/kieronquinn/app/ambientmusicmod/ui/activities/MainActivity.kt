@@ -6,7 +6,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
-import com.kieronquinn.app.ambientmusicmod.service.AmbientMusicModForegroundService
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.delayPreDrawUntilFlow
 import com.kieronquinn.app.ambientmusicmod.work.UpdateWorker
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
@@ -31,7 +30,6 @@ class MainActivity: MonetCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        AmbientMusicModForegroundService.start(this, true)
         if(!intent.getBooleanExtra(EXTRA_SKIP_SPLASH, false)) {
             findViewById<View>(android.R.id.content).delayPreDrawUntilFlow(splashDelay, lifecycle)
         }

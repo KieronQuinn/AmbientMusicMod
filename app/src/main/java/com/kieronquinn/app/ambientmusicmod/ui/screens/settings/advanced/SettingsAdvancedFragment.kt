@@ -2,6 +2,7 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
@@ -10,6 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.SettingsAdvancedViewModel.State
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isArmv7
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,17 +68,19 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             onChanged = viewModel::onAlternativeEncodingChanged
         ),
         GenericSettingsItem.SwitchSetting(
-            state.runOnSmallCores,
+            state.runOnSmallCores && !isArmv7,
             getString(R.string.settings_advanced_small_cores),
-            getString(R.string.settings_advanced_small_cores_content),
+            getStringOrUnsupported(!isArmv7, R.string.settings_advanced_small_cores_content),
             R.drawable.ic_settings_advanced_small_cores,
+            enabled = !isArmv7,
             onChanged = viewModel::onRunOnLittleCoresChanged
         ),
         GenericSettingsItem.SwitchSetting(
-            state.nnfpv3,
+            state.nnfpv3 && !isArmv7,
             getString(R.string.settings_advanced_nnfp_v3),
-            getText(R.string.settings_advanced_nnfp_v3_content),
+            getStringOrUnsupported(!isArmv7, R.string.settings_advanced_nnfp_v3_content),
             R.drawable.ic_settings_advanced_nnfp,
+            enabled = !isArmv7,
             onChanged = viewModel::onNnfpv3Changed
         ),
         GenericSettingsItem.SwitchSetting(
@@ -108,5 +112,13 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             viewModel.onClearAlbumArtClicked(requireContext())
         }
     )
+
+    private fun getStringOrUnsupported(isEnabled: Boolean, @StringRes resource: Int): String {
+        return if(isEnabled){
+            getString(resource)
+        } else {
+            getString(R.string.settings_generic_unsupported)
+        }
+    }
 
 }

@@ -1,9 +1,11 @@
 package com.kieronquinn.app.ambientmusicmod.repositories
 
 import android.content.Context
+import com.google.gson.Gson
 import com.kieronquinn.app.ambientmusicmod.BuildConfig
 import com.kieronquinn.app.ambientmusicmod.PACKAGE_NAME_PAM
 import com.kieronquinn.app.ambientmusicmod.model.github.GitHubRelease
+import com.kieronquinn.app.ambientmusicmod.model.update.CachedGitHubRelease
 import com.kieronquinn.app.ambientmusicmod.providers.GitHubProvider
 import com.kieronquinn.app.ambientmusicmod.repositories.UpdatesRepository.UpdateState
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.time.Duration
+import java.time.Instant
 
 interface UpdatesRepository {
 
@@ -22,8 +26,15 @@ interface UpdatesRepository {
     suspend fun containerCheckForUpdates()
 
     suspend fun isAnyUpdateAvailable(): Boolean
-    suspend fun getPAMUpdateState(ignoreLocal: Boolean = false): UpdateState
-    suspend fun getAMMUpdateState(): UpdateState
+
+    suspend fun getPAMUpdateState(
+        ignoreLocal: Boolean = false,
+        ignoreCache: Boolean = false
+    ): UpdateState
+
+    suspend fun getAMMUpdateState(
+        ignoreCache: Boolean = false
+    ): UpdateState
 
     sealed class UpdateState {
         data class NotInstalled(
@@ -46,7 +57,17 @@ interface UpdatesRepository {
 
 class UpdatesRepositoryImpl(context: Context): UpdatesRepository {
 
+    companion object {
+        private val CACHE_TIMEOUT = Duration.ofHours(12).toMillis()
+    }
+
     private val packageManager = context.packageManager
+
+    private val updatesCacheDir = File(context.cacheDir, "updates").apply {
+        mkdirs()
+    }
+
+    private val gson = Gson()
 
     private val pamProvider = GitHubProvider.getGitHubProvider("NowPlaying")
     private val ammProvider = GitHubProvider.getGitHubProvider("AmbientMusicMod")
@@ -68,7 +89,10 @@ class UpdatesRepositoryImpl(context: Context): UpdatesRepository {
         containerCheckUpdatesBus.emit(System.currentTimeMillis())
     }
 
-    override suspend fun getPAMUpdateState(ignoreLocal: Boolean): UpdateState = withContext(
+    override suspend fun getPAMUpdateState(
+        ignoreLocal: Boolean,
+        ignoreCache: Boolean
+    ): UpdateState = withContext(
         Dispatchers.IO
     ) {
         val localAsiVersion = try {
@@ -76,13 +100,13 @@ class UpdatesRepositoryImpl(context: Context): UpdatesRepository {
         }catch (e: Exception){
             null
         }
-        getRelease(localAsiVersion, pamProvider)
+        getRelease(localAsiVersion, pamProvider, "pam", ignoreCache)
     }
 
-    override suspend fun getAMMUpdateState(): UpdateState = withContext(
+    override suspend fun getAMMUpdateState(ignoreCache: Boolean): UpdateState = withContext(
         Dispatchers.IO
     ) {
-        getRelease(BuildConfig.TAG_NAME, ammProvider)
+        getRelease(BuildConfig.TAG_NAME, ammProvider, "amm", ignoreCache)
     }
 
     override suspend fun isAnyUpdateAvailable(): Boolean {
@@ -98,9 +122,15 @@ class UpdatesRepositoryImpl(context: Context): UpdatesRepository {
     }
 
     private fun getRelease(
-        localVersion: String?, provider: GitHubProvider
+        localVersion: String?,
+        provider: GitHubProvider,
+        repository: String,
+        ignoreCache: Boolean = false
     ): UpdateState {
-        val remoteRelease = provider.getCurrentRelease()
+        val cachedRelease = if(ignoreCache) null else getUpdateCache(repository)
+        val remoteRelease = cachedRelease ?: provider.getCurrentRelease()?.also {
+            it.cacheRelease(repository)
+        }
         val remoteVersion = remoteRelease?.tag
         return when {
             localVersion != null && remoteRelease != null && remoteVersion != null &&
@@ -131,6 +161,27 @@ class UpdatesRepositoryImpl(context: Context): UpdatesRepository {
             null
         } ?: return null
         return releases.firstOrNull()
+    }
+
+    private fun getUpdateCache(repository: String): GitHubRelease? {
+        val file = File(updatesCacheDir, repository)
+        if(!file.exists()) return null
+        val cachedRelease = try {
+            gson.fromJson(file.readText(), CachedGitHubRelease::class.java)
+        }catch (e: Exception){
+            null
+        } ?: return null
+        val cacheAge = Duration.between(
+            Instant.ofEpochMilli(cachedRelease.timestamp), Instant.now()
+        ).toMillis()
+        if(cacheAge > CACHE_TIMEOUT) return null
+        return cachedRelease.release
+    }
+
+    private fun GitHubRelease.cacheRelease(repository: String) {
+        val file = File(updatesCacheDir, repository)
+        val cachedRelease = gson.toJson(CachedGitHubRelease(System.currentTimeMillis(), this))
+        file.writeText(cachedRelease)
     }
 
 }

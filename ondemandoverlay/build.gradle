@@ -64,7 +64,7 @@ dependencies {}
 
 task copyOverlay(type: Copy, dependsOn: 'build') {
     from buildDir.path + "/outputs/apk/release/OnDemandOverlay.apk"
-    into projectDir.path + "/module/system/product/overlay/OnDemandOverlay"
+    into projectDir.path + "/module/install/"
 }
 
 task buildOverlay(type: Zip, dependsOn: 'copyOverlay') {

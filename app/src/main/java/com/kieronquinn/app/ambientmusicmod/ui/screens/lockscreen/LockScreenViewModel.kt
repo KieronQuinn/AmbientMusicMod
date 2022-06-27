@@ -1,6 +1,7 @@
 package com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen
 
 import android.content.Context
+import android.graphics.Color
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +15,11 @@ import com.kieronquinn.app.ambientmusicmod.repositories.AccessibilityRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.OverlayTextColour
 import com.kieronquinn.app.ambientmusicmod.service.LockscreenOverlayAccessibilityService
 import com.kieronquinn.app.ambientmusicmod.ui.screens.container.ContainerFragmentDirections
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.getAccessibilityIntent
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.toHexColor
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -29,6 +32,7 @@ abstract class LockScreenViewModel: ViewModel() {
     abstract fun onEnhancedChanged(enabled: Boolean)
     abstract fun onStyleChanged(style: LockscreenOverlayStyle)
     abstract fun onOnDemandChanged(enabled: Boolean)
+    abstract fun onTextColourClicked()
 
     abstract fun onPositionClicked()
     abstract fun onClickActionClicked()
@@ -42,7 +46,8 @@ abstract class LockScreenViewModel: ViewModel() {
             val style: LockscreenOverlayStyle,
             val clickAction: SettingsRepository.LockscreenOnTrackClicked,
             val onDemandAvailable: Boolean,
-            val onDemandEnabled: Boolean
+            val onDemandEnabled: Boolean,
+            val overlayTextColour: String
         ): State() {
             override fun equals(other: Any?): Boolean {
                 return false
@@ -73,6 +78,7 @@ abstract class LockScreenViewModel: ViewModel() {
 }
 
 class LockScreenViewModelImpl(
+    context: Context,
     settingsRepository: SettingsRepository,
     remoteSettingsRepository: RemoteSettingsRepository,
     private val accessibilityRepository: AccessibilityRepository,
@@ -83,6 +89,8 @@ class LockScreenViewModelImpl(
     private val overlayEnabled = accessibilityRepository.enabled
     private val overlayEnhanced = settingsRepository.lockscreenOverlayEnhanced
     private val style = settingsRepository.lockscreenOverlayStyle
+    private val overlayTextColour = settingsRepository.lockscreenOverlayColour
+    private val overlayCustomTextColour = settingsRepository.lockscreenOverlayCustomColour
     private val clicked = settingsRepository.lockscreenOverlayClicked
     private val onDemandLockscreenEnabled = settingsRepository.onDemandLockscreenEnabled
 
@@ -97,14 +105,29 @@ class LockScreenViewModelImpl(
         Pair(remote.onDemandCapable && remote.onDemandEnabled, enabled)
     }
 
+    private val combinedStyle = combine(
+        style.asFlow(), overlayTextColour.asFlow(), overlayCustomTextColour.asFlow()
+    ) { s, textColour, customTextColour ->
+        val colour = when(textColour){
+            OverlayTextColour.AUTOMATIC -> context.getString(R.string.lockscreen_overlay_text_colour_automatic_title)
+            OverlayTextColour.BLACK -> context.getString(R.string.lockscreen_overlay_text_colour_black_title)
+            OverlayTextColour.WHITE -> context.getString(R.string.lockscreen_overlay_text_colour_white_title)
+            OverlayTextColour.CUSTOM -> {
+                if(customTextColour == Int.MAX_VALUE) Color.WHITE.toHexColor(true)
+                else customTextColour.toHexColor(true)
+            }
+        }
+        Pair(s, colour)
+    }
+
     override val state = combine(
         overlayEnabled,
         overlayEnhanced.asFlow(),
-        style.asFlow(),
+        combinedStyle,
         clicked.asFlow(),
         onDemand
     ) { enabled, enhanced, style, clicked, demand ->
-        State.Loaded(enabled, enhanced, style, clicked, demand.first, demand.second)
+        State.Loaded(enabled, enhanced, style.first, clicked, demand.first, demand.second, style.second)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
     override fun onSwitchChanged(context: Context, enabled: Boolean) {
@@ -150,6 +173,12 @@ class LockScreenViewModelImpl(
         viewModelScope.launch {
             val style = style.get()
             rootNavigation.navigate(ContainerFragmentDirections.actionContainerFragmentToLockScreenPositionFragment(style))
+        }
+    }
+
+    override fun onTextColourClicked() {
+        viewModelScope.launch {
+            navigation.navigate(LockScreenFragmentDirections.actionLockScreenFragmentToLockScreenTextColourFragment())
         }
     }
 

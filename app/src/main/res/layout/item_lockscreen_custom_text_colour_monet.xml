@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_8"
+    android:paddingBottom="@dimen/margin_8">
+
+    <TextView
+        android:id="@+id/custom_text_colour_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+        tools:text="Primary 1" />
+
+    <com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
+        android:id="@+id/custom_text_colour_inner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/margin_8"
+        android:paddingEnd="@dimen/margin_8"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_lockscreen_custom_text_colour_monet_colour"
+        tools:orientation="horizontal" />
+
+</LinearLayout>

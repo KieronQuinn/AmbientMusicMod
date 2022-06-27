@@ -79,6 +79,12 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
             .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
     }
 
+    private val overlayTextColour = settings.lockscreenOverlayColour.asFlow()
+        .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
+
+    private val overlayCustomTextColour = settings.lockscreenOverlayCustomColour.asFlow()
+        .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
+
     private val mainSwitch = combine(
         remoteSettings.getRemoteSettings(lifecycleScope).filterNotNull(),
         accessibility.enabled
@@ -247,8 +253,21 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
 
     }
 
+    private suspend fun getOverlayTextColour(darkText: Boolean): Int {
+        val automatic = if(darkText) Color.BLACK else Color.WHITE
+        return when(overlayTextColour.firstNotNull()) {
+            SettingsRepository.OverlayTextColour.AUTOMATIC -> automatic
+            SettingsRepository.OverlayTextColour.BLACK -> Color.BLACK
+            SettingsRepository.OverlayTextColour.WHITE -> Color.WHITE
+            SettingsRepository.OverlayTextColour.CUSTOM -> {
+                val colour = overlayCustomTextColour.firstNotNull()
+                if(colour == Int.MAX_VALUE) automatic else colour
+            }
+        }
+    }
+
     private suspend fun setupAndAttachView(state: OverlayState, darkText: Boolean, yPos: Int) = viewLock.withLock {
-        val colour = if(darkText) Color.BLACK else Color.WHITE
+        val colour = getOverlayTextColour(darkText)
         val style = when (state) {
             is OverlayState.Hidden -> {
                 detachViewLocked()

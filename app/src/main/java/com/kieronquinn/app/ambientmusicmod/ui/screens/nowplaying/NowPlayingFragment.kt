@@ -1,5 +1,6 @@
 package com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -76,10 +77,13 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
 
     private fun setupFab() = with(binding.fabNowplayingRecognise){
         backgroundTintList = ColorStateList.valueOf(monet.getPrimaryColor(context))
+        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            context.getLegacyWorkaroundNavBarHeight()
+        } else 0
         onApplyInsets { _, insets ->
             val bottomInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             updateLayoutParams<ConstraintLayout.LayoutParams> {
-                updateMargins(bottom = bottomInset + fabMargin)
+                updateMargins(bottom = bottomInset + fabMargin + legacyWorkaround)
             }
         }
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
@@ -97,6 +101,13 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
                 viewModel.onRecogniseFabClicked()
             }
         }
+    }
+
+    private fun Context.getLegacyWorkaroundNavBarHeight(): Int {
+        val resourceId: Int = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+        return if (resourceId > 0) {
+            resources.getDimensionPixelSize(resourceId)
+        } else 0
     }
 
     override fun onResume() {

@@ -118,7 +118,8 @@ class DeviceConfigRepositoryImpl(
             "NowPlaying__on_demand_min_supported_aga_version" to "12.35.17",
             "NowPlaying__on_demand_retry_fingerprinter_install" to "true",
             "NowPlaying__youtube_export_enabled" to "true",
-            "NowPlaying__ambient_music_hide_old_results_when_recognition_fails" to "false"
+            "NowPlaying__ambient_music_hide_old_results_when_recognition_fails" to "false",
+            "StatsLog__enabled" to "false" //Disable StatsLog as it's useless to us and crashes A10
         )
     }
 

@@ -3,6 +3,7 @@ package com.kieronquinn.app.ambientmusicmod.utils.extensions
 import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
@@ -38,6 +39,28 @@ fun View.onClicked() = callbackFlow {
         setOnClickListener(null)
     }
 }.debounce(TAP_DEBOUNCE)
+
+fun View.onFocused() = callbackFlow {
+    setOnFocusChangeListener { _, isFocused ->
+        if(isFocused) trySend(Unit)
+    }
+    awaitClose {
+        onFocusChangeListener = null
+    }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun View.onTouchUp() = callbackFlow {
+    setOnTouchListener { _, motionEvent ->
+        if(motionEvent.action == MotionEvent.ACTION_UP){
+            trySend(Unit)
+        }
+        false
+    }
+    awaitClose {
+        setOnTouchListener(null)
+    }
+}
 
 fun View.addRipple() = with(TypedValue()) {
     context.theme.resolveAttribute(android.R.attr.selectableItemBackground, this, true)

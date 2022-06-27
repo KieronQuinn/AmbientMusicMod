@@ -1,6 +1,7 @@
 package com.kieronquinn.app.ambientmusicmod.ui.screens.setup.permissions
 
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.WindowInsetsCompat
@@ -12,6 +13,7 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentSetupPermissionsB
 import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.setup.permissions.SetupPermissionsViewModel.State
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getLegacyWorkaroundNavBarHeight
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
@@ -48,10 +50,13 @@ class SetupPermissionsFragment: BoundFragment<FragmentSetupPermissionsBinding>(F
 
     private fun setupInsets() {
         val standardPadding = resources.getDimension(R.dimen.margin_16).toInt()
+        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            requireContext().getLegacyWorkaroundNavBarHeight()
+        } else 0
         binding.setupPermissionsControls.onApplyInsets { view, insets ->
             view.updatePadding(
                 bottom = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom +
-                        standardPadding
+                        standardPadding + legacyWorkaround
             )
         }
     }

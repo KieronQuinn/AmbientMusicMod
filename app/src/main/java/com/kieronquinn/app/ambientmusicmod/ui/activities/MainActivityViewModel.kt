@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.kieronquinn.app.ambientmusicmod.PACKAGE_NAME_PAM
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
+import com.kieronquinn.app.ambientmusicmod.service.AmbientMusicModForegroundService
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isAppInstalled
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -20,6 +21,10 @@ class MainActivityViewModelImpl(
     context: Context,
     settingsRepository: SettingsRepository
 ): MainActivityViewModel() {
+
+    init {
+        AmbientMusicModForegroundService.start(context, true)
+    }
 
     companion object {
         private const val SPLASH_TIMEOUT = 1000L

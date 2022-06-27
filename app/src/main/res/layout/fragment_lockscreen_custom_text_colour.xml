@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_8"
+    android:transitionGroup="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/custom_text_colour_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@drawable/background_tabs"
+        android:minWidth="@dimen/tab_min_width"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lockscreen_header_new_preview"
+        app:tabIndicator="@drawable/indicator_tabs"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="56dp"
+        app:tabSelectedTextColor="?android:textColorPrimaryInverse"
+        app:tabTextAppearance="@style/TextAppearance.Tabs"
+        app:tabTextColor="@android:color/white">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lockscreen_overlay_text_colour_custom_tab_monet" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lockscreen_overlay_text_colour_custom_tab_custom" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/custom_text_colour_pager" />
+
+</LinearLayout>

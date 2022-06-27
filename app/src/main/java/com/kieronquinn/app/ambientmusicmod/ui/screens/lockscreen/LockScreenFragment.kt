@@ -92,6 +92,12 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
             R.drawable.ic_lockscreen_click_action,
             viewModel::onClickActionClicked
         )
+        val textColour = GenericSettingsItem.Setting(
+            getString(R.string.lockscreen_overlay_text_colour_title),
+            getString(R.string.lockscreen_overlay_text_colour_content, state.overlayTextColour),
+            R.drawable.ic_lockscreen_overlay_text_colour,
+            viewModel::onTextColourClicked
+        )
         val onDemand = if(state.onDemandAvailable){
             GenericSettingsItem.SwitchSetting(
                 state.onDemandEnabled,
@@ -102,7 +108,7 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
             )
         }else null
         return listOfNotNull(
-            switch, header, enhancedSetting, clickAction, onDemand, ownerInfo, LockScreenSettingsItem.Footer
+            switch, header, enhancedSetting, clickAction, textColour, onDemand, ownerInfo, LockScreenSettingsItem.Footer
         )
     }
 

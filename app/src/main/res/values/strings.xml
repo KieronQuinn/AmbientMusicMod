@@ -192,7 +192,7 @@
     <string name="lockscreen_show_on_demand">On Demand</string>
     <string name="lockscreen_show_on_demand_content">Show a button to start an On Demand recognition when no track is recognised</string>
     <string name="lockscreen_enhanced">Adaptive Lock Screen Overlay</string>
-    <string name="lockscreen_enhanced_content">Hide the overlay when notifications, quick settings or an app is displaying over the lockscreen. This may not work on all devices.</string>
+    <string name="lockscreen_enhanced_content">Hide the overlay when notifications, quick settings or an app is displaying over the lockscreen. This may not work on all devices, disable if it breaks the overlay.</string>
     <string name="lockscreen_overlay_on_clicked">Tap Action</string>
     <string name="lockscreen_overlay_on_clicked_content">Select an action to open when a track is clicked: %1s</string>
     <string name="lockscreen_enable_toast">Enable "Ambient Music Mod"</string>
@@ -211,6 +211,28 @@
     <string name="lockscreen_owner_info_fallback_content_empty">[Empty]</string>
     <string name="lockscreen_owner_info_fallback_reset">Reset</string>
 
+    <string name="lockscreen_overlay_text_colour_title">Overlay Text Colour</string>
+    <string name="lockscreen_overlay_text_colour_content">Set the text colour of the lockscreen overlay: %1s</string>
+
+    <string name="lockscreen_overlay_text_colour_automatic_title">Automatic</string>
+    <string name="lockscreen_overlay_text_colour_automatic_content">Automatically adjusts to the wallpaper colour, provided by the system (may not work on all wallpapers)</string>
+    <string name="lockscreen_overlay_text_colour_black_title">Black</string>
+    <string name="lockscreen_overlay_text_colour_black_content">Best for light wallpapers</string>
+    <string name="lockscreen_overlay_text_colour_white_title">White</string>
+    <string name="lockscreen_overlay_text_colour_white_content">Best for dark wallpapers</string>
+    <string name="lockscreen_overlay_text_colour_custom_title">Custom</string>
+    <string name="lockscreen_overlay_text_colour_custom_content">Set a custom colour</string>
+    <string name="lockscreen_overlay_text_colour_custom_title_long">Custom colour</string>
+    <string name="lockscreen_overlay_text_colour_custom_tab_monet">Palette</string>
+    <string name="lockscreen_overlay_text_colour_custom_tab_custom">Custom</string>
+    <string name="lockscreen_overlay_text_colour_custom_input_hint">Colour</string>
+    <string name="lockscreen_overlay_text_colour_custom_button">Apply</string>
+    <string name="lockscreen_overlay_text_colour_palette_accent1">Accent 1</string>
+    <string name="lockscreen_overlay_text_colour_palette_accent2">Accent 2</string>
+    <string name="lockscreen_overlay_text_colour_palette_accent3">Accent 3</string>
+    <string name="lockscreen_overlay_text_colour_palette_neutral1">Neutral 1</string>
+    <string name="lockscreen_overlay_text_colour_palette_neutral2">Neutral 2</string>
+
     <string name="lockscreen_position_toast">Drag to move, long press background to reset</string>
 
     <string name="lockscreen_overlay_on_clicked_title">Tap Action</string>
@@ -228,6 +250,8 @@
     <string name="footer_lockscreen">In order to display the recognised song, <b>Ambient Music Mod uses an Accessibility Service</b>. This service is required as Android does not otherwise allow apps to overlay on top of the lock screen. <b>Ambient Music Mod does not collect your data or monitor interactions</b>, unless you enable Adaptive Lock Screen Overlay, when interactions with the Status Bar and Quick Settings while the device is locked are monitored. <b>No other data is processed</b>.</string>
 
     <string name="settings_title">Settings</string>
+
+    <string name="settings_generic_unsupported">This option is not available on your device</string>
 
     <string name="settings_recognition_period">Recognition Period</string>
     <string name="settings_recognition_period_content">Specify the time between recognitions: %1s</string>
@@ -272,7 +296,7 @@
     <string name="settings_advanced_content">Change the audio recording gain and more</string>
 
     <string name="settings_advanced_gain">Gain</string>
-    <string name="settings_advanced_gain_content">Apply a gain to audio recordings.\n<b>Note:</b> A higher gain also increases noise, use with care. Use a gain lower than 1.0x if you are experiencing distortion with the default setting.</string>
+    <string name="settings_advanced_gain_content">Apply a gain to audio recordings.\n<b>Note:</b> A higher gain also increases noise, use with care.</string>
     <string name="settings_advanced_gain_reset">Reset</string>
     <string name="settings_advanced_gain_formatter">%1sx</string>
 
