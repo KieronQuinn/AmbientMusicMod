@@ -29,7 +29,7 @@
             app:maxLines="3"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:scrimAnimationDuration="250"
-            app:scrimVisibleHeightTrigger="174dp"
+            app:scrimVisibleHeightTrigger="@dimen/app_bar_scrim_height"
             app:statusBarScrim="@null"
             app:titleCollapseMode="fade"
             app:collapsedTitleTextAppearance="@style/CollapsingToolbarTitle.Collapsed"

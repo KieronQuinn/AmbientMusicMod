@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_lockScreenFragment_to_lockScreenOwnerInfoFragment"
             app:destination="@id/lockScreenOwnerInfoFragment" />
+        <action
+            android:id="@+id/action_lockScreenFragment_to_lockScreenTextColourFragment"
+            app:destination="@id/lockScreenTextColourFragment" />
     </fragment>
     <fragment
         android:id="@+id/lockScreenActionFragment"
@@ -174,5 +177,19 @@
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.batteryoptimisation.BatteryOptimisationSettingsFragment"
         android:label="@string/battery_optimisation_title"
         tools:layout="@layout/fragment_settings_base"/>
+    <fragment
+        android:id="@+id/lockScreenTextColourFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.LockScreenTextColourFragment"
+        android:label="@string/lockscreen_overlay_text_colour_title"
+        tools:layout="@layout/fragment_settings_base" >
+        <action
+            android:id="@+id/action_lockScreenTextColourFragment_to_lockScreenCustomTextColourFragment"
+            app:destination="@id/lockScreenCustomTextColourFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lockScreenCustomTextColourFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.LockScreenCustomTextColourFragment"
+        android:label="@string/lockscreen_overlay_text_colour_custom_title_long"
+        tools:layout="@layout/fragment_lockscreen_custom_text_colour"/>
 
 </navigation>

@@ -52,6 +52,7 @@
         android:background="@drawable/rounded_ripple_36"
         android:src="@drawable/ic_check"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        app:tint="?android:textColorPrimary" />
 
 </LinearLayout>

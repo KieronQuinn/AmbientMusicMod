@@ -13,6 +13,7 @@ import com.kieronquinn.monetcompat.extensions.views.applyMonet
 abstract class BaseSettingsFragment: BoundFragment<FragmentSettingsBaseBinding>(FragmentSettingsBaseBinding::inflate) {
 
     open val addAdditionalPadding = false
+    open val disableNestedScrolling = false
 
     abstract val adapter: BaseSettingsAdapter
 
@@ -28,6 +29,9 @@ abstract class BaseSettingsFragment: BoundFragment<FragmentSettingsBaseBinding>(
         applyBottomNavigationInset(resources.getDimension(R.dimen.margin_16))
         if(addAdditionalPadding){
             updatePadding(top = resources.getDimension(R.dimen.margin_8).toInt())
+        }
+        if(disableNestedScrolling){
+            isNestedScrollingEnabled = false
         }
     }
 

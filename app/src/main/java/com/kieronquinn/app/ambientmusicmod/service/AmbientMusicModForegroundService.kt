@@ -202,7 +202,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
                         null,
                         System.currentTimeMillis() + ON_DEMAND_SEARCH_TIMEOUT
                     ){}
-                }else clearTo
+                }else null //Don't clear during recordings for screen on's sake
             }
             is RecognitionState.Recognising -> {
                 if(state.source == RecognitionSource.ON_DEMAND) {
@@ -214,7 +214,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
                         null,
                         System.currentTimeMillis() + ON_DEMAND_SEARCH_TIMEOUT
                     ){}
-                }else clearTo
+                }else null //Don't clear during recognising for screen on's sake
             }
             is RecognitionState.Recognised -> {
                 val recognitionTime = state.metadata?.recognitionTime ?: System.currentTimeMillis()
@@ -241,13 +241,14 @@ class AmbientMusicModForegroundService: LifecycleService() {
                     )
                 }else clearTo
             }
+            null -> null //Don't clear on null for screen on's sake
             else -> clearTo
         }.also {
             if(it is OverlayState.Shown) {
                 setupTimeout(it.endTime, clearTo)
             }
         }
-    }.distinctUntilChanged { old, new -> old.stateEquals(new) }
+    }.filterNotNull().distinctUntilChanged { old, new -> old.stateEquals(new) }
 
     private val recognitionDelay = recognitionState.mapLatest {
         if(it == null){

@@ -8,7 +8,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.debounce
 
-fun EditText.onChanged() = callbackFlow {
+fun EditText.onChanged(disableIf: (() -> Boolean) = { false }) = callbackFlow {
     val textWatcher = object: TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             //No-op
@@ -19,7 +19,7 @@ fun EditText.onChanged() = callbackFlow {
         }
 
         override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            trySend(value)
+            if(!disableIf()) trySend(value)
         }
     }
     addTextChangedListener(textWatcher)

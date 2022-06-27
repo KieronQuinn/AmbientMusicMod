@@ -33,6 +33,12 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo.fallb
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo.fallback.LockScreenOwnerInfoFallbackBottomSheetViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.position.LockScreenPositionViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.position.LockScreenPositionViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.LockScreenTextColourViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.LockScreenTextColourViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.custom.LockScreenCustomTextColourCustomViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.custom.LockScreenCustomTextColourCustomViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.monet.LockScreenCustomTextColourMonetViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.monet.LockScreenCustomTextColourMonetViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.ondemand.OnDemandViewModel
@@ -127,11 +133,14 @@ class AmbientMusicMod: Application() {
         viewModel<NowPlayingViewModel> { NowPlayingViewModelImpl(get(), get(), get(), get(), get()) }
         viewModel<RecognitionViewModel> { RecognitionViewModelImpl(get(), get(), get(), get(), get()) }
         viewModel<OnDemandViewModel> { OnDemandViewModelImpl(get(), get(), get()) }
-        viewModel<LockScreenViewModel> { LockScreenViewModelImpl(get(), get(), get(), get(), get()) }
+        viewModel<LockScreenViewModel> { LockScreenViewModelImpl(get(), get(), get(), get(), get(), get()) }
         viewModel<LockScreenPositionViewModel> { LockScreenPositionViewModelImpl(get(), get()) }
         viewModel<LockScreenActionViewModel> { LockScreenActionViewModelImpl(get()) }
         viewModel<LockScreenOwnerInfoViewModel> { LockScreenOwnerInfoViewModelImpl(get(), get(), get()) }
         viewModel<LockScreenOwnerInfoFallbackBottomSheetViewModel> { LockScreenOwnerInfoFallbackBottomSheetViewModelImpl(get(), get()) }
+        viewModel<LockScreenTextColourViewModel> { LockScreenTextColourViewModelImpl(get(), get()) }
+        viewModel<LockScreenCustomTextColourMonetViewModel> { LockScreenCustomTextColourMonetViewModelImpl(get(), get()) }
+        viewModel<LockScreenCustomTextColourCustomViewModel> { LockScreenCustomTextColourCustomViewModelImpl(get(), get()) }
         viewModel<SettingsViewModel> { SettingsViewModelImpl(get(), get(), get()) }
         viewModel<SettingsRecognitionPeriodViewModel> { SettingsRecognitionPeriodViewModelImpl(get()) }
         viewModel<SettingsRecognitionBufferViewModel> { SettingsRecognitionBufferViewModelImpl(get()) }

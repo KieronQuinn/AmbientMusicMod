@@ -23,6 +23,10 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:layout_marginStart="@dimen/margin_8"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="0.5"
+        android:shadowDx="0.5"
+        android:shadowDy="0.5"
         android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
         android:textColor="?android:textColorPrimary"
         tools:text="Clocks • Coldplay" />

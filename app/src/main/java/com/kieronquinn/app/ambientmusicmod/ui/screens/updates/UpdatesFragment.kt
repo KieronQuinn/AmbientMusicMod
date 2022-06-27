@@ -41,7 +41,7 @@ class UpdatesFragment: BoundFragment<FragmentUpdatesBinding>(FragmentUpdatesBind
     private fun setupSwipeRefresh() = with(binding.updatesSwipeRefresh) {
         setColorSchemeColors(monet.getAccentColor(context))
         setOnRefreshListener {
-            viewModel.reload()
+            viewModel.reload(true)
         }
     }
 

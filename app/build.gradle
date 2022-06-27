@@ -11,10 +11,10 @@ plugins {
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "215:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20220612-030100/manifest.json"
+String DEFAULT_MANIFEST = "217:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20220626-030028/manifest.json"
 
-def tagName = '2.0.2'
-def version = 202
+def tagName = '2.0.3'
+def version = 203
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -184,6 +184,9 @@ dependencies {
 
     //Autostarter provides some OEM battery checks + starting settings for disabling them
     implementation 'com.github.judemanutd:autostarter:1.1.0'
+
+    //Colour Picker for overlay text
+    implementation 'com.github.duanhong169:colorpicker:1.1.6'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

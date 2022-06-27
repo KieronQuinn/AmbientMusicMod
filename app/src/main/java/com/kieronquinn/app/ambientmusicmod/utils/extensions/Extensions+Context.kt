@@ -71,6 +71,7 @@ private const val EXTRA_SHOW_FRAGMENT_ARGUMENTS = ":settings:show_fragment_args"
 fun Context.getAccessibilityIntent(accessibilityService: Class<out AccessibilityService>): Intent {
     return Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         val bundle = Bundle()
         val componentName = ComponentName(packageName, accessibilityService.name).flattenToString()
         bundle.putString(EXTRA_FRAGMENT_ARG_KEY, componentName)
@@ -170,6 +171,10 @@ val Context.isDarkMode: Boolean
             else -> false
         }
     }
+
+fun Context.isLandscape(): Boolean {
+    return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+}
 
 fun Context.getNetworkCapabilities() = callbackFlow {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

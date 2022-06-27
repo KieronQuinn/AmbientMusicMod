@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:overScrollMode="never"
+    android:paddingTop="@dimen/margin_16">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <top.defaults.colorpicker.ColorPickerView
+            android:id="@+id/custom_colour_picker"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_gravity="center_horizontal" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/custom_colour_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16"
+            app:boxCornerRadiusBottomEnd="@dimen/margin_16"
+            app:boxCornerRadiusBottomStart="@dimen/margin_16"
+            app:boxCornerRadiusTopEnd="@dimen/margin_16"
+            app:boxCornerRadiusTopStart="@dimen/margin_16"
+            app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+            app:prefixText="#"
+            app:prefixTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/custom_colour_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_text_medium"
+                android:hint="@string/lockscreen_overlay_text_colour_custom_input_hint"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:lines="1"
+                android:maxLines="1"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+                tools:text="33b5e5" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/custom_colour_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/margin_16"
+            android:text="@string/lockscreen_overlay_text_colour_custom_button"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
+            app:icon="@drawable/ic_save" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

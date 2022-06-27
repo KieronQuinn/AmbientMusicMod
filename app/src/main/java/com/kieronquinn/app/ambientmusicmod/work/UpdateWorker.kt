@@ -66,9 +66,9 @@ class UpdateWorker(
 
     private suspend fun checkForUpdates() = withContext(Dispatchers.IO) {
         val appUpdatesAvailable = updatesRepository.isAnyUpdateAvailable()
-        val shardsUpdateAvailable = shardsRepository.isUpdateAvailable()
+        val shardsUpdateAvailable = shardsRepository.isUpdateAvailable(true)
         if(appUpdatesAvailable || shardsUpdateAvailable){
-            val shards = shardsRepository.getShardsState().first()
+            val shards = shardsRepository.getShardsState(true).first()
             if(shards.updateAvailable && shards.remote != null
                 && settingsRepository.automaticMusicDatabaseUpdates.get()){
                 //Automatically apply the shards update

@@ -221,7 +221,7 @@ class RemoteSettingsRepositoryImpl(
         //Requires Android 12+
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return GoogleAppState.UNSUPPORTED
         //Requires ARMv8
-        if(!Build.SUPPORTED_ABIS.contains("arm64-v8a")) return GoogleAppState.UNSUPPORTED
+        if(isArmv7) return GoogleAppState.UNSUPPORTED
         //Requires the config value to point to it
         if(!isOnDemandConfigValueSet) return GoogleAppState.NEEDS_OVERLAY
         val splits = packageManager.getSplits(PACKAGE_NAME_GSB)

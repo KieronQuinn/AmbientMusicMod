@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="72dp"
+    android:layout_height="72dp"
+    android:clipToPadding="false"
+    android:padding="8dp">
+
+    <View
+        android:id="@+id/colour_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/monet_color_picker_circle_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/monet_color_picker_circle_foreground_selected"
+        tools:backgroundTint="@android:color/holo_red_light"
+        tools:foregroundTint="@android:color/black" />
+
+    <ImageView
+        android:id="@+id/colour_check"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="4dp"
+        android:outlineProvider="none"
+        android:padding="@dimen/margin_16"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        tools:tint="@android:color/black"
+        tools:visibility="visible" />
+
+</FrameLayout>

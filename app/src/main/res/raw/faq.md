@@ -36,15 +36,19 @@ move closer to the source or try increasing the gain in Settings > Advanced. Not
 the gain will also increase noise, so check after each modification if playback is still audible
 without significant distortion.
 
+If you find that the recorded audio is always distorted, even on low gain values, enable 
+"Alternative Encoding" in the advanced settings. You may need to increase the gain again once 
+enabling this, since it usually makes the recorded audio much quieter.
+
 If the track is not in the database, and you find this is the case with many tracks, consider
 switching database country to one that closer matches your music.
 
 ## How many songs does Ambient Music Recognise?
 
-It depends on your country. The "core" database (used by all regions) has ~17k tracks, but after the 
+It depends on your country. The "core" database (used by all regions) has 16k tracks, but after the 
 databases for your country have been downloaded by Now Playing, the list is significantly longer.
 
-At the time of writing, there are around 53k tracks in the United States database.
+At the time of writing, there are around 70k tracks in the United States database.
 
 You can view the full list of tracks Ambient Music is able to recognise on your device using the 
 "View Track List" option.
@@ -95,6 +99,7 @@ device, but it may save battery.
 On Demand - the recognition method that runs online - requires a device that fits certain criteria:
 
 - It must be running Android 12 or above
+- It must have an ARM v8 CPU (ARM v7 is not compatible)
 - It must have the Google Search App's Music Recognition Service set as the system recognition
 service (this is done in the system - no apps can override it)
 - It must have the `.29`, bundle build of the Google Search App installed

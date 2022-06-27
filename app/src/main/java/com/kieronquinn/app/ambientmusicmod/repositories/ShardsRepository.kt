@@ -4,7 +4,10 @@ import android.content.Context
 import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.google.gson.Gson
 import com.kieronquinn.app.ambientmusicmod.R
+import com.kieronquinn.app.ambientmusicmod.model.shards.CachedShardManifest
+import com.kieronquinn.app.ambientmusicmod.model.shards.ShardManifest
 import com.kieronquinn.app.ambientmusicmod.providers.ShardsProvider
 import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.*
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.contentResolverAsTFlow
@@ -13,6 +16,8 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.safeQuery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -20,9 +25,9 @@ import java.time.format.DateTimeFormatter
 
 interface ShardsRepository {
 
-    suspend fun isUpdateAvailable(): Boolean
+    suspend fun isUpdateAvailable(clearCache: Boolean = false): Boolean
     fun getCurrentDownloads(): Flow<Int>
-    fun getShardsState(): Flow<ShardsState>
+    fun getShardsState(clearCache: Boolean = false): Flow<ShardsState>
 
     enum class ShardDownloadState {
         DOWNLOADING, WAITING_FOR_NETWORK, WAITING_FOR_CHARGING
@@ -98,15 +103,25 @@ class ShardsRepositoryImpl(
         private const val TYPE_LINEAR_NORMAL = "linear.db"
         private const val TYPE_LINEAR_V3 = "linear_v3.db"
 
+        private val CACHE_TIMEOUT = Duration.ofHours(12).toMillis()
+        private const val CACHE_FILENAME = "shards_manifest"
+
         private val URI_DOWNLOAD_STATE = Uri.Builder().apply {
             scheme(SCHEME)
             authority(AUTHORITY)
             path(METHOD_DOWNLOAD_STATE)
         }.build()
+
     }
 
     private val contentResolver = context.contentResolver
     private val shardsProvider = ShardsProvider.getShardsProvider()
+
+    private val updatesCacheDir = File(context.cacheDir, "updates").apply {
+        mkdirs()
+    }
+
+    private val gson = Gson()
 
     override fun getCurrentDownloads() = context.contentResolverAsTFlow(URI_DOWNLOAD_STATE) {
         val cursor = contentResolver.safeQuery(
@@ -120,9 +135,9 @@ class ShardsRepositoryImpl(
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun isUpdateAvailable(): Boolean = withContext(Dispatchers.IO) {
+    override suspend fun isUpdateAvailable(clearCache: Boolean): Boolean = withContext(Dispatchers.IO) {
         val localShard = deviceConfigRepository.indexManifest.get().getUrlData()
-        val remoteShard = remoteShards.first()
+        val remoteShard = getRemoteShards(clearCache).first()
         remoteShard != null && remoteShard.versionCode != localShard.first
     }
 
@@ -205,9 +220,12 @@ class ShardsRepositoryImpl(
         )
     }.flowOn(Dispatchers.IO)
 
-    private val remoteShards = flow {
+    private fun getRemoteShards(ignoreCache: Boolean) = flow {
         val shards = try {
-            shardsProvider.getShardsManifest().execute().body()
+            val cached = if(ignoreCache) null else getShardsCache()
+            cached ?: shardsProvider.getShardsManifest().execute().body()?.also {
+                it.cacheManifest()
+            }
         }catch (e: Exception){
             null
         } ?: run {
@@ -222,9 +240,9 @@ class ShardsRepositoryImpl(
         ))
     }.flowOn(Dispatchers.IO)
 
-    override fun getShardsState(): Flow<ShardsState> = flow {
+    override fun getShardsState(clearCache: Boolean): Flow<ShardsState> = flow {
         emit(combine(
-            localShards, remoteShards
+            localShards, getRemoteShards(clearCache)
         ) { local, remote ->
             val updateAvailable = remote != null && local.versionCode != remote.versionCode
             ShardsState(local, remote, updateAvailable)
@@ -244,6 +262,27 @@ class ShardsRepositoryImpl(
             LocalDateTime.ofInstant(it, ZoneId.systemDefault())
         }
         return Pair(version, localDate)
+    }
+
+    private fun getShardsCache(): ShardManifest? {
+        val file = File(updatesCacheDir, CACHE_FILENAME)
+        if(!file.exists()) return null
+        val cachedShardManifest = try {
+            gson.fromJson(file.readText(), CachedShardManifest::class.java)
+        }catch (e: Exception){
+            null
+        } ?: return null
+        val cacheAge = Duration.between(
+            Instant.ofEpochMilli(cachedShardManifest.timestamp), Instant.now()
+        ).toMillis()
+        if(cacheAge > CACHE_TIMEOUT) return null
+        return cachedShardManifest.shardManifest
+    }
+
+    private fun ShardManifest.cacheManifest() {
+        val file = File(updatesCacheDir, CACHE_FILENAME)
+        val cachedRelease = gson.toJson(CachedShardManifest(System.currentTimeMillis(), this))
+        file.writeText(cachedRelease)
     }
 
 }

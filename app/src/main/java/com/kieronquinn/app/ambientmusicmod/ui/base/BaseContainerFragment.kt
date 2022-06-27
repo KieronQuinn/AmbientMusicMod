@@ -1,6 +1,7 @@
 package com.kieronquinn.app.ambientmusicmod.ui.base
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuInflater
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
@@ -82,9 +84,14 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
     }
 
     private fun BottomNavigationView.setupBottomNavigation() {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            context.getLegacyWorkaroundNavBarHeight()
+        } else 0
         onApplyInsets { view, insets ->
             val bottomNavHeight = resources.getDimension(R.dimen.bottom_nav_height).toInt()
-            val bottomInsets = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars()).bottom
+            val bottomInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+            ).bottom + legacyWorkaround
             view.updateLayoutParams<CoordinatorLayout.LayoutParams> {
                 height = bottomNavHeight + bottomInsets
             }
@@ -166,7 +173,7 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
         }else{
             setupMenu(null)
         }
-        if(topFragment is LockCollapsed) {
+        if(topFragment is LockCollapsed || requireContext().isLandscape()) {
             appBar.setExpanded(false)
         }else {
             appBar.setExpanded(!topFragment.getRememberedAppBarCollapsed())

@@ -22,6 +22,8 @@ interface SettingsRepository {
     val lockscreenOverlayStyle: AmbientMusicModSetting<LockscreenOverlayStyle>
     val lockscreenOverlayYPos: AmbientMusicModSetting<Int>
     val lockscreenOverlayClicked: AmbientMusicModSetting<LockscreenOnTrackClicked>
+    val lockscreenOverlayColour: AmbientMusicModSetting<OverlayTextColour>
+    val lockscreenOverlayCustomColour: AmbientMusicModSetting<Int>
 
     val lockscreenOwnerInfo: AmbientMusicModSetting<Boolean>
     val lockscreenOwnerInfoShowNote: AmbientMusicModSetting<Boolean>
@@ -97,6 +99,28 @@ interface SettingsRepository {
         SECONDS_30(30_000L, R.string.settings_recognition_buffer_30_seconds)
     }
 
+    enum class OverlayTextColour(
+        @StringRes val title: Int,
+        @StringRes val content: Int
+    ) {
+        AUTOMATIC(
+            R.string.lockscreen_overlay_text_colour_automatic_title,
+            R.string.lockscreen_overlay_text_colour_automatic_content
+        ),
+        BLACK(
+            R.string.lockscreen_overlay_text_colour_black_title,
+            R.string.lockscreen_overlay_text_colour_black_content
+        ),
+        WHITE(
+            R.string.lockscreen_overlay_text_colour_white_title,
+            R.string.lockscreen_overlay_text_colour_white_content
+        ),
+        CUSTOM(
+            R.string.lockscreen_overlay_text_colour_custom_title,
+            R.string.lockscreen_overlay_text_colour_custom_content
+        )
+    }
+
 }
 
 class SettingsRepositoryImpl(
@@ -130,6 +154,11 @@ class SettingsRepositoryImpl(
 
         private const val LOCK_SCREEN_OVERLAY_Y_POS = "lock_screen_overlay_y_pos"
         private const val DEFAULT_LOCK_SCREEN_Y_POS = 0
+
+        private const val LOCK_SCREEN_OVERLAY_TEXT_COLOUR = "lock_screen_overlay_text_colour"
+        private val DEFAULT_LOCK_SCREEN_OVERLAY_TEXT_COLOUR = OverlayTextColour.AUTOMATIC
+
+        private const val LOCK_SCREEN_OVERLAY_CUSTOM_TEXT_COLOUR = "lock_screen_overlay_custom_text_colour"
 
         private const val LOCK_SCREEN_OWNER_INFO = "lock_screen_owner_info"
         private const val DEFAULT_LOCK_SCREEN_OWNER_INFO = false
@@ -187,6 +216,14 @@ class SettingsRepositoryImpl(
 
     override val lockscreenOverlayClicked = enum(
         LOCK_SCREEN_OVERLAY_ON_TRACK_CLICKED, DEFAULT_LOCK_SCREEN_OVERLAY_ON_TRACK_CLICKED
+    )
+
+    override val lockscreenOverlayColour = enum(
+        LOCK_SCREEN_OVERLAY_TEXT_COLOUR, DEFAULT_LOCK_SCREEN_OVERLAY_TEXT_COLOUR
+    )
+
+    override val lockscreenOverlayCustomColour = color(
+        LOCK_SCREEN_OVERLAY_CUSTOM_TEXT_COLOUR, Integer.MAX_VALUE
     )
 
     override val lockscreenOwnerInfo = boolean(
