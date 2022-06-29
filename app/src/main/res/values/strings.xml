@@ -124,6 +124,7 @@
     <string name="recognition_failed_reason_content_music_playing">Music is playing</string>
     <string name="recognition_failed_reason_content_audio_record_failed">Failed to record audio, please try again</string>
     <string name="recognition_failed_reason_content_busy">A recognition is already running and could not be re-used, please try again</string>
+    <string name="recognition_failed_reason_content_root">Root or a Magisk Module is required to use On Demand on this device, please read the FAQ</string>
     <string name="recognition_failed_reason_content_code_unknown">An unknown error occurred, please try again</string>
     <string name="recognition_failed_reason_content_code_not_found">No track matched, please try again</string>
     <string name="recognition_failed_reason_content_code_no_connectivity">No network connection, try again or use on device recognition</string>
@@ -171,7 +172,7 @@
     <string name="on_demand_banner_needs_split_content">The version of the Google App installed on this device is not compatible with On Demand, please follow the steps on the setup page to replace it with a version that is.</string>
     <string name="on_demand_banner_needs_split_button">Setup</string>
     <string name="on_demand_banner_needs_overlay_title">Firmware Incompatible</string>
-    <string name="on_demand_banner_needs_overlay_content">The firmware on your device is missing a crucial configuration to point to the On Demand service. This can be fixed with a Magisk Module if your device is rooted, please follow the steps on the setup page to install.</string>
+    <string name="on_demand_banner_needs_overlay_content">The firmware on your device is missing a crucial configuration to point to the On Demand service. This can be fixed by installing a Magisk Module, starting Shizuku as root or using Sui (which requires root), please follow the steps on the setup page to install.</string>
     <string name="on_demand_banner_needs_overlay_button">Setup</string>
     <string name="on_demand_banner_disable">Disable</string>
     <string name="on_demand_save_title">Save On Demand Recognitions</string>

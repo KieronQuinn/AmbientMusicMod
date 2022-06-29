@@ -1,11 +1,13 @@
 package android.media.musicrecognition;
 
+import android.media.AudioAttributes;
+import android.media.AudioFormat;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class RecognitionRequest implements Parcelable {
+import androidx.annotation.NonNull;
 
-    //Stub
+public class RecognitionRequest implements Parcelable {
 
     protected RecognitionRequest(Parcel in) {
     }
@@ -31,4 +33,28 @@ public class RecognitionRequest implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         throw new RuntimeException("Stub!");
     }
+
+    @NonNull
+    public AudioAttributes getAudioAttributes() {
+        throw new RuntimeException("Stub!");
+    }
+
+    @NonNull
+    public AudioFormat getAudioFormat() {
+        throw new RuntimeException("Stub!");
+    }
+
+    public int getCaptureSession() {
+        throw new RuntimeException("Stub!");
+    }
+
+    @SuppressWarnings("MethodNameUnits")
+    public int getMaxAudioLengthSeconds() {
+        throw new RuntimeException("Stub!");
+    }
+
+    public int getIgnoreBeginningFrames() {
+        throw new RuntimeException("Stub!");
+    }
+
 }

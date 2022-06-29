@@ -63,6 +63,11 @@ data class SettingsBackup(
     @SerializedName("recording_gain")
     val recordingGain: Float?,
     @SerializedName("show_album_art")
-    val showAlbumArt: Boolean?
-    //Sensor Privacy suppression intentionally not backed up
+    val showAlbumArt: Boolean?,
+    @SerializedName("overlay_text_colour")
+    val overlayTextColour: OverlayTextColour?,
+    @SerializedName("overlay_custom_text_colour")
+    val overlayCustomTextColour: Int?,
+    @SerializedName("alternative_encoding")
+    val alternativeEncoding: Boolean?
 )

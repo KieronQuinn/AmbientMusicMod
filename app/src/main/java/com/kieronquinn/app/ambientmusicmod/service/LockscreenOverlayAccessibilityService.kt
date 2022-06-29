@@ -218,7 +218,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
      *  may be in front of it.
      */
     private fun isLockscreenVisible(): Boolean {
-        return powerManager.isInteractive && keyguardManager.isDeviceLocked
+        return powerManager.isInteractive && keyguardManager.isKeyguardLocked
     }
 
     private fun Array<Int>.or(): Int {

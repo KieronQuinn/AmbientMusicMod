@@ -329,7 +329,10 @@ class BackupRestoreRepositoryImpl(
             deviceConfigRepository.superpacksRequireCharging.getOrNull(),
             deviceConfigRepository.superpacksRequireWiFi.getOrNull(),
             deviceConfigRepository.recordingGain.getOrNull(),
-            deviceConfigRepository.showAlbumArt.getOrNull()
+            deviceConfigRepository.showAlbumArt.getOrNull(),
+            settingsRepository.lockscreenOverlayColour.getOrNull(),
+            settingsRepository.lockscreenOverlayCustomColour.getOrNull(),
+            deviceConfigRepository.alternativeEncoding.getOrNull()
         )
     }
 
@@ -366,6 +369,10 @@ class BackupRestoreRepositoryImpl(
         superpacksRequireWiFi.restoreTo(deviceConfigRepository.superpacksRequireWiFi)
         recordingGain.restoreTo(deviceConfigRepository.recordingGain)
         showAlbumArt.restoreTo(deviceConfigRepository.showAlbumArt)
+
+        overlayTextColour.restoreTo(settingsRepository.lockscreenOverlayColour)
+        overlayCustomTextColour.restoreTo(settingsRepository.lockscreenOverlayCustomColour)
+        alternativeEncoding.restoreTo(deviceConfigRepository.alternativeEncoding)
     }
 
     private suspend fun <T> T?.restoreTo(setting: BaseSettingsRepository.AmbientMusicModSetting<T>) {

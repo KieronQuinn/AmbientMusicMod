@@ -22,6 +22,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -285,4 +286,14 @@ fun Context.getColorResCompat(@AttrRes id: Int): Int {
     this.theme.resolveAttribute(id, resolvedAttr, true)
     val colorRes = resolvedAttr.run { if (resourceId != 0) resourceId else data }
     return ContextCompat.getColor(this, colorRes)
+}
+
+private const val COMPONENT_GSA_ON_DEMAND =
+    "com.google.android.googlequicksearchbox/com.google.android.apps.search.soundsearch.service.SoundSearchService"
+
+fun Context.isOnDemandConfigValueSet(): Boolean {
+    return getString(
+        "android",
+        "config_defaultMusicRecognitionService"
+    ) == COMPONENT_GSA_ON_DEMAND
 }

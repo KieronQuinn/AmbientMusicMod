@@ -470,6 +470,9 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
             MusicRecognitionManager.RECOGNITION_FAILED_TIMEOUT -> {
                 R.string.recognition_failed_reason_content_code_timeout
             }
+            MusicRecognitionManager_RECOGNITION_FAILED_NEEDS_ROOT -> {
+                R.string.recognition_failed_reason_content_root
+            }
             else -> {
                 R.string.recognition_failed_reason_content_code_unknown
             }

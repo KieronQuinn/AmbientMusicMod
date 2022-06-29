@@ -18,7 +18,7 @@ interface IShellProxy {
     int AudioRecord_getBufferSizeInFrames() = 9;
     int AudioRecord_getSampleRate() = 10;
 
-    //MusicRecognitionManager proxy
+    //MusicRecognitionManager proxy (only used externally)
     void MusicRecognitionManager_beginStreamingSearch(in RecognitionRequest request, in IRecognitionCallback callback) = 11;
 
     //Sensor Privacy checks for AMM UI & to know when to not recognise
@@ -40,6 +40,14 @@ interface IShellProxy {
 
     //Force stops Now Playing to force a reload of data
     oneway void forceStopNowPlaying() = 19;
+
+    //MusicRecognitionManager proxy with added thread injection (not exposed externally)
+    void MusicRecognitionManager_beginStreamingSearchWithThread(
+        in RecognitionRequest request,
+        in IRecognitionCallback callback,
+        in IBinder thread,
+        in IBinder token
+    ) = 20;
 
     void destroy() = 16777114;
 

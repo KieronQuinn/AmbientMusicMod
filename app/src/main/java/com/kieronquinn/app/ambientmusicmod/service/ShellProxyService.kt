@@ -11,6 +11,8 @@ import com.kieronquinn.app.ambientmusicmod.IRecognitionCallback
 import com.kieronquinn.app.ambientmusicmod.IShellProxy
 import com.kieronquinn.app.ambientmusicmod.repositories.ShizukuServiceRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.ShizukuServiceRepository.ShizukuServiceResponse
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getActivityToken
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getApplicationThread
 import org.koin.android.ext.android.inject
 
 /**
@@ -99,8 +101,15 @@ class ShellProxyService: Service() {
             request: RecognitionRequest?,
             callback: IRecognitionCallback?
         ) {
+            val thread = getApplicationThread().asBinder()
+            val token = getActivityToken()
             runWithService {
-                it.MusicRecognitionManager_beginStreamingSearch(request, callback)
+                it.MusicRecognitionManager_beginStreamingSearchWithThread(
+                    request,
+                    callback,
+                    thread,
+                    token
+                )
             }
         }
 
@@ -153,6 +162,15 @@ class ShellProxyService: Service() {
         }
 
         override fun forceStopNowPlaying() {
+            throw SecurityException("Not exposed to external access")
+        }
+
+        override fun MusicRecognitionManager_beginStreamingSearchWithThread(
+            request: RecognitionRequest?,
+            callback: IRecognitionCallback?,
+            thread: IBinder?,
+            token: IBinder?
+        ) {
             throw SecurityException("Not exposed to external access")
         }
 

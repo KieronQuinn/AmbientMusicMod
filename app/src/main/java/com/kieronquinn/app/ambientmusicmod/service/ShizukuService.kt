@@ -1,7 +1,6 @@
 package com.kieronquinn.app.ambientmusicmod.service
 
 import android.annotation.SuppressLint
-import android.content.AttributionSource
 import android.content.Context
 import android.content.ContextWrapper
 import android.hardware.SensorPrivacyManager.Sensors
@@ -11,8 +10,8 @@ import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaMetadata
+import android.media.musicrecognition.IMusicRecognitionManagerCallback
 import android.media.musicrecognition.MusicRecognitionManager
-import android.media.musicrecognition.MusicRecognitionManager.RECOGNITION_FAILED_SERVICE_UNAVAILABLE
 import android.media.musicrecognition.RecognitionRequest
 import android.os.*
 import android.view.IWindowManager
@@ -20,10 +19,13 @@ import androidx.core.os.BuildCompat
 import com.android.internal.policy.IKeyguardDismissCallback
 import com.android.internal.widget.ILockSettings
 import com.kieronquinn.app.ambientmusicmod.*
+import com.kieronquinn.app.ambientmusicmod.components.musicrecognition.RootMusicRecognitionManager
+import com.kieronquinn.app.ambientmusicmod.utils.context.ShellContext
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
 import dev.rikka.tools.refine.Refine
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import rikka.shizuku.SystemServiceHelper
 import java.util.*
 import java.util.concurrent.Executors
@@ -33,9 +35,10 @@ import kotlin.system.exitProcess
 class ShizukuService: IShellProxy.Stub() {
 
     companion object {
-        private const val SHELL_UID = 2000
-        private const val ROOT_UID = 0
-        private const val SHELL_PACKAGE = "com.android.shell"
+        const val ROOT_UID = 0
+        const val SHELL_UID = 2000
+        const val ROOT_PACKAGE = "root"
+        const val SHELL_PACKAGE = "com.android.shell"
     }
 
     private val context by lazy {
@@ -57,6 +60,12 @@ class ShizukuService: IShellProxy.Stub() {
     private val recordingLock = Object()
     private val musicRecognitionManagerExecutor = Executors.newSingleThreadExecutor()
     private val sensorPrivacyListeners = HashMap<String, OnSensorPrivacyChangedListener>()
+
+    private val rootMusicRecognitionManager by lazy {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            RootMusicRecognitionManager(context, getUserId())
+        }else null
+    }
 
     private val musicRecognitionManager by lazy {
         context.getSystemService("music_recognition") as MusicRecognitionManager
@@ -175,7 +184,7 @@ class ShizukuService: IShellProxy.Stub() {
         sessionId: Int,
         bufferSizeInBytes: Int
     ): AudioRecord {
-        val shellContext = ShellContext(context)
+        val shellContext = ShellContext(context, isRoot)
         return AudioRecord::class.java.getDeclaredConstructor(
             AudioAttributes::class.java, //attributes
             AudioFormat::class.java, // format
@@ -213,29 +222,35 @@ class ShizukuService: IShellProxy.Stub() {
     private fun replaceBaseContextIfRequired() {
         val base = getActivityThreadApplication().getBase()
         if(base !is ContextWrapper){
-            getActivityThreadApplication().setBase(ShellContext(base))
-        }
-    }
-
-    private inner class ShellContext(context: Context): ContextWrapper(context) {
-
-        override fun getBaseContext(): Context {
-            return super.getBaseContext()
-        }
-
-        override fun getOpPackageName(): String {
-            return "uid:0"
-        }
-
-        @SuppressLint("NewApi")
-        override fun getAttributionSource(): AttributionSource {
-            val uid = if(isRoot) ROOT_UID else SHELL_UID
-            return AttributionSource.Builder(uid)
-                .setPackageName(SHELL_PACKAGE).build()
+            getActivityThreadApplication().setBase(ShellContext(base, isRoot))
         }
     }
 
     override fun MusicRecognitionManager_beginStreamingSearch(
+        request: RecognitionRequest,
+        callback: IRecognitionCallback
+    ) {
+        //No longer used, will be redirected to beginStreamingSearchWithThread from the proxy service
+    }
+
+    override fun MusicRecognitionManager_beginStreamingSearchWithThread(
+        request: RecognitionRequest,
+        callback: IRecognitionCallback,
+        thread: IBinder,
+        token: IBinder?
+    ) {
+        if(context.isOnDemandConfigValueSet()) {
+            beginStreamingSearchViaSystem(request, callback)
+        }else{
+            if(!isRoot){
+                callback.onRecognitionFailed(request, MusicRecognitionManager_RECOGNITION_FAILED_NEEDS_ROOT)
+            }else{
+                beginStreamingSearchViaRoot(request, callback, thread, token)
+            }
+        }
+    }
+
+    private fun beginStreamingSearchViaSystem(
         request: RecognitionRequest,
         callback: IRecognitionCallback
     ) = runWithClearedIdentity {
@@ -266,9 +281,37 @@ class ShizukuService: IShellProxy.Stub() {
                 systemCallback
             )
         }catch (e: Exception){
-            callback.onRecognitionFailed(request, RECOGNITION_FAILED_SERVICE_UNAVAILABLE)
+            callback.onRecognitionFailed(request,
+                MusicRecognitionManager.RECOGNITION_FAILED_SERVICE_UNAVAILABLE
+            )
         }
-        Unit
+    }
+
+    @SuppressLint("NewApi")
+    private fun beginStreamingSearchViaRoot(
+        request: RecognitionRequest,
+        callback: IRecognitionCallback,
+        thread: IBinder,
+        token: IBinder?
+    ) = runWithClearedIdentity {
+        scope.launch {
+            val managerCallback = object: IMusicRecognitionManagerCallback.Stub() {
+                override fun onRecognitionSucceeded(result: MediaMetadata?, extras: Bundle?) {
+                    callback.onRecognitionSucceeded(request, result, extras)
+                }
+
+                override fun onRecognitionFailed(failureCode: Int) {
+                    callback.onRecognitionFailed(request, failureCode)
+                }
+
+                override fun onAudioStreamClosed() {
+                    callback.onAudioStreamClosed()
+                }
+            }
+            rootMusicRecognitionManager?.runStreamingSearch(
+                scope, request, managerCallback, thread, token
+            )
+        }
     }
 
     override fun ping(): Boolean {

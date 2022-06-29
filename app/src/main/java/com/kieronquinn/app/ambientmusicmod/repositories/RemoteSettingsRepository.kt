@@ -96,9 +96,6 @@ class RemoteSettingsRepositoryImpl(
 ): RemoteSettingsRepository {
 
     companion object {
-        private const val COMPONENT_GSA_ON_DEMAND =
-            "com.google.android.googlequicksearchbox/com.google.android.apps.search.soundsearch.service.SoundSearchService"
-
         private const val SETTINGS_AUTHORITY = "com.google.android.as.pam.ambientmusic.settings"
         private val SETTINGS_URI = Uri.Builder().apply {
             scheme("content")
@@ -217,13 +214,14 @@ class RemoteSettingsRepositoryImpl(
         }?.firstOrNull()
     }.flowOn(Dispatchers.IO)
 
-    private fun isGoogleAppSupported(): GoogleAppState {
+    private suspend fun isGoogleAppSupported(): GoogleAppState {
         //Requires Android 12+
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return GoogleAppState.UNSUPPORTED
         //Requires ARMv8
         if(isArmv7) return GoogleAppState.UNSUPPORTED
         //Requires the config value to point to it
-        if(!isOnDemandConfigValueSet) return GoogleAppState.NEEDS_OVERLAY
+        val isRoot = shizukuServiceRepository.runWithService { it.isRoot }.unwrap() ?: false
+        if(!isOnDemandConfigValueSet && !isRoot) return GoogleAppState.NEEDS_OVERLAY
         val splits = packageManager.getSplits(PACKAGE_NAME_GSB)
         //The QSB app needs Sound Search to be installed, this has to be done manually
         if(!splits.contains("sound_search_fingerprinter_split")) return GoogleAppState.NEEDS_SPLIT
@@ -336,11 +334,6 @@ class RemoteSettingsRepositoryImpl(
         supported == GoogleAppState.SUPPORTED && settings?.onDemandEnabled == true
     }
 
-    private fun Context.isOnDemandConfigValueSet(): Boolean {
-        return getString(
-            "android",
-            "config_defaultMusicRecognitionService"
-        ) == COMPONENT_GSA_ON_DEMAND
-    }
+
 
 }
