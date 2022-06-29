@@ -6,7 +6,7 @@ Ambient Music Mod is a Shizuku or root app that ports Now Playing from Pixels to
 
 ## Requirements
 
-- Android device running Android 9.0 or above (11+ recommended). ARM64 is currently required.
+- Android device running Android 9.0 or above (11+ recommended).
 - Shizuku (Android 12+) or root access (Android 9+). 
 	- Shizuku does not require root, instead needing an ADB command to be run every reboot.
 
