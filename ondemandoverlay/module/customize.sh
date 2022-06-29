@@ -1,5 +1,8 @@
 # OVERLAY CODE MODIFIED FROM QuickSwitch: https://github.com/skittles9823/QuickSwitch/blob/master/quickswitch
 
+# Global vars
+API=$(getprop ro.build.version.sdk)
+
 # Magisk Module ID
 ID="OnDemandOverlay"
 
@@ -74,6 +77,7 @@ copyOverlay() {
   ui_print "- Installing overlay to $STEPDIR"
 	ui_print ""
 	ui_print ""
+	mkdir -p $STEPDIR
   cp -rf ${MODDIR}/install/OnDemandOverlay.apk ${STEPDIR}
   rm -r ${MODDIR}/install
 }

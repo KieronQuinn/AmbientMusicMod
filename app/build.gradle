@@ -13,8 +13,8 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 String DEFAULT_MANIFEST = "217:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20220626-030028/manifest.json"
 
-def tagName = '2.0.3'
-def version = 203
+def tagName = '2.0.4'
+def version = 204
 
 def getKeystoreProperties() {
     def properties = new Properties()
