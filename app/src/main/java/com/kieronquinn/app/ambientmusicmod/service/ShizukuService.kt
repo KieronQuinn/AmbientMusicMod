@@ -37,7 +37,7 @@ class ShizukuService: IShellProxy.Stub() {
     companion object {
         const val ROOT_UID = 0
         const val SHELL_UID = 2000
-        const val ROOT_PACKAGE = "root"
+        const val ROOT_PACKAGE = "android"
         const val SHELL_PACKAGE = "com.android.shell"
     }
 
