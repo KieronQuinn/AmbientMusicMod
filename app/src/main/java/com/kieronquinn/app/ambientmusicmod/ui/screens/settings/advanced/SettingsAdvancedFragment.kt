@@ -12,6 +12,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.SettingsAdvancedViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isArmv7
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isX86_64
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -63,7 +64,7 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
         GenericSettingsItem.SwitchSetting(
             state.alternativeEncoding,
             getString(R.string.settings_advanced_alternative_encoding),
-            getString(R.string.settings_advanced_alternative_encoding_content),
+            getText(R.string.settings_advanced_alternative_encoding_content),
             R.drawable.ic_settings_advanced_alternative_encoding,
             onChanged = viewModel::onAlternativeEncodingChanged
         ),
@@ -76,11 +77,11 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             onChanged = viewModel::onRunOnLittleCoresChanged
         ),
         GenericSettingsItem.SwitchSetting(
-            state.nnfpv3 && !isArmv7,
+            state.nnfpv3 && !isArmv7 && !isX86_64,
             getString(R.string.settings_advanced_nnfp_v3),
-            getStringOrUnsupported(!isArmv7, R.string.settings_advanced_nnfp_v3_content),
+            getStringOrUnsupported(!isArmv7 && !isX86_64, R.string.settings_advanced_nnfp_v3_content),
             R.drawable.ic_settings_advanced_nnfp,
-            enabled = !isArmv7,
+            enabled = !isArmv7 && !isX86_64,
             onChanged = viewModel::onNnfpv3Changed
         ),
         GenericSettingsItem.SwitchSetting(
@@ -113,9 +114,9 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
         }
     )
 
-    private fun getStringOrUnsupported(isEnabled: Boolean, @StringRes resource: Int): String {
+    private fun getStringOrUnsupported(isEnabled: Boolean, @StringRes resource: Int): CharSequence {
         return if(isEnabled){
-            getString(resource)
+            getText(resource)
         } else {
             getString(R.string.settings_generic_unsupported)
         }

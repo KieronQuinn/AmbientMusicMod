@@ -6,7 +6,7 @@
     tools:background="@drawable/background_switch"
     android:orientation="vertical">
 
-    <com.kieronquinn.monetcompat.view.MonetSwitch
+    <com.kieronquinn.app.ambientmusicmod.ui.views.MonetSwitch
         android:id="@+id/item_settings_switch_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

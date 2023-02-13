@@ -141,6 +141,7 @@
     <string name="recognition_playback_stop">Stop</string>
     <string name="recognition_playback_save">Save</string>
     <string name="recognition_playback_saved_toast">Audio saved. Read the FAQ for info about how to open the file</string>
+    <string name="recognition_playback_distortion_info">If the playback is distorted, try enabling Alternative Encoding in the Advanced Settings.</string>
 
     <!-- Recognition Chips -->
     <string name="recognition_chip_assistant">Ask Google</string>
@@ -281,9 +282,6 @@
 
     <string name="settings_trigger_when_screen_on">Trigger when Screen On</string>
     <string name="settings_trigger_when_screen_on_content">Trigger a recognition when the screen is turned on. Use this option when the Recognition Period is set to \"Never\" to only trigger recognitions when required.</string>
-
-    <string name="settings_battery_saver">Run on Battery Saver</string>
-    <string name="settings_battery_saver_content">Allow automatic recognitions while battery saver is enabled</string>
 
     <string name="settings_show_album_art">Show Album Art</string>
     <string name="settings_show_album_art_content">Show album art in Now Playing History</string>

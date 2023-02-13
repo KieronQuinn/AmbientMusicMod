@@ -1,5 +1,7 @@
 package com.kieronquinn.app.ambientmusicmod.service
 
+import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
@@ -113,7 +115,7 @@ class ShizukuService: IShellProxy.Stub() {
         audioFormat: AudioFormat,
         sessionId: Int,
         bufferSizeInBytes: Int
-    ) {
+    ) = runWithClearedIdentity {
         //The service can only handle one recording at once, so is locked while recording until release is called
         synchronized(recordingLock){
             _audioRecord = createAudioRecord(attributes, audioFormat, sessionId, bufferSizeInBytes)
@@ -381,6 +383,8 @@ class ShizukuService: IShellProxy.Stub() {
         //The Settings values are no longer used but this triggers a content update
         runCommand("settings put secure lock_screen_owner_info_enabled true")
         runCommand("settings put secure lock_screen_owner_info \"$info\"")
+        //Oxygen OS specific
+        runCommand("settings put secure aod_display_text \"$info\"")
     }
 
     override fun forceStopNowPlaying() {
@@ -396,6 +400,20 @@ class ShizukuService: IShellProxy.Stub() {
         return block().also {
             Binder.restoreCallingIdentity(token)
         }
+    }
+
+    /**
+     *  Grants Notification permission to both apps on T. If you want to disable notifications,
+     *  just disable every channel.
+     */
+    private fun grantNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        runCommand("pm grant ${BuildConfig.APPLICATION_ID} $POST_NOTIFICATIONS")
+        runCommand("pm grant $PACKAGE_NAME_PAM $POST_NOTIFICATIONS")
+    }
+
+    init {
+        grantNotificationPermission()
     }
 
 }

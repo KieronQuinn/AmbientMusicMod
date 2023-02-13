@@ -19,7 +19,13 @@
         android:layout_marginEnd="4dp"
         android:padding="20dp"
         app:tint="?android:colorControlNormal"
-        tools:src="@drawable/ic_community" />
+        tools:src="@drawable/ic_bottom_nav_settings" />
+
+    <Space
+        android:id="@+id/item_settings_switch_space"
+        android:visibility="gone"
+        android:layout_width="@dimen/margin_16"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -51,15 +57,13 @@
 
     </LinearLayout>
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/item_settings_switch_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_16"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:thumb="@drawable/switch_thumb"
         app:showText="false"
-        app:track="@drawable/switch_track" />
+        app:thumbIconTint="?android:textColorTertiaryInverse"
+        tools:checked="true" />
 
 </LinearLayout>

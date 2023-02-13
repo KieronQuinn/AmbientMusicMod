@@ -1,6 +1,8 @@
 package com.kieronquinn.app.ambientmusicmod.ui.base
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -30,6 +33,7 @@ import com.kieronquinn.app.ambientmusicmod.components.navigation.BaseNavigation
 import com.kieronquinn.app.ambientmusicmod.components.navigation.setupWithNavigation
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
 import com.kieronquinn.app.ambientmusicmod.utils.monetcompat.MonetElevationOverlayProvider
+import com.kieronquinn.monetcompat.extensions.toArgb
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -97,8 +101,22 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
             }
             view.updatePadding(bottom = bottomInsets)
         }
-        applyMonet(setBackgroundColor = true, md3Style = true)
-        setBackgroundColor(androidx.core.graphics.ColorUtils.setAlphaComponent(headerBackground, 235))
+        setBackgroundColor(monet.getBackgroundColor(context))
+        val color = if(requireContext().isDarkMode){
+            monet.getMonetColors().neutral2[800]?.toArgb()
+        }else{
+            monet.getMonetColors().neutral2[100]?.toArgb()
+        } ?: monet.getBackgroundColor(requireContext())
+        val indicatorColor = if(requireContext().isDarkMode){
+            monet.getMonetColors().accent2[700]?.toArgb()
+        }else{
+            monet.getMonetColors().accent2[200]?.toArgb()
+        }
+        setBackgroundColor(ColorUtils.setAlphaComponent(color, 235))
+        itemActiveIndicatorColor = ColorStateList(
+            arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf()),
+            intArrayOf(indicatorColor ?: Color.TRANSPARENT, Color.TRANSPARENT)
+        )
     }
 
     @SuppressLint("RestrictedApi")
@@ -145,7 +163,10 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
     }
 
     private fun setupBack() {
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            shouldBackDispatcherBeEnabled()
+        ) {
             (navHostFragment.getTopFragment() as? ProvidesBack)?.let {
                 if(it.onBackPressed()) return@addCallback
             }
@@ -156,6 +177,16 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
                 requireActivity().finish()
             }
         }
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            navController.onDestinationChanged().collect {
+                callback.isEnabled = shouldBackDispatcherBeEnabled()
+            }
+        }
+    }
+
+    private fun shouldBackDispatcherBeEnabled(): Boolean {
+        val top = navHostFragment.getTopFragment()
+        return top is ProvidesBack || top !is Root
     }
 
     private fun setupAppBar() = with(appBar) {

@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.nav_version = "2.4.2"
+    ext.nav_version = "2.5.3"
     ext.protobufVersion = '0.8.17'
     ext.shizuku_version = '12.1.0'
     ext.refine_version = '3.1.1'
@@ -11,7 +11,7 @@ buildscript {
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.google.protobuf:protobuf-gradle-plugin:$protobufVersion"
-        classpath "com.google.android.gms:oss-licenses-plugin:0.10.5"
+        classpath "com.google.android.gms:oss-licenses-plugin:0.10.6"
     }
 }
 

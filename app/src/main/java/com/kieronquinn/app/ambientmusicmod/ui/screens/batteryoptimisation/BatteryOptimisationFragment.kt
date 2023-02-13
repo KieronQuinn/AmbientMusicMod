@@ -10,7 +10,6 @@ import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.batteryoptimisation.BatteryOptimisationViewModel.BatteryOptimisationSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.batteryoptimisation.BatteryOptimisationViewModel.State
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 abstract class BatteryOptimisationFragment: BaseSettingsFragment() {
@@ -63,13 +62,13 @@ abstract class BatteryOptimisationFragment: BaseSettingsFragment() {
                 true,
                 getString(R.string.battery_optimisation_system_title),
                 getString(R.string.battery_optimisation_system_content),
-                R.drawable.ic_settings_battery_saver,
+                R.drawable.ic_settings_battery_optimisation,
                 false){}
         }else{
             GenericSettingsItem.Setting(
                 getString(R.string.battery_optimisation_system_title),
                 getString(R.string.battery_optimisation_system_content),
-                R.drawable.ic_settings_battery_saver,
+                R.drawable.ic_settings_battery_optimisation,
                 viewModel::onBatteryOptimisationClicked
             )
         }

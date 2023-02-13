@@ -316,7 +316,6 @@ class BackupRestoreRepositoryImpl(
             settingsRepository.lockscreenOwnerInfoFallback.getOrNull(),
             settingsRepository.onDemandLockscreenEnabled.getOrNull(),
             settingsRepository.triggerWhenScreenOn.getOrNull(),
-            settingsRepository.runOnBatterySaver.getOrNull(),
             settingsRepository.bedtimeModeEnabled.getOrNull(),
             settingsRepository.bedtimeModeStart.getOrNull(),
             settingsRepository.bedtimeModeEnd.getOrNull(),
@@ -354,7 +353,6 @@ class BackupRestoreRepositoryImpl(
         lockscreenOwnerInfoFallback.restoreTo(settingsRepository.lockscreenOwnerInfoFallback)
         onDemandLockscreenEnabled.restoreTo(settingsRepository.onDemandLockscreenEnabled)
         triggerWhenScreenOn.restoreTo(settingsRepository.triggerWhenScreenOn)
-        runOnBatterySaver.restoreTo(settingsRepository.runOnBatterySaver)
         bedtimeModeEnabled.restoreTo(settingsRepository.bedtimeModeEnabled)
         bedtimeModeStart.restoreTo(settingsRepository.bedtimeModeStart)
         bedtimeModeEnd.restoreTo(settingsRepository.bedtimeModeEnd)

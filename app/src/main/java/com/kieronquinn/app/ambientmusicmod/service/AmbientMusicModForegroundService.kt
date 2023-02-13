@@ -34,6 +34,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.activities.MainActivity
 import com.kieronquinn.app.ambientmusicmod.utils.alarm.AlarmTimeout
 import com.kieronquinn.app.ambientmusicmod.utils.alarm.AlarmTimeout.Companion.MODE_RESCHEDULE_IF_SCHEDULED
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.pixelambientmusic.model.RecognitionFailure
+import com.kieronquinn.app.pixelambientmusic.model.RecognitionFailureReason
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionMetadata
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionSource
 import kotlinx.coroutines.Job
@@ -103,19 +105,13 @@ class AmbientMusicModForegroundService: LifecycleService() {
     private val remoteSettingsState = remoteSettings.getRemoteSettings(lifecycleScope)
         .filterNotNull()
 
-    private val batterySaverGating = combine(
-        batterySaverEnabled(),
-        settings.runOnBatterySaver.asFlow()
-    ) { saver, enabled ->
-        saver && enabled
-    }
-
-    private val isBedtime = bedtime.isBedtime()
-        .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
+    private val isBedtime = bedtime.isBedtime().onEach {
+        log("Bedtime: $it")
+    }.stateIn(lifecycleScope, SharingStarted.Eagerly, null)
 
     private val enabled = combine(
         remoteSettingsState,
-        batterySaverGating,
+        batterySaverEnabled(),
         isBedtime.filterNotNull(),
         settings.hasSeenSetup.asFlow(), //Only start after setup
     ) { remote, batterySaver, bedtime, hasSeenSetup ->
@@ -399,6 +395,13 @@ class AmbientMusicModForegroundService: LifecycleService() {
             if(it){
                 //Trigger an immediate recognition
                 recognitionState.emit(null)
+            } else {
+                //Send a fake no match recognition to clear any previous recognitions
+                recognitionState.emit(
+                    RecognitionState.Failed(RecognitionFailure(
+                        RecognitionFailureReason.NoMatch, RecognitionSource.NNFP, null)
+                    )
+                )
             } //Disabled will be caught in the start recognition and not re-scheduled
         }
     }

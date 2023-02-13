@@ -10,6 +10,7 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentUpdatesBinding
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
+import com.kieronquinn.app.ambientmusicmod.ui.base.Root
 import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.UpdatesViewModel.State
 import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.UpdatesViewModel.UpdatesSettingsItem
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationInset
@@ -17,7 +18,7 @@ import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UpdatesFragment: BoundFragment<FragmentUpdatesBinding>(FragmentUpdatesBinding::inflate) {
+class UpdatesFragment: BoundFragment<FragmentUpdatesBinding>(FragmentUpdatesBinding::inflate), Root {
 
     private val viewModel by viewModel<UpdatesViewModel>()
 
