@@ -20,7 +20,6 @@ abstract class SettingsViewModel: ViewModel() {
     abstract fun onRecognitionPeriodClicked()
     abstract fun onRecognitionBufferClicked()
     abstract fun onTriggerWhenScreenOnChanged(enabled: Boolean)
-    abstract fun onBatterySaverChanged(enabled: Boolean)
     abstract fun onBedtimeClicked()
     abstract fun onAdvancedClicked()
     abstract fun onAlbumArtChanged(enabled: Boolean)
@@ -31,7 +30,6 @@ abstract class SettingsViewModel: ViewModel() {
             val recognitionPeriod: RecognitionPeriod,
             val recognitionBuffer: RecognitionBuffer,
             val triggerWhenScreenOn: Boolean,
-            val runOnBatterySaver: Boolean,
             val bedtimeMode: Boolean,
             val albumArtEnabled: Boolean
         ): State()
@@ -46,7 +44,6 @@ class SettingsViewModelImpl(
 ): SettingsViewModel() {
 
     private val triggerWhenScreenOn = settingsRepository.triggerWhenScreenOn
-    private val runOnBatterySaver = settingsRepository.runOnBatterySaver
     private val showAlbumArt = deviceConfigRepository.showAlbumArt
 
     private val recognitionState = combine(
@@ -59,15 +56,13 @@ class SettingsViewModelImpl(
     override val state = combine(
         recognitionState,
         triggerWhenScreenOn.asFlow(),
-        runOnBatterySaver.asFlow(),
         settingsRepository.bedtimeModeEnabled.asFlow(),
         showAlbumArt.asFlow()
-    ) { recognitionState, screenOn, batterySaver, bedtime, albumArt ->
+    ) { recognitionState, screenOn, bedtime, albumArt ->
         State.Loaded(
             recognitionState.first,
             recognitionState.second,
             screenOn,
-            batterySaver,
             bedtime,
             albumArt
         )
@@ -88,12 +83,6 @@ class SettingsViewModelImpl(
     override fun onTriggerWhenScreenOnChanged(enabled: Boolean) {
         viewModelScope.launch {
             triggerWhenScreenOn.set(enabled)
-        }
-    }
-
-    override fun onBatterySaverChanged(enabled: Boolean) {
-        viewModelScope.launch {
-            runOnBatterySaver.set(enabled)
         }
     }
 

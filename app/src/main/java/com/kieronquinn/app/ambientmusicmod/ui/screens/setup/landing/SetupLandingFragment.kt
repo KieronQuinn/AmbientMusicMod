@@ -5,12 +5,13 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentSetupLandingBinding
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
+import com.kieronquinn.app.ambientmusicmod.ui.base.Root
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SetupLandingFragment: BoundFragment<FragmentSetupLandingBinding>(FragmentSetupLandingBinding::inflate) {
+class SetupLandingFragment: BoundFragment<FragmentSetupLandingBinding>(FragmentSetupLandingBinding::inflate), Root {
 
     private val viewModel by viewModel<SetupLandingViewModel>()
 

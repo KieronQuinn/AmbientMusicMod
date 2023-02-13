@@ -25,7 +25,9 @@ import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.blur.BlurProvider
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentRecognitionBinding
 import com.kieronquinn.app.ambientmusicmod.model.recognition.Player
+import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState.ErrorReason
+import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.ui.activities.RecognitionModalActivity
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundDialogFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel.*
@@ -49,6 +51,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     private val viewModel by viewModel<RecognitionViewModel>()
     private val blurProvider by inject<BlurProvider>()
     private val args by navArgs<RecognitionFragmentArgs>()
+    private val config by inject<DeviceConfigRepository>()
     private val isModal by lazy {
         requireActivity() is RecognitionModalActivity
     }
@@ -181,6 +184,8 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         recognitionPlaybackSave.applyMonet()
         recognitionPlaybackSave.overrideRippleColor(accent)
         recognitionPlaybackWaveform.waveColor = accent
+        //Hide the distortion info if the alternative encoding option has been set *at all*
+        recognitionPlaybackDistortionInfo.isVisible = !config.alternativeEncoding.existsSync()
     }
 
     override fun onDestroyView() {

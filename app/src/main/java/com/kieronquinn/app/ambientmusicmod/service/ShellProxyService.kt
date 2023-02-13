@@ -6,6 +6,7 @@ import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.musicrecognition.RecognitionRequest
 import android.os.IBinder
+import android.util.Log
 import com.kieronquinn.app.ambientmusicmod.IMicrophoneDisabledStateCallback
 import com.kieronquinn.app.ambientmusicmod.IRecognitionCallback
 import com.kieronquinn.app.ambientmusicmod.IShellProxy

@@ -32,7 +32,6 @@ interface SettingsRepository {
     val onDemandLockscreenEnabled: AmbientMusicModSetting<Boolean>
 
     val triggerWhenScreenOn: AmbientMusicModSetting<Boolean>
-    val runOnBatterySaver: AmbientMusicModSetting<Boolean>
     val bedtimeModeEnabled: AmbientMusicModSetting<Boolean>
     val bedtimeModeStart: AmbientMusicModSetting<Long>
     val bedtimeModeEnd: AmbientMusicModSetting<Long>
@@ -172,9 +171,6 @@ class SettingsRepositoryImpl(
         private const val TRIGGER_WHEN_SCREEN_ON = "trigger_when_screen_on"
         private const val DEFAULT_TRIGGER_WHEN_SCREEN_ON = false
 
-        private const val RUN_ON_BATTERY_SAVER = "run_on_battery_saver"
-        private const val DEFAULT_RUN_ON_BATTERY_SAVER = false
-
         private const val BEDTIME_MODE_ENABLED = "bedtime_mode"
         private const val DEFAULT_BEDTIME_MODE_ENABLED = false
 
@@ -245,8 +241,6 @@ class SettingsRepositoryImpl(
     override val triggerWhenScreenOn = boolean(
         TRIGGER_WHEN_SCREEN_ON, DEFAULT_TRIGGER_WHEN_SCREEN_ON
     )
-
-    override val runOnBatterySaver = boolean(RUN_ON_BATTERY_SAVER, DEFAULT_RUN_ON_BATTERY_SAVER)
 
     override val bedtimeModeEnabled = boolean(BEDTIME_MODE_ENABLED, DEFAULT_BEDTIME_MODE_ENABLED)
     override val bedtimeModeStart = long(BEDTIME_MODE_START, DEFAULT_BEDTIME_MODE_START)

@@ -74,13 +74,6 @@ class SettingsFragment: BaseSettingsFragment(), BackAvailable {
             onChanged = viewModel::onTriggerWhenScreenOnChanged
         ),
         GenericSettingsItem.SwitchSetting(
-            state.runOnBatterySaver,
-            getString(R.string.settings_battery_saver),
-            getString(R.string.settings_battery_saver_content),
-            R.drawable.ic_settings_battery_saver,
-            onChanged = viewModel::onBatterySaverChanged
-        ),
-        GenericSettingsItem.SwitchSetting(
             state.albumArtEnabled,
             getString(R.string.settings_show_album_art),
             getString(R.string.settings_show_album_art_content),

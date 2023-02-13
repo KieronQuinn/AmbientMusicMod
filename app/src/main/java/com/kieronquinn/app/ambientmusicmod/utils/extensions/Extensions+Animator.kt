@@ -6,20 +6,20 @@ import kotlin.coroutines.resume
 
 suspend fun Animator.runAndJoin() = suspendCancellableCoroutine<Unit> {
     val listener = object: Animator.AnimatorListener {
-        override fun onAnimationStart(p0: Animator?) {
+        override fun onAnimationStart(p0: Animator) {
             //No-op
         }
 
-        override fun onAnimationEnd(p0: Animator?) {
+        override fun onAnimationEnd(p0: Animator) {
             removeListener(this)
             it.resume(Unit)
         }
 
-        override fun onAnimationCancel(p0: Animator?) {
+        override fun onAnimationCancel(p0: Animator) {
             //No-op
         }
 
-        override fun onAnimationRepeat(p0: Animator?) {
+        override fun onAnimationRepeat(p0: Animator) {
             //No-op
         }
     }

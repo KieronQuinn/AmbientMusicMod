@@ -35,8 +35,6 @@ data class SettingsBackup(
     val onDemandLockscreenEnabled: Boolean?,
     @SerializedName("trigger_when_screen_on")
     val triggerWhenScreenOn: Boolean?,
-    @SerializedName("run_on_battery_saver")
-    val runOnBatterySaver: Boolean?,
     @SerializedName("bedtime_mode_enabled")
     val bedtimeModeEnabled: Boolean?,
     @SerializedName("bedtime_mode_start")

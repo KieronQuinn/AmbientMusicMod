@@ -23,6 +23,7 @@ import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.base.ProvidesOverflow
+import com.kieronquinn.app.ambientmusicmod.ui.base.Root
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.NowPlayingSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
@@ -30,7 +31,7 @@ import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPlayingBinding::inflate), ProvidesOverflow {
+class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPlayingBinding::inflate), ProvidesOverflow, Root {
 
     private val viewModel by viewModel<NowPlayingViewModel>()
 

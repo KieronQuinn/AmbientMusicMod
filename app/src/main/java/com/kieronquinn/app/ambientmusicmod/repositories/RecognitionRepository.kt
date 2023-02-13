@@ -5,6 +5,7 @@ import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.google.audio.ambientmusic.HistoryData
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState.ErrorReason

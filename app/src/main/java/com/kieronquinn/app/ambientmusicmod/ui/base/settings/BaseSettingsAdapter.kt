@@ -135,12 +135,11 @@ abstract class BaseSettingsAdapter(
     }
 
     private fun GenericViewHolder.Switch.setup(item: GenericSettingsItem.Switch) = with(binding) {
-        itemSettingsSwitchSwitch.setOnCheckedChangeListener(null)
         itemSettingsSwitchSwitch.isChecked = item.enabled
         itemSettingsSwitchSwitch.text = item.text
         lifecycleScope.launchWhenResumed {
-            binding.itemSettingsSwitchSwitch.onChanged().collect {
-                item.onChanged(it)
+            binding.itemSettingsSwitchSwitch.onClicked().collect {
+                item.onChanged(!itemSettingsSwitchSwitch.isChecked)
             }
         }
     }

@@ -177,7 +177,6 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         }
         LAST_STATE?.let {
             LAST_STATE = null
-            if(!it.isValid()) return@let
             lifecycleScope.launchWhenCreated {
                 lockscreenOverlayState.emit(it)
             }

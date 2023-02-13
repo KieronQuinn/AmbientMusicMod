@@ -9,6 +9,8 @@ interface LockCollapsed
 interface CanShowSnackbar
 interface NoToolbar
 
+interface Root
+
 interface ProvidesBack {
     fun onBackPressed(): Boolean
 }

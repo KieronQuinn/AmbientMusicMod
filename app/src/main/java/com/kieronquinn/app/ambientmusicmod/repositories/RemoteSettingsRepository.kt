@@ -218,7 +218,7 @@ class RemoteSettingsRepositoryImpl(
         //Requires Android 12+
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return GoogleAppState.UNSUPPORTED
         //Requires ARMv8
-        if(isArmv7) return GoogleAppState.UNSUPPORTED
+        if(isArmv7 || isX86_64) return GoogleAppState.UNSUPPORTED
         //Requires the config value to point to it
         val isRoot = shizukuServiceRepository.runWithService { it.isRoot }.unwrap() ?: false
         if(!isOnDemandConfigValueSet && !isRoot) return GoogleAppState.NEEDS_OVERLAY
