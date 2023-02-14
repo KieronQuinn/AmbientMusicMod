@@ -78,7 +78,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
 
     private fun setupFab() = with(binding.fabNowplayingRecognise){
         backgroundTintList = ColorStateList.valueOf(monet.getPrimaryColor(context))
-        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             context.getLegacyWorkaroundNavBarHeight()
         } else 0
         onApplyInsets { _, insets ->

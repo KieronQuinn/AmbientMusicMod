@@ -60,7 +60,7 @@ class SetupCountryPickerFragment: BoundFragment<FragmentSetupCountryPickerBindin
 
     private fun setupInsets() {
         val standardPadding = resources.getDimension(R.dimen.margin_16).toInt()
-        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             requireContext().getLegacyWorkaroundNavBarHeight()
         } else 0
         binding.setupCountryPickerControls.onApplyInsets { view, insets ->
