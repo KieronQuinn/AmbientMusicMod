@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.PowerManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
@@ -62,7 +63,8 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
     private val shizukuService by inject<ShizukuServiceRepository>()
     private val accessibility by inject<AccessibilityRepository>()
 
-    private val accessibilityWindow = MutableStateFlow<AccessibilityWindow?>(null)
+    private val accessibilityWindowName = MutableStateFlow<CharSequence?>(null)
+    private val accessibilityWindowPackage = MutableStateFlow<String?>(null)
     private val lockscreenOverlayState = MutableStateFlow<OverlayState?>(null)
     private var currentBinding: OverlayBinding? = null
 
@@ -98,12 +100,13 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
      */
     private val accessibilityWindowIsLockscreen = combine(
         settings.lockscreenOverlayEnhanced.asFlow(),
-        accessibilityWindow,
+        accessibilityWindowName,
+        accessibilityWindowPackage,
         systemUiPackage,
         lockScreenText
-    ) { enhanced, window, systemui, lockscreen ->
+    ) { enhanced, windowName, windowPackage, systemui, lockscreen ->
         if(!enhanced) return@combine true
-        window?.packageName == systemui && window.windowName == lockscreen
+        windowPackage == systemui && windowName == lockscreen
     }
 
     private val overlayState by lazy {
@@ -191,14 +194,37 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        if(event.packageName == BuildConfig.APPLICATION_ID) return //Prevent self-triggers
+        //Prevent self-trigger when adding overlay
+        if(event == null || event.packageName == BuildConfig.APPLICATION_ID) return
+        when (event.eventType) {
+            AccessibilityEvent.TYPE_WINDOWS_CHANGED -> {
+                onWindowsChange(event)
+            }
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {
+                onWindowStateChange(event)
+            }
+        }
+    }
+
+    private fun onWindowsChange(event: AccessibilityEvent) {
+        //Get the window responsible for this change
+        val window = windows.firstOrNull { it.id == event.windowId } ?: return
+        //Get the package of the app responsible for adding the window
+        val packageName = window.root?.packageName ?: return
+        if(packageName == BuildConfig.APPLICATION_ID) return //Prevent self-trigger
+        //We only care if a window is being added
+        if(event.windowChanges == AccessibilityEvent.WINDOWS_CHANGE_ADDED){
+            lifecycleScope.launchWhenCreated {
+                accessibilityWindowPackage.emit(packageName.toString())
+            }
+        }
+    }
+
+    private fun onWindowStateChange(event: AccessibilityEvent) {
+        if(event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_DISAPPEARED)
+            return //Prevent triggering for disappearing windows
         lifecycleScope.launchWhenCreated {
-            accessibilityWindow.emit(
-                AccessibilityWindow(
-                    event.packageName?.toString() ?: return@launchWhenCreated,
-                    event.text?.firstOrNull() ?: return@launchWhenCreated
-                )
-            )
+            accessibilityWindowName.emit(event.text?.firstOrNull() ?: return@launchWhenCreated)
         }
     }
 
@@ -388,7 +414,5 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         if(this !is OverlayState.Shown) return true
         return System.currentTimeMillis() < endTime
     }
-
-    private data class AccessibilityWindow(val packageName: String, val windowName: CharSequence?)
 
 }

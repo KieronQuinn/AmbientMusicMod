@@ -3,6 +3,6 @@
     android:accessibilityFeedbackType="feedbackGeneric"
     android:accessibilityFlags="flagDefault|flagRetrieveInteractiveWindows"
     android:canRetrieveWindowContent="true"
-    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowsChanged"
     android:settingsActivity="com.kieronquinn.app.ambientmusicmod.app.activities.MainActivity"
     android:description="@string/accessibility_service_description" />
