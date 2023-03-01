@@ -25,8 +25,6 @@ class BackupRestoreViewModelImpl(
 
     companion object {
         const val BACKUP_FILE_TEMPLATE = "amm_backup_%s.ammbkp"
-        private val BACKUP_MIME_TYPE = MimeTypeMap.getSingleton()
-            .getMimeTypeFromExtension("ammbkp")
     }
 
     override fun onBackupClicked(launcher: ActivityResultLauncher<String>) {
@@ -34,7 +32,7 @@ class BackupRestoreViewModelImpl(
     }
 
     override fun onRestoreClicked(launcher: ActivityResultLauncher<Array<String>>) {
-        launcher.launch(listOfNotNull(BACKUP_MIME_TYPE).toTypedArray())
+        launcher.launch(arrayOf("*/*"))
     }
 
     override fun onBackupLocationSelected(uri: Uri) {
