@@ -1,5 +1,6 @@
 package com.kieronquinn.app.ambientmusicmod.model.settings
 
+import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem.GenericSettingsItemType
 
@@ -41,6 +42,7 @@ sealed class GenericSettingsItem(val type: GenericSettingsItemType): BaseSetting
         val subtitle: CharSequence,
         @DrawableRes
         val icon: Int,
+        val enabled: Boolean = true,
         val onClick: () -> Unit
     ): GenericSettingsItem(GenericSettingsItemType.SETTING)
 
@@ -58,8 +60,18 @@ sealed class GenericSettingsItem(val type: GenericSettingsItemType): BaseSetting
         val text: CharSequence
     ): GenericSettingsItem(GenericSettingsItemType.HEADER)
 
+    data class Dropdown<T>(
+        val title: CharSequence,
+        val subtitle: CharSequence,
+        val icon: Drawable?,
+        val setting: T,
+        val onSet: (T) -> Unit,
+        val options: List<T>,
+        val adapter: (T) -> Int
+    ): GenericSettingsItem(GenericSettingsItemType.DROPDOWN)
+
     enum class GenericSettingsItemType: BaseSettingsItemType {
-        HEADER, SWITCH, SETTING, SWITCH_SETTING;
+        HEADER, SWITCH, SETTING, SWITCH_SETTING, DROPDOWN;
 
         //Base ItemType starts at 0, then other types go from there
         override fun firstIndex() = 0

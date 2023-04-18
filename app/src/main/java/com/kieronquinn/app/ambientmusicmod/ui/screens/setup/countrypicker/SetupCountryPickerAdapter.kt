@@ -3,7 +3,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.setup.countrypicker
 import android.content.res.ColorStateList
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemCountryPickerBinding
@@ -16,7 +15,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.setup.countrypicker.SetupC
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 
 class SetupCountryPickerAdapter(
     recyclerView: LifecycleAwareRecyclerView,
@@ -77,7 +76,7 @@ class SetupCountryPickerAdapter(
         }
         itemCountryPickerIcon.clipToOutline = true
         itemCountryPickerCheck.isVisible = item.isSelected
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             root.onClicked().collect {
                 item.onSelected(item.country)
             }

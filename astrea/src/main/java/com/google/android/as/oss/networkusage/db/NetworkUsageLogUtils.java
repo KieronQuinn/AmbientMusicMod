@@ -50,6 +50,19 @@ public final class NetworkUsageLogUtils {
         .build();
   }
 
+  public static ConnectionDetails createPdConnectionDetails(String clientId, String packageName) {
+    checkArgument(!Strings.isNullOrEmpty(clientId));
+    return getDefaultConnectionDetailsBuilder(ConnectionType.PD, packageName)
+        .setConnectionKey(
+            ConnectionKey.newBuilder()
+                .setPdConnectionKey(
+                    com.google.android.as.oss.networkusage.api.proto.PdConnectionKey.newBuilder()
+                        .setClientId(clientId)
+                        .build())
+                .build())
+        .build();
+  }
+
   public static ConnectionDetails createFcCheckInConnectionDetails() {
     return getDefaultConnectionDetailsBuilder(ConnectionType.FC_CHECK_IN).build();
   }
@@ -71,33 +84,41 @@ public final class NetworkUsageLogUtils {
   }
 
   public static NetworkUsageEntity createHttpNetworkUsageEntity(
-      ConnectionDetails connectionDetails, Status status, long size, String url) {
+      ConnectionDetails connectionDetails, Status status, long downloadSize, String url) {
     checkArgument(connectionDetails.connectionKey().hasHttpConnectionKey());
     checkArgument(
         url.matches(connectionDetails.connectionKey().getHttpConnectionKey().getUrlRegex()));
     checkArgument(connectionDetails.type() == ConnectionType.HTTP);
-    return getNetworkUsageEntityForUrl(connectionDetails, status, size, url);
+    return getNetworkUsageEntityForUrl(connectionDetails, status, downloadSize, url);
   }
 
   public static NetworkUsageEntity createPirNetworkUsageEntity(
-      ConnectionDetails connectionDetails, Status status, long size, String url) {
+      ConnectionDetails connectionDetails, Status status, long downloadSize, String url) {
     checkArgument(connectionDetails.type() == ConnectionType.PIR);
     checkArgument(connectionDetails.connectionKey().hasPirConnectionKey());
     checkArgument(
         url.matches(connectionDetails.connectionKey().getPirConnectionKey().getUrlRegex()));
-    return getNetworkUsageEntityForUrl(connectionDetails, status, size, url);
+    return getNetworkUsageEntityForUrl(connectionDetails, status, downloadSize, url);
   }
 
-  public static NetworkUsageEntity createFcCheckInNetworkUsageEntity(long size) {
-    return getNetworkUsageEntityBuilder(createFcCheckInConnectionDetails(), Status.SUCCEEDED, size)
+  public static NetworkUsageEntity createFcCheckInNetworkUsageEntity(
+      long downloadSize, long uploadSize) {
+    return NetworkUsageEntity.defaultBuilder()
+        .setConnectionDetails(createFcCheckInConnectionDetails())
+        .setStatus(Status.SUCCEEDED)
+        .setDownloadSize(downloadSize)
+        .setUploadSize(uploadSize)
         .build();
   }
 
-  public static NetworkUsageEntity createFcTrainingResultUploadNetworkUsageEntity(
-      long runId, long size) {
-    return getNetworkUsageEntityBuilder(
-            createFcTrainingResultUploadConnectionDetails(), Status.SUCCEEDED, size)
+  public static NetworkUsageEntity createFcTrainingResultNetworkUsageEntity(
+      long runId, long downloadSize, long uploadSize) {
+    return NetworkUsageEntity.defaultBuilder()
+        .setConnectionDetails(createFcTrainingResultUploadConnectionDetails())
+        .setStatus(Status.SUCCEEDED)
         .setFcRunId(runId)
+        .setDownloadSize(downloadSize)
+        .setUploadSize(uploadSize)
         .build();
   }
 
@@ -107,28 +128,39 @@ public final class NetworkUsageLogUtils {
     checkArgument(connectionDetails.connectionKey().hasFlConnectionKey());
     checkNotNull(policyProto);
     checkArgument(policyProto.isInitialized());
-    return getNetworkUsageEntityBuilder(connectionDetails, Status.SUCCEEDED, /* size= */ 0)
+    return getNetworkUsageEntityBuilder(connectionDetails, Status.SUCCEEDED, /* downloadSize= */ 0)
         .setFcRunId(runId)
         .setPolicyProto(policyProto)
         .build();
   }
 
+  public static NetworkUsageEntity createPdNetworkUsageEntry(
+      ConnectionDetails connectionDetails, Status status, long downloadSize, String clientId) {
+    checkArgument(connectionDetails.type() == ConnectionType.PD);
+    checkArgument(connectionDetails.connectionKey().hasPdConnectionKey());
+    checkArgument(
+        clientId.equals(connectionDetails.connectionKey().getPdConnectionKey().getClientId()));
+    return getNetworkUsageEntityBuilder(connectionDetails, status, downloadSize).build();
+  }
+
   private static NetworkUsageEntity getNetworkUsageEntityForUrl(
-      ConnectionDetails connectionDetails, Status status, long size, String url) {
+      ConnectionDetails connectionDetails, Status status, long downloadSize, String url) {
     checkArgument(!Strings.isNullOrEmpty(url));
-    return getNetworkUsageEntityBuilder(connectionDetails, status, size).setUrl(url).build();
+    return getNetworkUsageEntityBuilder(connectionDetails, status, downloadSize)
+        .setUrl(url)
+        .build();
   }
 
   private static NetworkUsageEntity.Builder getNetworkUsageEntityBuilder(
-      ConnectionDetails connectionDetails, Status status, long size) {
+      ConnectionDetails connectionDetails, Status status, long downloadSize) {
     checkNotNull(connectionDetails);
     checkNotNull(status);
-    checkArgument(size >= 0);
+    checkArgument(downloadSize >= 0);
 
     return NetworkUsageEntity.defaultBuilder()
         .setConnectionDetails(connectionDetails)
         .setStatus(status)
-        .setSize(size);
+        .setDownloadSize(downloadSize);
   }
 
   private static ConnectionDetails.Builder getDefaultConnectionDetailsBuilder(

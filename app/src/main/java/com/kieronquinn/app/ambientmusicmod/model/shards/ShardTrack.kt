@@ -1,16 +1,41 @@
 package com.kieronquinn.app.ambientmusicmod.model.shards
 
+import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+@Entity
 data class ShardTrack(
+    @PrimaryKey
+    @ColumnInfo(name = "db_id")
     val dbId: String,
+    @ColumnInfo(name = "id")
     val id: String,
+    @ColumnInfo(name = "track_name")
     val trackName: String,
+    @ColumnInfo(name = "artist")
     val artist: String,
+    @ColumnInfo(name = "google_id")
     val googleId: String,
+    @ColumnInfo(name = "player_urls")
     val playerUrls: Array<String>,
+    @ColumnInfo(name = "album")
     val album: String?,
+    @ColumnInfo(name = "year")
     val year: Int?,
-    val isLinear: Boolean
-) {
+    @ColumnInfo(name = "is_linear")
+    val isLinear: Boolean,
+    @ColumnInfo(name = "database")
+    val database: String?
+): Parcelable {
+
+    fun sharedName(): String {
+        return "$trackName:$artist:$isLinear"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

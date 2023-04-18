@@ -12,6 +12,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.Lock
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 
@@ -60,7 +61,7 @@ class LockScreenTextColourAdapter(
         root.setOnClickListener {
             lockscreenTextColourRadio.callOnClick()
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             lockscreenTextColourRadio.onClicked().collect {
                 colour.onClicked(colour.colour)
             }

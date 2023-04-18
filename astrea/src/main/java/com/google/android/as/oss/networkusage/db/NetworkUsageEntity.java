@@ -56,8 +56,13 @@ public abstract class NetworkUsageEntity implements Parcelable {
   /** The success status of the download/upload. */
   public abstract Status status();
 
-  /** The download/upload size in bytes. */
-  public abstract long size();
+  /** The download size in bytes. */
+  public abstract long downloadSize();
+
+  /** The upload size in bytes. */
+  @CopyAnnotations
+  @ColumnInfo(defaultValue = "0")
+  public abstract long uploadSize();
 
   /** The instantaneous point of creation of the entry. */
   public abstract Instant creationTime();
@@ -84,6 +89,7 @@ public abstract class NetworkUsageEntity implements Parcelable {
         .setCreationTime(Instant.now())
         .setUrl("")
         .setFcRunId(-1L)
+        .setUploadSize(0)
         .setPolicyProto(PolicyProto.getDefaultInstance());
   }
 
@@ -95,7 +101,8 @@ public abstract class NetworkUsageEntity implements Parcelable {
       int id,
       ConnectionDetails connectionDetails,
       Status status,
-      long size,
+      long downloadSize,
+      long uploadSize,
       Instant creationTime,
       long fcRunId,
       PolicyProto policyProto) {
@@ -104,7 +111,8 @@ public abstract class NetworkUsageEntity implements Parcelable {
         .setConnectionDetails(connectionDetails)
         .setUrl(url)
         .setStatus(status)
-        .setSize(size)
+        .setDownloadSize(downloadSize)
+        .setUploadSize(uploadSize)
         .setCreationTime(creationTime)
         .setFcRunId(fcRunId)
         .setPolicyProto(policyProto)
@@ -126,7 +134,9 @@ public abstract class NetworkUsageEntity implements Parcelable {
 
     public abstract Builder setStatus(Status status);
 
-    public abstract Builder setSize(long size);
+    public abstract Builder setDownloadSize(long size);
+
+    public abstract Builder setUploadSize(long size);
 
     public abstract Builder setCreationTime(Instant instant);
 

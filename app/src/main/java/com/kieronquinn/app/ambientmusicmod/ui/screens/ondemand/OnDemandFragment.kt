@@ -3,7 +3,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.ondemand
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.navigation.NavigationEvent
 import com.kieronquinn.app.ambientmusicmod.model.settings.BannerAttentionLevel
@@ -15,7 +14,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.ondemand.OnDemandViewModel.OnDemandSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.ondemand.OnDemandViewModel.State
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OnDemandFragment: BaseSettingsFragment(), BackAvailable {
@@ -33,7 +32,7 @@ class OnDemandFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -110,7 +109,7 @@ class OnDemandFragment: BaseSettingsFragment(), BackAvailable {
         val onDemandSaveSetting = GenericSettingsItem.SwitchSetting(
             onDemandSave,
             getString(R.string.on_demand_save_title),
-            getString(R.string.on_demand_save_content),
+            getText(R.string.on_demand_save_content),
             R.drawable.ic_ondemand_save,
             onChanged = viewModel::onOnDemandSaveChanged
         )

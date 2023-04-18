@@ -5,8 +5,8 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.musicrecognition.RecognitionRequest
+import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import com.kieronquinn.app.ambientmusicmod.IMicrophoneDisabledStateCallback
 import com.kieronquinn.app.ambientmusicmod.IRecognitionCallback
 import com.kieronquinn.app.ambientmusicmod.IShellProxy
@@ -154,10 +154,6 @@ class ShellProxyService: Service() {
             throw SecurityException("Not exposed to external access")
         }
 
-        override fun grantAccessibilityPermission() {
-            throw SecurityException("Not exposed to external access")
-        }
-
         override fun setOwnerInfo(info: String?) {
             throw SecurityException("Not exposed to external access")
         }
@@ -178,6 +174,15 @@ class ShellProxyService: Service() {
         override fun destroy() {
             //No-op at this level
         }
+
+        override fun onCreate(config: Bundle?) {
+            //No-op at this level
+        }
+
+        override fun expediteJobs(jobs: IntArray, force: Boolean) {
+            throw SecurityException("Not exposed to external access")
+        }
+
     }
 
 }

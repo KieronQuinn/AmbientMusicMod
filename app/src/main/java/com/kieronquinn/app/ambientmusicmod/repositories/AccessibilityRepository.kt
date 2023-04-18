@@ -11,6 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.service.LockscreenOverlayAccessibilit
 import com.kieronquinn.app.ambientmusicmod.ui.activities.MainActivity
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.getSettingAsFlow
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.secureStringConverter
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenCreated
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
@@ -24,17 +25,9 @@ interface AccessibilityRepository {
     fun bringToFrontOnAccessibilityStart(fragment: Fragment)
     suspend fun onAccessibilityStarted()
 
-    /**
-     *  Grants the ACCESS_RESTRICTED_SETTINGS AppOp in Android 13, does nothing otherwise
-     */
-    suspend fun allowRestrictedIfNeeded()
-
 }
 
-class AccessibilityRepositoryImpl(
-    context: Context,
-    private val shizukuServiceRepository: ShizukuServiceRepository
-): AccessibilityRepository {
+class AccessibilityRepositoryImpl(context: Context): AccessibilityRepository {
 
     companion object {
         private val COMPONENT_ACCESSIBILITY_SERVICE = ComponentName(
@@ -62,7 +55,7 @@ class AccessibilityRepositoryImpl(
     }
 
     override fun bringToFrontOnAccessibilityStart(fragment: Fragment) {
-        fragment.viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+        fragment.viewLifecycleOwner.whenCreated {
             this@AccessibilityRepositoryImpl.accessibilityStartBus.collect {
                 fragment.bringToFront()
             }
@@ -71,10 +64,6 @@ class AccessibilityRepositoryImpl(
 
     override suspend fun onAccessibilityStarted() {
         accessibilityStartBus.emit(Unit)
-    }
-
-    override suspend fun allowRestrictedIfNeeded() {
-        shizukuServiceRepository.runWithService { it.grantAccessibilityPermission() }
     }
 
     private fun Fragment.bringToFront() {

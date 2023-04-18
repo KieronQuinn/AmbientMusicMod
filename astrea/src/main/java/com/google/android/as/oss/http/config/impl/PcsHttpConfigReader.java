@@ -29,13 +29,13 @@ class PcsHttpConfigReader extends AbstractConfigReader<PcsHttpConfig> {
   private static final String FLAG_PREFIX = "PcsHttp__";
 
   static final BooleanFlag ENABLE_ON_READY_HANDLER =
-      BooleanFlag.create("PcsHttp__enable_on_ready_handler", BuildCompat.isAtLeastT());
+      BooleanFlag.create("PcsHttp__enable_on_ready_handler", true);
 
   static final IntegerFlag IPC_STREAMING_THROTTLE_MS =
-      IntegerFlag.create("PcsHttp__ipc_streaming_throttle_ms", BuildCompat.isAtLeastT() ? 4000 : 0);
+      IntegerFlag.create("PcsHttp__ipc_streaming_throttle_ms", 4000);
 
   static final BooleanFlag WRITE_TO_PFD =
-      BooleanFlag.create("PcsHttp__write_to_pfd", BuildCompat.isAtLeastT());
+      BooleanFlag.create("PcsHttp__write_to_pfd", true);
 
   private final FlagManager flagManager;
 

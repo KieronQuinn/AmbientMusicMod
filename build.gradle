@@ -2,7 +2,7 @@
 
 buildscript {
     ext.nav_version = "2.5.3"
-    ext.protobufVersion = '0.8.17'
+    ext.protobufVersion = '0.9.1'
     ext.shizuku_version = '12.1.0'
     ext.refine_version = '4.1.0'
     repositories {
@@ -16,9 +16,9 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.4.1' apply false
-    id 'com.android.library' version '7.4.1' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
     id 'com.google.dagger.hilt.android' version '2.41' apply false
     id 'dev.rikka.tools.refine' version '4.1.0' apply false
 }

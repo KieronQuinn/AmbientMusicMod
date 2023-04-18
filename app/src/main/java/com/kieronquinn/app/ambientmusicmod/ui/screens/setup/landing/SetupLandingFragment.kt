@@ -7,6 +7,7 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentSetupLandingBindi
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.base.Root
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,7 +31,7 @@ class SetupLandingFragment: BoundFragment<FragmentSetupLandingBinding>(FragmentS
     }
 
     private fun setupGetStarted() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.setupLandingGetStarted.onClicked().collect {
                 viewModel.onGetStartedClicked()
             }

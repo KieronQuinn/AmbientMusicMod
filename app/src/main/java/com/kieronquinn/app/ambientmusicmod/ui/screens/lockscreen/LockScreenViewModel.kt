@@ -12,10 +12,12 @@ import com.kieronquinn.app.ambientmusicmod.model.lockscreenoverlay.LockscreenOve
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItemType
 import com.kieronquinn.app.ambientmusicmod.repositories.AccessibilityRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.OverlayTextColour
+import com.kieronquinn.app.ambientmusicmod.repositories.ShizukuServiceRepository
 import com.kieronquinn.app.ambientmusicmod.service.LockscreenOverlayAccessibilityService
 import com.kieronquinn.app.ambientmusicmod.ui.screens.container.ContainerFragmentDirections
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.getAccessibilityIntent
@@ -47,7 +49,9 @@ abstract class LockScreenViewModel: ViewModel() {
             val clickAction: SettingsRepository.LockscreenOnTrackClicked,
             val onDemandAvailable: Boolean,
             val onDemandEnabled: Boolean,
-            val overlayTextColour: String
+            val overlayTextColour: String,
+            val verboseEnabled: Boolean,
+            val systemUiPackageName: String
         ): State() {
             override fun equals(other: Any?): Boolean {
                 return false
@@ -81,9 +85,11 @@ class LockScreenViewModelImpl(
     context: Context,
     settingsRepository: SettingsRepository,
     remoteSettingsRepository: RemoteSettingsRepository,
+    deviceConfigRepository: DeviceConfigRepository,
     private val accessibilityRepository: AccessibilityRepository,
     private val rootNavigation: RootNavigation,
-    private val navigation: ContainerNavigation
+    private val navigation: ContainerNavigation,
+    private val shizukuServiceRepository: ShizukuServiceRepository
 ): LockScreenViewModel() {
 
     private val overlayEnabled = accessibilityRepository.enabled
@@ -95,6 +101,18 @@ class LockScreenViewModelImpl(
     private val onDemandLockscreenEnabled = settingsRepository.onDemandLockscreenEnabled
 
     private val reloadBus = MutableStateFlow(System.currentTimeMillis())
+
+    private val systemUiPackageName = flow {
+        emit(shizukuServiceRepository.runWithService { it.systemUIPackageName })
+    }.map {
+        it.unwrap()
+    }
+
+    private val overlay = combine(
+        overlayEnabled, overlayEnhanced.asFlow()
+    ) { enabled, enhanced ->
+        Pair(enabled, enhanced)
+    }
 
     private val onDemand = combine(
         onDemandLockscreenEnabled.asFlow(),
@@ -121,18 +139,28 @@ class LockScreenViewModelImpl(
     }
 
     override val state = combine(
-        overlayEnabled,
-        overlayEnhanced.asFlow(),
+        overlay,
         combinedStyle,
         clicked.asFlow(),
-        onDemand
-    ) { enabled, enhanced, style, clicked, demand ->
-        State.Loaded(enabled, enhanced, style.first, clicked, demand.first, demand.second, style.second)
+        onDemand,
+        systemUiPackageName
+    ) { overlay, style, clicked, demand, packageName ->
+        State.Loaded(
+            overlay.first,
+            overlay.second,
+            style.first,
+            clicked,
+            demand.first,
+            demand.second,
+            style.second,
+            deviceConfigRepository.enableLogging.get(),
+            packageName
+                ?: context.getString(R.string.lockscreen_systemui_package_name_title)
+        )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
     override fun onSwitchChanged(context: Context, enabled: Boolean) {
         viewModelScope.launch {
-            accessibilityRepository.allowRestrictedIfNeeded()
             val toastMessage = if(enabled){
                 R.string.lockscreen_enable_toast
             }else{

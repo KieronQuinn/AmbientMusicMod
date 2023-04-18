@@ -118,18 +118,22 @@
         android:id="@+id/backupRestoreFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.BackupRestoreFragment"
         android:label="@string/backup_restore_title"
-        tools:layout="@layout/fragment_settings_base" >
+        tools:layout="@layout/fragment_settings_base">
         <action
             android:id="@+id/action_backupRestoreFragment_to_backupRestoreBackupFragment"
             app:destination="@id/backupRestoreBackupFragment" />
         <action
             android:id="@+id/action_backupRestoreFragment_to_backupRestoreOptionsFragment"
             app:destination="@id/backupRestoreOptionsFragment" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:action="ACTION_VIEW"
+            app:uri="amm://backuprestore" />
     </fragment>
     <fragment
         android:id="@+id/backupRestoreBackupFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.backup.BackupRestoreBackupFragment"
-        android:label="@string/restore_title"
+        android:label="@string/backup_title"
         tools:layout="@layout/fragment_settings_base">
         <argument
             android:name="uri"

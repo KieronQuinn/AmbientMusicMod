@@ -32,7 +32,7 @@ public class Converters {
   @TypeConverter
   public static ConnectionKey connectionKeyFromBytes(byte[] bytes) {
     try {
-      return ConnectionKey.parseFrom(bytes);//, ExtensionRegistryLite.getGeneratedRegistry());
+      return ConnectionKey.parseFrom(bytes, ExtensionRegistryLite.getEmptyRegistry());
     } catch (InvalidProtocolBufferException e) {
       logger.atSevere().withCause(e).log("Unable to parse ConnectionKey.");
       // Return empty proto message.
@@ -68,7 +68,7 @@ public class Converters {
   @TypeConverter
   public static PolicyProto policyProtoFromBytes(byte[] bytes) {
     try {
-      return PolicyProto.parseFrom(bytes);//, ExtensionRegistryLite.getGeneratedRegistry());
+      return PolicyProto.parseFrom(bytes, ExtensionRegistryLite.getEmptyRegistry());
     } catch (InvalidProtocolBufferException e) {
       logger.atSevere().withCause(e).log("Unable to parse PolicyProto.");
       return PolicyProto.getDefaultInstance();

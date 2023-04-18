@@ -23,6 +23,10 @@ class TracklistArtistsViewModelImpl(
     private val navigation: TracklistNavigation
 ): TracklistArtistsViewModel(shardsListRepository) {
 
+    companion object {
+        private const val SEARCH_TERM_ONDEMAND = "ondemand"
+    }
+
     override suspend fun createList(tracks: List<ShardTrack>): List<ShardArtist> {
         return tracks.groupBy { it.artist }.map { ShardArtist(it.key, it.value) }.sortedBy {
             it.name.lowercase()
@@ -31,8 +35,19 @@ class TracklistArtistsViewModelImpl(
 
     override fun filterList(items: List<ShardArtist>, searchTerm: String): List<ShardArtist> {
         if(searchTerm.isBlank()) return items
-        return items.filter {
-            it.name.lowercase().trim().contains(searchTerm.lowercase().trim())
+        val linearOnly = searchTerm.equals(SEARCH_TERM_ONDEMAND, true)
+        return if(linearOnly){
+            items.filter {
+                it.tracks.any { track -> track.isLinear }
+            }.map {
+                //Include only the linear tracks so the count is correct
+                val linearTracks = it.tracks.filter { track -> track.isLinear }
+                it.copy(tracks = linearTracks)
+            }
+        }else{
+            items.filter {
+                it.name.lowercase().trim().contains(searchTerm.lowercase().trim())
+            }
         }
     }
 

@@ -1,6 +1,5 @@
 package com.kieronquinn.app.ambientmusicmod.service
 
-import android.Manifest
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,6 +17,7 @@ import android.media.musicrecognition.RecognitionRequest
 import android.os.*
 import android.view.IWindowManager
 import androidx.core.os.BuildCompat
+import androidx.core.os.bundleOf
 import com.android.internal.policy.IKeyguardDismissCallback
 import com.android.internal.widget.ILockSettings
 import com.kieronquinn.app.ambientmusicmod.*
@@ -41,6 +41,17 @@ class ShizukuService: IShellProxy.Stub() {
         const val SHELL_UID = 2000
         const val ROOT_PACKAGE = "android"
         const val SHELL_PACKAGE = "com.android.shell"
+
+        private const val KEY_SET_NOTIFICATION_PERMISSION = "set_notification_permission"
+        private const val KEY_SET_ACCESSIBILITY_PERMISSION = "set_accessibility_permission"
+
+        fun createConfigBundle(
+            setNotificationPermission: Boolean,
+            setAccessibilityPermission: Boolean
+        ) = bundleOf(
+            KEY_SET_NOTIFICATION_PERMISSION to setNotificationPermission,
+            KEY_SET_ACCESSIBILITY_PERMISSION to setAccessibilityPermission
+        )
     }
 
     private val context by lazy {
@@ -162,7 +173,7 @@ class ShizukuService: IShellProxy.Stub() {
         return audioRecord.sampleRate
     }
 
-    @SuppressLint("NewApi", "MissingPermission")
+    @SuppressLint("NewApi", "MissingPermission", "UnsafeOptInUsageError")
     private fun createAudioRecord(
         audioAttributes: AudioAttributes,
         audioFormat: AudioFormat,
@@ -170,6 +181,9 @@ class ShizukuService: IShellProxy.Stub() {
         bufferSizeInBytes: Int
     ): AudioRecord {
         return when {
+            BuildCompat.isAtLeastU() -> createAudioRecordApi34(
+                audioAttributes, audioFormat, sessionId, bufferSizeInBytes
+            )
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> createAudioRecordApi31(
                 audioAttributes, audioFormat, sessionId, bufferSizeInBytes
             )
@@ -177,6 +191,29 @@ class ShizukuService: IShellProxy.Stub() {
                 audioAttributes, audioFormat, sessionId, bufferSizeInBytes
             )
         }
+    }
+
+    @SuppressLint("NewApi", "MissingPermission")
+    private fun createAudioRecordApi34(
+        audioAttributes: AudioAttributes,
+        audioFormat: AudioFormat,
+        sessionId: Int,
+        bufferSizeInBytes: Int
+    ): AudioRecord {
+        val shellContext = ShellContext(context, isRoot)
+        return AudioRecord::class.java.getDeclaredConstructor(
+            AudioAttributes::class.java, //attributes
+            AudioFormat::class.java, // format
+            Integer.TYPE, // bufferSizeInBytes
+            Integer.TYPE, // sessionId
+            Context::class.java, // context
+            Integer.TYPE, // maxSharedAudioHistoryMs
+            Integer.TYPE // halInputFlags
+        ).apply {
+            isAccessible = true
+        }.newInstance(
+            audioAttributes, audioFormat, bufferSizeInBytes, sessionId, shellContext, 0, 0
+        )
     }
 
     @SuppressLint("NewApi", "MissingPermission")
@@ -366,13 +403,6 @@ class ShizukuService: IShellProxy.Stub() {
         windowManager.dismissKeyguard(dismissCallback, message)
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
-    override fun grantAccessibilityPermission() {
-        if(!BuildCompat.isAtLeastT()) return
-        //Grant the Restricted Settings AppOps permission, required to enable accessibility on A13
-        runCommand("appops set ${BuildConfig.APPLICATION_ID} ACCESS_RESTRICTED_SETTINGS allow")
-    }
-
     override fun setOwnerInfo(info: String) = runWithClearedIdentity {
         if(!isRoot){
             return@runWithClearedIdentity
@@ -402,18 +432,37 @@ class ShizukuService: IShellProxy.Stub() {
         }
     }
 
-    /**
-     *  Grants Notification permission to both apps on T. If you want to disable notifications,
-     *  just disable every channel.
-     */
     private fun grantNotificationPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
         runCommand("pm grant ${BuildConfig.APPLICATION_ID} $POST_NOTIFICATIONS")
         runCommand("pm grant $PACKAGE_NAME_PAM $POST_NOTIFICATIONS")
     }
 
-    init {
-        grantNotificationPermission()
+    @SuppressLint("UnsafeOptInUsageError")
+    private fun grantAccessibilityPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        //Grant the Restricted Settings AppOps permission, required to enable accessibility on A13
+        runCommand("appops set ${BuildConfig.APPLICATION_ID} ACCESS_RESTRICTED_SETTINGS allow")
+    }
+
+    override fun onCreate(config: Bundle) {
+        if(config.getBoolean(KEY_SET_ACCESSIBILITY_PERMISSION, false)) {
+            grantAccessibilityPermission()
+        }
+        if(config.getBoolean(KEY_SET_NOTIFICATION_PERMISSION, false)) {
+            grantNotificationPermission()
+        }
+    }
+
+    override fun expediteJobs(jobs: IntArray, force: Boolean) {
+        jobs.forEach {
+            val command = if(force){
+                "cmd jobscheduler run -f $PACKAGE_NAME_PAM $it"
+            }else{
+                "cmd jobscheduler run $PACKAGE_NAME_PAM $it"
+            }
+            runCommand(command)
+        }
     }
 
 }

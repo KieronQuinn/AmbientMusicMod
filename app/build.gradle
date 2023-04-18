@@ -11,10 +11,11 @@ plugins {
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "244:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20230219-030030/manifest.json"
+String DEFAULT_MANIFEST = "247:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20230402-030031/manifest.json"
+String DEFAULT_MANIFEST_V3 = "3048:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20230402-030031/manifest.json"
 
-def tagName = '2.1.2'
-def version = 212
+def tagName = '2.2'
+def version = 220
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -45,6 +46,7 @@ android {
         versionName tagName
 
         buildConfigField "String", "DEFAULT_MANIFEST", "\"" + DEFAULT_MANIFEST + "\""
+        buildConfigField "String", "DEFAULT_MANIFEST_V3", "\"" + DEFAULT_MANIFEST_V3 + "\""
         buildConfigField "String", "TAG_NAME", "\"${tagName}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -76,11 +78,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = 17
     }
     buildFeatures {
         viewBinding true
@@ -109,15 +111,15 @@ protobuf {
 
 dependencies {
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.work:work-runtime-ktx:2.8.0"
+    implementation "androidx.work:work-runtime-ktx:2.8.1"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-service:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-service:2.6.1"
 
     //Material UI
     implementation 'com.google.android.material:material:1.8.0'
@@ -187,6 +189,11 @@ dependencies {
 
     //Colour Picker for overlay text
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
+
+    //Room for local song list cache
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

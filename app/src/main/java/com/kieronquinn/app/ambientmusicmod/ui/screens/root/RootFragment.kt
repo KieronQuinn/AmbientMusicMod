@@ -11,6 +11,8 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentRootBinding
 import com.kieronquinn.app.ambientmusicmod.ui.activities.MainActivityViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.firstNotNull
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenCreated
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -28,7 +30,7 @@ class RootFragment: BoundFragment<FragmentRootBinding>(FragmentRootBinding::infl
         super.onViewCreated(view, savedInstanceState)
         view.setBackgroundColor(monet.getBackgroundColor(requireContext()))
         setupNavigation()
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+        whenCreated {
             setupStartDestination(
                 activityViewModel.startDestination.firstNotNull(), savedInstanceState
             )
@@ -41,7 +43,7 @@ class RootFragment: BoundFragment<FragmentRootBinding>(FragmentRootBinding::infl
         navHostFragment.navController.setGraph(graph, savedInstanceState)
     }
 
-    private fun setupNavigation() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupNavigation() = whenResumed {
         launch {
             navHostFragment.setupWithNavigation(navigation)
         }

@@ -13,6 +13,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.setup.shizuku.SetupShizukuViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -45,7 +46,7 @@ class SetupShizukuFragment: BoundFragment<FragmentSetupShizukuBinding>(FragmentS
         binding.setupShizukuLoadingProgress.applyMonet()
     }
 
-    private fun setupGet() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupGet() = whenResumed {
         binding.setupShizukuGet.onClicked().collect {
             viewModel.onGetShizukuClicked()
         }
@@ -61,7 +62,7 @@ class SetupShizukuFragment: BoundFragment<FragmentSetupShizukuBinding>(FragmentS
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }

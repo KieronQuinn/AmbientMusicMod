@@ -11,7 +11,7 @@
         android:gravity="center_vertical"
         android:padding="@dimen/margin_16"
         android:textColor="?android:textColorPrimary"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
         tools:text="Header" />
 
 </FrameLayout>

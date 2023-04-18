@@ -8,6 +8,7 @@ import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenCreated
 import com.kieronquinn.app.ambientmusicmod.utils.lifecycle.LifecycleTileService
 import com.kieronquinn.app.pixelambientmusic.model.SettingsStateChange
 import kotlinx.coroutines.Job
@@ -33,7 +34,7 @@ class QuickSettingTileService: LifecycleTileService() {
 
     override fun onStartListening() {
         super.onStartListening()
-        tileJob = lifecycleScope.launchWhenCreated {
+        tileJob = whenCreated {
             isEnabled.collect {
                 val isEnabled = when {
                     it == null -> null //Not got state yet
@@ -75,8 +76,8 @@ class QuickSettingTileService: LifecycleTileService() {
 
     override fun onClick() {
         super.onClick()
-        lifecycleScope.launchWhenCreated {
-            val current = isEnabled.value?.first ?: return@launchWhenCreated
+        whenCreated {
+            val current = isEnabled.value?.first ?: return@whenCreated
             remoteSettings.commitChanges(SettingsStateChange(mainEnabled = !current))
         }
     }

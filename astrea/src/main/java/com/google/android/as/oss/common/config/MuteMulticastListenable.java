@@ -24,6 +24,8 @@ import java.util.concurrent.Executor;
  * <p>This type is handy to avoid using null in cases where we don't need to notify.
  * (https://github.com/google/guava/wiki/UsingAndAvoidingNullExplained)
  */
+// See [redacted]
+@SuppressWarnings("ExtendsObject")
 public class MuteMulticastListenable<L extends Object> extends MulticastListenable<L> {
   @Override
   public boolean addListener(L listener) {

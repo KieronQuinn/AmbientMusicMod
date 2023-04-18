@@ -19,6 +19,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onSelected
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.selectTab
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.toArgb
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -65,7 +66,7 @@ class LockScreenAdapter(
             nowPlayingText.setTextColor(Color.WHITE)
             nowPlayingText.setText(R.string.item_nowplaying_header_preview)
             (nowPlayingIcon.drawable as AnimatedVectorDrawable).start()
-            lifecycleScope.launchWhenResumed {
+            whenResumed {
                 root.onClicked().collect { lockscreenHeaderTabs.selectTab(0) }
             }
         }
@@ -74,7 +75,7 @@ class LockScreenAdapter(
             nowPlayingText.setTextColor(Color.WHITE)
             nowPlayingText.setText(R.string.item_nowplaying_header_preview)
             (nowPlayingIcon.drawable as AnimatedVectorDrawable).start()
-            lifecycleScope.launchWhenResumed {
+            whenResumed {
                 root.onClicked().collect { lockscreenHeaderTabs.selectTab(1) }
             }
         }
@@ -84,12 +85,12 @@ class LockScreenAdapter(
         lockscreenHeaderTabs.backgroundTintList = ColorStateList.valueOf(tabBackground)
         lockscreenHeaderTabs.setSelectedTabIndicatorColor(monet.getAccentColor(root.context))
         lockscreenHeaderChangePosition.overrideRippleColor(monet.getAccentColor(root.context))
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             lockscreenHeaderTabs.onSelected().collect {
                 header.onStyleSelected(LockscreenOverlayStyle.values()[it])
             }
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             lockscreenHeaderChangePosition.onClicked().collect {
                 header.onPositionClicked()
             }

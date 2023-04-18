@@ -18,6 +18,8 @@ abstract class CountryPickerViewModel: ViewModel() {
 
     abstract fun setCountry(country: ShardCountry?)
 
+    abstract fun setAdditionalCountry(country: ShardCountry?)
+
     sealed class State {
         object Loading: State()
         data class Loaded(val selectedItem: ShardCountry?): State()
@@ -28,7 +30,8 @@ abstract class CountryPickerViewModel: ViewModel() {
         data class Country(
             val country: ShardCountry?,
             val isSelected: Boolean,
-            val onSelected: (ShardCountry?) -> Unit
+            val onSelected: (ShardCountry?) -> Unit,
+            val onLongSelected: ((ShardCountry?) -> Unit)?
         ): CountryPickerSettingsItem(ItemType.COUNTRY)
 
         enum class ItemType: BaseSettingsItemType {
@@ -50,6 +53,13 @@ class CountryPickerViewModelImpl(
     override fun setCountry(country: ShardCountry?) {
         viewModelScope.launch {
             deviceConfigRepository.deviceCountry.set(country?.code ?: "")
+        }
+    }
+
+    override fun setAdditionalCountry(country: ShardCountry?) {
+        viewModelScope.launch {
+            deviceConfigRepository.extraLanguages.set(country?.code ?: "")
+            deviceConfigRepository.extraLanguageLimit.set(1)
         }
     }
 

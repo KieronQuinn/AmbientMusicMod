@@ -1,6 +1,8 @@
 package com.kieronquinn.app.ambientmusicmod.utils.extensions
 
 import android.content.ContentResolver
+import android.content.ContentValues
+import android.content.Intent
 import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
@@ -22,6 +24,35 @@ fun ContentResolver.safeQuery(
     }
 }
 
+fun ContentResolver.safeUpdate(
+    uri: Uri,
+    values: ContentValues,
+    selection: String,
+    selectionArgs: Array<out String>
+): Int {
+    ApiRepository.assertCompatibility()
+    return try {
+        update(uri, values, selection, selectionArgs)
+    }catch (e: SecurityException){
+        //Provider not found
+        0
+    }
+}
+
+fun ContentResolver.safeDelete(
+    uri: Uri,
+    selection: String,
+    selectionArgs: Array<out String>
+): Int {
+    ApiRepository.assertCompatibility()
+    return try {
+        delete(uri, selection, selectionArgs)
+    }catch (e: SecurityException){
+        //Provider not found
+        0
+    }
+}
+
 fun ContentResolver.safeRegisterContentObserver(
     uri: Uri, notifyForDescendants: Boolean, observer: ContentObserver
 ) {
@@ -30,4 +61,11 @@ fun ContentResolver.safeRegisterContentObserver(
     }catch (e: SecurityException){
         //Provider not found
     }
+}
+
+fun ContentResolver.takeUriPermission(
+    uri: Uri,
+    flags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+) {
+    takePersistableUriPermission(uri, flags)
 }

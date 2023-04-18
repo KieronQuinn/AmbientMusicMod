@@ -11,6 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.restore.BackupRestoreRestoreViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -41,7 +42,7 @@ class BackupRestoreRestoreFragment: BoundFragment<FragmentBackupRestoreRestoreFr
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -65,7 +66,7 @@ class BackupRestoreRestoreFragment: BoundFragment<FragmentBackupRestoreRestoreFr
         }
     }
 
-    private fun setupClose() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupClose() = whenResumed {
         binding.backupRestoreRestoreClose.onClicked().collect {
             viewModel.onCloseClicked()
         }

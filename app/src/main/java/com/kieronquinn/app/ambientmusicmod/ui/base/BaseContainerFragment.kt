@@ -129,7 +129,7 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
     }
 
     private fun setupStack() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             navController.onDestinationChanged().collect {
                 onTopFragmentChanged(
                     navHostFragment.getTopFragment() ?: return@collect, it
@@ -142,14 +142,14 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
         )
     }
 
-    private fun setupCollapsedState() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupCollapsedState() = whenResumed {
         appBar.collapsedState().collect {
             navHostFragment.getTopFragment()?.rememberAppBarCollapsed(it)
         }
     }
 
     private fun setupToolbar() = with(toolbar) {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             onNavigationIconClicked().collect {
                 (navHostFragment.getTopFragment() as? ProvidesBack)?.let {
                     if(it.onBackPressed()) return@collect
@@ -177,7 +177,7 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
                 requireActivity().finish()
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             navController.onDestinationChanged().collect {
                 callback.isEnabled = shouldBackDispatcherBeEnabled()
             }
@@ -228,7 +228,7 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
         toolbar.navigationIcon = backIcon
     }
 
-    private fun setupNavigation() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupNavigation() = whenResumed {
         launch {
             navHostFragment.setupWithNavigation(navigation)
         }

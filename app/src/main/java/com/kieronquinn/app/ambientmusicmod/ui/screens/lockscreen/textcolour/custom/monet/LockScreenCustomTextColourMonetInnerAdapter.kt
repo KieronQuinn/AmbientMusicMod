@@ -12,6 +12,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.cust
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isColorDark
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.flow.collect
 
 class LockScreenCustomTextColourMonetInnerAdapter(
@@ -41,7 +42,7 @@ class LockScreenCustomTextColourMonetInnerAdapter(
         colourCheck.imageTintList = ColorStateList.valueOf(
             if(isColourDark) Color.WHITE else Color.BLACK
         )
-        holder.lifecycleScope.launchWhenResumed {
+        holder.whenResumed {
             colourBackground.onClicked().collect {
                 onColourClicked(item.colour)
             }

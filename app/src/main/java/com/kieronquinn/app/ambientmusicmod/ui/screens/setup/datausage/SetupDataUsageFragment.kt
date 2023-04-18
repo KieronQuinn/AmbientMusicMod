@@ -21,6 +21,7 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.getLegacyWorkaroundN
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -51,7 +52,7 @@ class SetupDataUsageFragment: BoundFragment<FragmentSetupDataUsageBinding>(Fragm
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -95,7 +96,7 @@ class SetupDataUsageFragment: BoundFragment<FragmentSetupDataUsageBinding>(Fragm
 
     private fun setupControls() {
         handleControls(viewModel.fabState.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.fabState.collect {
                 handleControls(it)
             }
@@ -148,7 +149,7 @@ class SetupDataUsageFragment: BoundFragment<FragmentSetupDataUsageBinding>(Fragm
         }
     }
 
-    private fun setupNext() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupNext() = whenResumed {
         binding.setupDataUsageNext.onClicked().collect {
             viewModel.onNextClicked()
         }

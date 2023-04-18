@@ -3,13 +3,13 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.batteryoptimisation
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.batteryoptimisation.BatteryOptimisationViewModel.BatteryOptimisationSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.batteryoptimisation.BatteryOptimisationViewModel.State
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 abstract class BatteryOptimisationFragment: BaseSettingsFragment() {
@@ -34,7 +34,7 @@ abstract class BatteryOptimisationFragment: BaseSettingsFragment() {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -69,7 +69,7 @@ abstract class BatteryOptimisationFragment: BaseSettingsFragment() {
                 getString(R.string.battery_optimisation_system_title),
                 getString(R.string.battery_optimisation_system_content),
                 R.drawable.ic_settings_battery_optimisation,
-                viewModel::onBatteryOptimisationClicked
+                onClick = viewModel::onBatteryOptimisationClicked
             )
         }
         val oemSetting = if(state.oemBatteryOptimisationAvailable){
@@ -77,7 +77,7 @@ abstract class BatteryOptimisationFragment: BaseSettingsFragment() {
                 getString(R.string.battery_optimisation_oem_title),
                 getString(R.string.battery_optimisation_oem_content),
                 R.drawable.ic_open,
-                viewModel::onOemBatteryOptimisationClicked
+                onClick = viewModel::onOemBatteryOptimisationClicked
             )
         }else null
         val footer = BatteryOptimisationSettingsItem.Footer(

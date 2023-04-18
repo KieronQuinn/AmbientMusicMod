@@ -22,10 +22,11 @@ import com.google.android.as.oss.networkusage.api.proto.ConnectionKey;
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.AutoValue.CopyAnnotations;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.ryanharter.auto.value.parcel.ParcelAdapter;
 import com.ryanharter.auto.value.parcel.TypeAdapter;
 
-/** Details that describe an PCS connection. */
+/** Details that describe a PCS connection. */
 @AutoValue
 public abstract class ConnectionDetails implements Parcelable {
   @CopyAnnotations
@@ -87,8 +88,17 @@ public abstract class ConnectionDetails implements Parcelable {
     /** A download using HTTPS. */
     HTTP,
     /** A download using Private Information Retrieval. */
-    PIR
+    PIR,
+    /** A protected download using a GRPC-based protocol. */
+    PD
   }
+
+  /** All the connection types related to federated computations. */
+  public static final ImmutableSet<ConnectionType> FC_CONNECTION_TYPES =
+      ImmutableSet.of(
+          ConnectionType.FC_CHECK_IN,
+          ConnectionType.FC_TRAINING_START_QUERY,
+          ConnectionType.FC_TRAINING_RESULT_UPLOAD);
 
   /**
    * TypeAdapter that converts ConnectionKey to a parcelable format. Used to implement the Auto

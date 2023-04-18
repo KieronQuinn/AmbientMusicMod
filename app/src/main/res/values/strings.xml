@@ -52,6 +52,10 @@
     <string name="notification_warning_on_demand_disabled_title">On Demand Disabled</string>
     <string name="notification_warning_on_demand_disabled_subtitle">On Demand is no longer available on this device. Tap to fix.</string>
 
+    <!-- Periodic Backup notification -->
+    <string name="notification_channel_backups_title">Backups</string>
+    <string name="notification_channel_backups_subtitle">Notifications shown during periodic backups</string>
+
     <!-- Now Playing settings -->
     <string name="nowplaying_title">Now Playing</string>
     <string name="now_playing_error_shizuku">Failed to connect to Shizuku</string>
@@ -162,6 +166,24 @@
         <item quantity="other">%1d tracks</item>
     </plurals>
     <string name="tracklist_snackbar_ondemand">Stored or updated by an On Demand recognition</string>
+    <string name="tracklist_generic_empty">No results found</string>
+
+    <string name="tracklist_track_info_title">Track Info</string>
+    <string name="tracklist_track_info_edit">Edit</string>
+    <string name="tracklist_track_info_track_name">Track Name</string>
+    <string name="tracklist_track_info_artist">Artist</string>
+    <string name="tracklist_track_info_album">Album</string>
+    <string name="tracklist_track_info_year">Year</string>
+    <string name="tracklist_track_info_country">Database Country</string>
+    <string name="tracklist_track_info_country_global">Global</string>
+
+    <string name="tracklist_track_edit_title">Edit Track</string>
+    <string name="tracklist_track_edit_save">Save</string>
+    <string name="tracklist_track_edit_delete">Delete</string>
+    <string name="tracklist_track_edit_saving">Saving…</string>
+    <string name="tracklist_track_edit_error">An error occurred, please try again</string>
+    <string name="tracklist_track_edit_track_error">A Track Name is required</string>
+    <string name="tracklist_track_edit_artist_error">An Artist is required</string>
 
     <!-- On Demand -->
     <string name="on_demand_title">On Demand</string>
@@ -177,7 +199,7 @@
     <string name="on_demand_banner_needs_overlay_button">Setup</string>
     <string name="on_demand_banner_disable">Disable</string>
     <string name="on_demand_save_title">Save On Demand Recognitions</string>
-    <string name="on_demand_save_content">Store the fingerprints of On Demand recognised songs locally so they can be recognised in future without an internet connection</string>
+    <string name="on_demand_save_content">Store the fingerprints of On Demand recognised songs locally so they can be recognised in future without an internet connection. <b>A maximum of 100 songs can be stored, in a first-in, first-out fashion.</b></string>
     <string name="on_demand_vibrate_title">Vibrate</string>
     <string name="on_demand_vibrate_content">Vibrate when an on-demand returns a result (successful or failure)</string>
 
@@ -197,6 +219,8 @@
     <string name="lockscreen_enhanced_content">Hide the overlay when notifications, quick settings or an app is displaying over the lockscreen. This may not work on all devices, disable if it breaks the overlay.</string>
     <string name="lockscreen_overlay_on_clicked">Tap Action</string>
     <string name="lockscreen_overlay_on_clicked_content">Select an action to open when a track is clicked: %1s</string>
+    <string name="lockscreen_systemui_package_name_title">SystemUI Package Name</string>
+    <string name="lockscreen_systemui_package_name_content_unknown">Unknown</string>
     <string name="lockscreen_enable_toast">Enable "Ambient Music Mod"</string>
     <string name="lockscreen_disable_toast">Disable "Ambient Music Mod"</string>
     <string name="lockscreen_owner_info">Show tracks as Owner Info</string>
@@ -286,6 +310,16 @@
     <string name="settings_show_album_art">Show Album Art</string>
     <string name="settings_show_album_art_content">Show album art in Now Playing History</string>
 
+    <string name="settings_history_summary_days">History Summary Length</string>
+    <string name="settings_history_summary_days_content">The length of time to show a summary of your listening for in Now Playing History: %1s</string>
+    <string name="settings_history_summary_1_day">1 day</string>
+    <string name="settings_history_summary_7_days">1 week</string>
+    <string name="settings_history_summary_14_days">2 weeks</string>
+    <string name="settings_history_summary_30_days">1 month</string>
+    <string name="settings_history_summary_60_days">2 months</string>
+    <string name="settings_history_summary_365_days">1 year</string>
+    <string name="settings_history_summary_toast">Longer time lengths may incur high loading times</string>
+
     <string name="settings_bedtime">Disable at Bedtime</string>
     <string name="settings_bedtime_content">Prevent automatic recognitions from happening overnight to save battery: %1s</string>
     <string name="settings_bedtime_content_enabled">Enabled</string>
@@ -305,9 +339,6 @@
     <string name="settings_advanced_small_cores">Run on Little Cores</string>
     <string name="settings_advanced_small_cores_content">Run recognition on the little CPU cores. May use less battery, may not work on all devices</string>
 
-    <string name="settings_advanced_nnfp_v3">Experimental Model</string>
-    <string name="settings_advanced_nnfp_v3_content">Use experimental (NNFP v3) recognition model. May not work, may be unstable\n<b>Note:</b> If you have \'Save On Demand Recognitions\' enabled, NNFP v3 uses a separate list of recognitions, so your list will be effectively reset.</string>
-
     <string name="settings_advanced_superpacks_require_wifi">Database Downloads on Wi-Fi only</string>
     <string name="settings_advanced_superpacks_require_wifi_short">Wi-Fi only</string>
     <string name="settings_advanced_superpacks_require_wifi_content">Require <b>unmetered</b> Wi-Fi to download updates to the Music Database. You may need to reboot after changing this setting for it to take effect.</string>
@@ -324,6 +355,12 @@
 
     <string name="settings_advanced_enable_logging">Enable Verbose Logging</string>
     <string name="settings_advanced_enable_logging_content">Enables logging in both Ambient Music Mod and Now Playing</string>
+
+    <string name="settings_advanced_debug">Debug</string>
+
+    <string name="settings_advanced_poke_jobscheduler">Poke Job Scheduler</string>
+    <string name="settings_advanced_poke_jobscheduler_content">Trigger a force run of any database download jobs in Now Playing. <b>This will ignore any constraints such as charging and WiFi requirements!</b></string>
+    <string name="settings_advanced_poke_jobscheduler_toast">Done, monitor log output for results</string>
 
     <string name="title_settings_bedtime">Bedtime</string>
     <string name="settings_bedtime_switch">Disable at Bedtime</string>
@@ -366,9 +403,14 @@
     <string name="updates_shards_track_count_label">Tracks in Database</string>
     <string name="updates_shards_track_count_label_personalised">Stored On Demand Tracks</string>
     <string name="updates_shards_view_tracks">View Track List</string>
+    <string name="updates_shards_plus">+%1d</string>
     <string name="updates_shards_status_updating">Updating</string>
     <string name="updates_shards_status_waiting_for_wifi">Waiting for suitable Wi-Fi</string>
     <string name="updates_shards_status_waiting_for_charging">Waiting until device is charging</string>
+
+    <string name="extra_country_picker_title">Additional Countries</string>
+    <string name="extra_country_picker_header"><b>Warning:</b> Adding additional countries to the local database may slow down Ambient Music Mod and Now Playing, and may impact battery life.\n\n<b>This option is experimental, and makes use of a developer option in Now Playing. If you find changes do not apply, force stop Now Playing or reboot your device, then re-open Ambient Music Mod.</b></string>
+    <string name="extra_country_picker_error">A maximum of 2 additional countries is allowed</string>
 
     <string name="updates_amm_title">Ambient Music Mod</string>
     <string name="updates_pam_title">Now Playing</string>
@@ -475,6 +517,8 @@
     <string name="backup_restore_restore_options_restore_settings_title">Restore Settings</string>
     <string name="backup_restore_restore_options_restore_settings_content">Restore Ambient Music Mod settings</string>
 
+    <string name="backup_title">Backup</string>
+    <string name="backup_subtitle_generic">Preparing…</string>
     <string name="backup_loading_history">Loading Now Playing History…</string>
     <string name="backup_loading_favourites">Loading Now Playing Favourites…</string>
     <string name="backup_loading_linear">Loading Stored On Demand Tracks…</string>
@@ -507,12 +551,25 @@
     <string name="restore_failed_incompatible_content">The selected backup is not compatible with this version of Ambient Music Mod</string>
     <string name="backup_restore_restore_close">Close</string>
 
+    <string name="backup_automatic_title">Automatic Backups</string>
+    <string name="backup_periodic_title">Periodic Backup</string>
+    <string name="backup_periodic_content">Enable automatic periodic backups of settings, history and favourites</string>
+    <string name="backup_periodic_interval_title">Backup Interval</string>
+    <string name="backup_periodic_daily">Daily</string>
+    <string name="backup_periodic_weekly">Weekly</string>
+    <string name="backup_periodic_monthly">Monthly</string>
+    <string name="backup_periodic_location_title">Backup Location</string>
+    <string name="backup_periodic_location_external">Backing up to External / Cloud Location</string>
+    <string name="backup_periodic_location_unset">Not set</string>
+    <string name="backup_periodic_location_last"><b>Last Backup:</b></string>
+    <string name="backup_periodic_location_next"><b>Next Backup:</b></string>
+
     <string name="faq_title">Frequently Asked Questions</string>
     <string name="faq_content">Please read these questions and answers before submitting a question or issue on GitHub or XDA</string>
     <string name="faq_title_short">FAQ</string>
 
     <string name="about_contributors_icons">Icons</string>
-    <string name="about_contributors_icons_content"><![CDATA[Icons by <b><a href="https://material.io/resources/icons">Material Icons</a></b> (<a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache Licence 2.0</a>)<br><b><a href="https://github.com/Templarian/MaterialDesign">Material Design Icons</a></b> (<a href="https://github.com/Templarian/MaterialDesign/blob/master/LICENSE">Pictogrammers Free Licence</a>)<br><b><a href="https://lottiefiles.com/3660-night-mode">Night Mode by James Storm</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://lottiefiles.com/78453-recording">Recording by Ashish Khan</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://lottiefiles.com/54141-google-pay-success">Success by Rohith R Krishnan</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://github.com/HatScripts/circle-flags>circle-flags</a></b> (<a href="https://github.com/HatScripts/circle-flags/blob/gh-pages/LICENSE.md">MIT license</a>)]]></string>
+    <string name="about_contributors_icons_content"><![CDATA[Icons by <b><a href="https://material.io/resources/icons">Material Icons</a></b> (<a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache Licence 2.0</a>)<br><b><a href="https://github.com/Templarian/MaterialDesign">Material Design Icons</a></b> (<a href="https://github.com/Templarian/MaterialDesign/blob/master/LICENSE">Pictogrammers Free Licence</a>)<br><b><a href="https://lottiefiles.com/3660-night-mode">Night Mode by James Storm</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://lottiefiles.com/78453-recording">Recording by Ashish Khan</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://lottiefiles.com/54141-google-pay-success">Success by Rohith R Krishnan</a></b> (<a href="https://lottiefiles.com/license">Lottie Simple License</a>)<br><b><a href="https://github.com/HatScripts/circle-flags">circle-flags</a></b> (<a href="https://github.com/HatScripts/circle-flags/blob/gh-pages/LICENSE.md">MIT license</a>)]]></string>
     <string name="about_translators">Translators</string>
 
     <string name="wallpaper_colour_picker_menu">Wallpaper Colour Picker</string>

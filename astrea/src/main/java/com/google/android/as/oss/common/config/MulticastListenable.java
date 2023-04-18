@@ -37,6 +37,8 @@ import javax.annotation.concurrent.ThreadSafe;
  */
 // Note: "L extends Object" (as opposite to "L extends @Nullable Object") is how we tell the
 // nullness checker that L is not nullable.
+// See [redacted]
+@SuppressWarnings("ExtendsObject")
 @ThreadSafe
 public class MulticastListenable<L extends Object> implements Listenable<L> {
   private final CopyOnWriteArrayList<L> listeners;

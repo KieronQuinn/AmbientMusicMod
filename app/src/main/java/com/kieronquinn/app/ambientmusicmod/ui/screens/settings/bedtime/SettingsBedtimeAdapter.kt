@@ -18,6 +18,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsB
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onComplete
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.replaceColour
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
@@ -66,11 +67,11 @@ class SettingsBedtimeAdapter(
             replaceColour("sky_night", "**", replaceWith = night)
             replaceColour("sky_day", "**", replaceWith = day)
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             bedtimeHeaderMotion.loopBedtimeHeader(bedtimeHeaderRecognised)
         }
         bedtimeHeaderRecognised.setAnimation(R.raw.lottie_bedtime_note_1)
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             delay(INITIAL_ANIMATION_START_DELAY)
             bedtimeHeaderMotion.setTransition(R.id.start_to_loop_start)
             bedtimeHeaderMotion.transitionToEnd()

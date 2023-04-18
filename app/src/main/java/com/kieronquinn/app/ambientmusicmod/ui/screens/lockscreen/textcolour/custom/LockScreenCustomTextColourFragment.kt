@@ -10,6 +10,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.base.LockCollapsed
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onSelected
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.selectTab
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.toArgb
 import kotlinx.coroutines.flow.collect
 
@@ -32,7 +33,7 @@ class LockScreenCustomTextColourFragment: BoundFragment<FragmentLockscreenCustom
         backgroundTintList = ColorStateList.valueOf(tabBackground)
         setSelectedTabIndicatorColor(monet.getAccentColor(context))
         selectTab(binding.customTextColourPager.currentItem)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             onSelected().collect {
                 binding.customTextColourPager.currentItem = it
             }

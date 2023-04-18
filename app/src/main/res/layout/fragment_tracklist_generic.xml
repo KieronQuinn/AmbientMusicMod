@@ -52,4 +52,33 @@
         android:layout_height="0dp"
         app:constraint_referenced_ids="tracklist_generic_loading_label,tracklist_generic_loading_progress" />
 
+    <ImageView
+        android:id="@+id/tracklist_generic_empty_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toTopOf="@id/tracklist_generic_loading_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tracklist_generic_empty_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/tracklist_generic_empty"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tracklist_generic_empty_icon" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/tracklist_generic_empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="tracklist_generic_empty_label,tracklist_generic_empty_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

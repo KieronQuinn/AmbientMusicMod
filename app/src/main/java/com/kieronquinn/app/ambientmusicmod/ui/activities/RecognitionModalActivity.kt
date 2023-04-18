@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.service.AmbientMusicModForegroundService
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenCreated
 import com.kieronquinn.app.ambientmusicmod.work.UpdateWorker
 import com.kieronquinn.monetcompat.app.MonetCompatActivity
 import org.koin.android.ext.android.inject
@@ -26,7 +27,7 @@ class RecognitionModalActivity: MonetCompatActivity() {
         AmbientMusicModForegroundService.start(this, true)
         UpdateWorker.queueWorker(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        lifecycleScope.launchWhenCreated {
+        whenCreated {
             monet.awaitMonetReady()
             setContentView(R.layout.activity_recognition_modal)
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)

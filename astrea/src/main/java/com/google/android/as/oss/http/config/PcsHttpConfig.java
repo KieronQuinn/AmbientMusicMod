@@ -24,8 +24,8 @@ public abstract class PcsHttpConfig {
 
   public static Builder builder() {
     return new AutoValue_PcsHttpConfig.Builder()
-        .setOnReadyHandlerEnabled(false)
-        .setIpcStreamingThrottleMs(0)
+        .setOnReadyHandlerEnabled(true)
+        .setIpcStreamingThrottleMs(4000)
         .setWriteToPfd(false);
   }
 

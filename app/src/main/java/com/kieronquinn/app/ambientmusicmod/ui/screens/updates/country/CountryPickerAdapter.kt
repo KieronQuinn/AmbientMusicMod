@@ -2,7 +2,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.updates.country
 
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemCountryPickerBinding
@@ -13,7 +12,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.country.CountryPic
 import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.country.CountryPickerViewModel.CountryPickerSettingsItem.ItemType
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onLongClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 
 class CountryPickerAdapter(
     recyclerView: LifecycleAwareRecyclerView,
@@ -65,9 +65,18 @@ class CountryPickerAdapter(
         }
         itemCountryPickerIcon.clipToOutline = true
         itemCountryPickerCheck.isVisible = item.isSelected
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             root.onClicked().collect {
                 item.onSelected(item.country)
+            }
+        }
+        whenResumed {
+            item.onLongSelected?.let { long ->
+                root.onLongClicked().collect {
+                    long(item.country)
+                }
+            } ?: run {
+                root.setOnLongClickListener(null)
             }
         }
     }

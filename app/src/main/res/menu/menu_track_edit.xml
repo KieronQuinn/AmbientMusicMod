@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/ic_delete"
+        android:title="@string/tracklist_track_edit_delete"
+        android:showAsAction="always"
+        tools:ignore="AppCompatResource" />
+</menu>

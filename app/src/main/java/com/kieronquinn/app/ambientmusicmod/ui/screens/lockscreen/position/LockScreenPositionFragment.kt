@@ -24,6 +24,7 @@ import com.kieronquinn.app.ambientmusicmod.databinding.OverlayNowPlayingClassicB
 import com.kieronquinn.app.ambientmusicmod.model.lockscreenoverlay.LockscreenOverlayStyle
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.measureSize
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -78,7 +79,7 @@ class LockScreenPositionFragment: BoundFragment<FragmentLockscreenPositionBindin
         )
     }
 
-    private fun setupSave() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupSave() = whenResumed {
         yPos.debounce(250L).collectLatest {
             viewModel.commit(it)
         }
@@ -131,7 +132,7 @@ class LockScreenPositionFragment: BoundFragment<FragmentLockscreenPositionBindin
         val height = overlay.measureSize(windowManager).second
         val rawYPos = (windowManager.defaultDisplay.height / 2f)
         overlay.y = rawYPos - (height / 2f)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             yPos.emit(0)
         }
     }
@@ -139,8 +140,8 @@ class LockScreenPositionFragment: BoundFragment<FragmentLockscreenPositionBindin
     private fun onTouch(view: View, motionEvent: MotionEvent) {
         if(motionEvent.action == MotionEvent.ACTION_MOVE){
             view.y = view.y + motionEvent.y
-            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                yPos.emit(overlayView?.centerY() ?: return@launchWhenResumed)
+            whenResumed {
+                yPos.emit(overlayView?.centerY() ?: return@whenResumed)
             }
         }
     }

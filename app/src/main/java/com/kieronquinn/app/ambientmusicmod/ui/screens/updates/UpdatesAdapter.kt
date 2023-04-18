@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.kieronquinn.app.ambientmusicmod.BuildConfig
 import com.kieronquinn.app.ambientmusicmod.R
@@ -22,9 +21,9 @@ import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.formatDateTime
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
-import kotlinx.coroutines.flow.collect
 
 class UpdatesAdapter(
     recyclerView: LifecycleAwareRecyclerView,
@@ -95,11 +94,13 @@ class UpdatesAdapter(
             updatesShardsPersonalisedTrackData.isVisible = false
         }
         val shouldShowTracks = personalisedCount + shardsState.local.trackCount > 0
+        val shouldShowMultipleCountries = shouldShowTracks && shards.multipleCountriesSupported
         val remote = shardsState.remote
         when {
             shardsState.downloadState == ShardsRepository.ShardDownloadState.DOWNLOADING -> {
                 updatesShardsTrackDataContainer.isVisible = false
                 updatesShardsCountry.isVisible = false
+                updatesShardsCountryExtras.isVisible = false
                 updatesShardsUpdate.isVisible = false
                 updatesShardsViewSpace.isVisible = false
                 updatesShardsViewTracks.isVisible = false
@@ -115,6 +116,7 @@ class UpdatesAdapter(
             shardsState.downloadState == ShardsRepository.ShardDownloadState.WAITING_FOR_NETWORK -> {
                 updatesShardsTrackDataContainer.isVisible = false
                 updatesShardsCountry.isVisible = false
+                updatesShardsCountryExtras.isVisible = false
                 updatesShardsUpdate.isVisible = false
                 updatesShardsViewSpace.isVisible = false
                 updatesShardsViewTracks.isVisible = false
@@ -130,6 +132,7 @@ class UpdatesAdapter(
             shardsState.downloadState == ShardsRepository.ShardDownloadState.WAITING_FOR_CHARGING -> {
                 updatesShardsTrackDataContainer.isVisible = false
                 updatesShardsCountry.isVisible = false
+                updatesShardsCountryExtras.isVisible = false
                 updatesShardsUpdate.isVisible = false
                 updatesShardsViewSpace.isVisible = false
                 updatesShardsViewTracks.isVisible = false
@@ -159,6 +162,7 @@ class UpdatesAdapter(
                 updatesShardsUpdate.isVisible = true
                 updatesShardsViewSpace.isVisible = true
                 updatesShardsCountry.isVisible = shouldShowTracks
+                updatesShardsCountryExtras.isVisible = shouldShowMultipleCountries
                 updatesShardsViewTracks.isVisible = shouldShowTracks
                 updatesShardsTrackDataLoading.isVisible = false
             }
@@ -174,6 +178,7 @@ class UpdatesAdapter(
                 updatesShardsUpdate.isVisible = false
                 updatesShardsViewSpace.isVisible = false
                 updatesShardsCountry.isVisible = shouldShowTracks
+                updatesShardsCountryExtras.isVisible = shouldShowMultipleCountries
                 updatesShardsViewTracks.isVisible = shouldShowTracks
                 updatesShardsTrackDataLoading.isVisible = false
             }
@@ -185,15 +190,30 @@ class UpdatesAdapter(
         updatesShardsTrackDataLoading.applyMonet()
         updatesShardsIcon.imageTintList = ColorStateList.valueOf(accent)
         updatesShardsCountry.clipToOutline = true
-        updatesShardsCountry.setImageResource(shards.shardsState.local.selectedCountry.icon)
-        lifecycleScope.launchWhenResumed {
+        val primaryCountry = shards.shardsState.local.selectedCountries.first()
+        updatesShardsCountry.setImageResource(primaryCountry.icon)
+        updatesShardsCountryExtras.backgroundTintList = chipBackground
+        val selectedCount = shards.shardsState.local.selectedCountries.size
+        if(selectedCount > 1){
+            updatesShardsCountryExtras.icon = null
+            updatesShardsCountryExtras.text = root.context.getString(
+                R.string.updates_shards_plus, selectedCount - 1
+            )
+        }else{
+            updatesShardsCountryExtras.setIconResource(R.drawable.ic_add)
+            updatesShardsCountryExtras.text = null
+        }
+        whenResumed {
             updatesShardsUpdate.onClicked().collect { shards.onUpdateClicked(shards.shardsState) }
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             updatesShardsViewTracks.onClicked().collect { shards.onViewTracksClicked() }
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             updatesShardsCountry.onClicked().collect { shards.onCountryClicked() }
+        }
+        whenResumed {
+            updatesShardsCountryExtras.onClicked().collect { shards.onAdditionalCountriesClicked() }
         }
     }
 
@@ -242,7 +262,7 @@ class UpdatesAdapter(
         updatesAmmUpdate.setTextColor(accent)
         updatesAmmUpdate.overrideRippleColor(accent)
         updatesAmmIcon.imageTintList = ColorStateList.valueOf(accent)
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             updatesAmmUpdate.onClicked().collect { amm.onUpdateClicked(amm.updateState) }
         }
     }
@@ -292,7 +312,7 @@ class UpdatesAdapter(
         updatesPamUpdate.setTextColor(accent)
         updatesPamUpdate.overrideRippleColor(accent)
         updatesPamIcon.imageTintList = ColorStateList.valueOf(accent)
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             updatesPamUpdate.onClicked().collect { amm.onUpdateClicked(amm.updateState) }
         }
     }
@@ -315,7 +335,7 @@ class UpdatesAdapter(
             with(chip.key){
                 chipBackgroundColor = chipBackground
                 typeface = googleSansTextMedium
-                lifecycleScope.launchWhenResumed {
+                whenResumed {
                     onClicked().collect {
                         chip.value()
                     }

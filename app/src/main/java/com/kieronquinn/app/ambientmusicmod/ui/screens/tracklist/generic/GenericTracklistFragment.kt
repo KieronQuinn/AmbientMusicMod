@@ -6,7 +6,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.kieronquinn.app.ambientmusicmod.R
@@ -15,10 +14,16 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentTracklistGenericB
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.TracklistViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.generic.GenericTracklistViewModel.State
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationInset
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationMargin
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.hideIme
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onChanged
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onEditorActionSent
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.setTypeface
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinScopeComponent
@@ -59,7 +64,7 @@ abstract class GenericTracklistFragment<T>: BoundFragment<FragmentTracklistGener
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -71,6 +76,7 @@ abstract class GenericTracklistFragment<T>: BoundFragment<FragmentTracklistGener
             is State.Loading -> {
                 binding.tracklistGenericLoading.isVisible = true
                 binding.tracklistGenericRecyclerview.isVisible = false
+                binding.tracklistGenericEmpty.isVisible = false
                 if(state.indeterminate){
                     binding.tracklistGenericLoadingProgress.isIndeterminate = true
                 }else{
@@ -81,6 +87,7 @@ abstract class GenericTracklistFragment<T>: BoundFragment<FragmentTracklistGener
             is State.Loaded -> {
                 binding.tracklistGenericLoading.isVisible = false
                 binding.tracklistGenericRecyclerview.isVisible = true
+                binding.tracklistGenericEmpty.isVisible = state.list.isEmpty()
                 adapter.items = state.list
                 adapter.notifyDataSetChanged()
             }
@@ -89,19 +96,19 @@ abstract class GenericTracklistFragment<T>: BoundFragment<FragmentTracklistGener
 
     private fun setupSearch() {
         setSearchText(viewModel.searchText.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.tracklistGenericSearch.searchBox.onChanged().debounce(250L).collect {
                 viewModel.setSearchText(it ?: "")
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.tracklistGenericSearch.searchBox.onEditorActionSent(EditorInfo.IME_ACTION_SEARCH).collect {
                 binding.tracklistGenericSearch.searchBox.hideIme()
             }
         }
     }
 
-    private fun setupSearchClear() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupSearchClear() = whenResumed {
         launch {
             viewModel.searchShowClear.collect {
                 binding.tracklistGenericSearch.searchClear.isVisible = it

@@ -11,6 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.setup.installpam.SetupInstallPAMViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -44,13 +45,13 @@ class SetupInstallPAMFragment: BoundFragment<FragmentSetupInstallPamBinding>(Fra
         }
     }
 
-    private fun setupRetry() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupRetry() = whenResumed {
         binding.setupInstallPamRetry.onClicked().collect {
             viewModel.restartDownload()
         }
     }
 
-    private fun setupInstall() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupInstall() = whenResumed {
         binding.setupInstallPamInstallStart.onClicked().collect {
             viewModel.onInstallClicked()
         }
@@ -58,7 +59,7 @@ class SetupInstallPAMFragment: BoundFragment<FragmentSetupInstallPamBinding>(Fra
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }

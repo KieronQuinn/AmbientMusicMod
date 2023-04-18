@@ -17,6 +17,7 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.getLegacyWorkaroundN
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -61,7 +62,7 @@ class SetupPermissionsFragment: BoundFragment<FragmentSetupPermissionsBinding>(F
         }
     }
 
-    private fun setupGrant() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupGrant() = whenResumed {
         binding.setupPermissionsGrant.onClicked().collect {
             viewModel.showPermissionPrompt()
         }
@@ -69,7 +70,7 @@ class SetupPermissionsFragment: BoundFragment<FragmentSetupPermissionsBinding>(F
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
@@ -12,8 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.SettingsAdvancedViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isArmv7
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.isX86_64
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
@@ -33,7 +31,7 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -54,12 +52,12 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
         }
     }
 
-    private fun loadItems(state: State.Loaded): List<BaseSettingsItem> = listOf(
+    private fun loadItems(state: State.Loaded): List<BaseSettingsItem> = listOfNotNull(
         GenericSettingsItem.Setting(
             getString(R.string.settings_advanced_gain),
             getText(R.string.settings_advanced_gain_content),
             R.drawable.ic_settings_advanced_gain,
-            viewModel::onGainClicked
+            onClick = viewModel::onGainClicked
         ),
         GenericSettingsItem.SwitchSetting(
             state.alternativeEncoding,
@@ -75,14 +73,6 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             R.drawable.ic_settings_advanced_small_cores,
             enabled = !isArmv7,
             onChanged = viewModel::onRunOnLittleCoresChanged
-        ),
-        GenericSettingsItem.SwitchSetting(
-            state.nnfpv3 && !isArmv7 && !isX86_64,
-            getString(R.string.settings_advanced_nnfp_v3),
-            getStringOrUnsupported(!isArmv7 && !isX86_64, R.string.settings_advanced_nnfp_v3_content),
-            R.drawable.ic_settings_advanced_nnfp,
-            enabled = !isArmv7 && !isX86_64,
-            onChanged = viewModel::onNnfpv3Changed
         ),
         GenericSettingsItem.SwitchSetting(
             state.superpacksRequireWifi,
@@ -109,9 +99,21 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             getString(R.string.settings_advanced_clear_album_art_cache),
             getString(R.string.settings_advanced_clear_album_art_cache_content),
             R.drawable.ic_advanced_clear_album_art_cache
-        ){
+        ) {
             viewModel.onClearAlbumArtClicked(requireContext())
-        }
+        },
+        if(state.enableLogging){
+            GenericSettingsItem.Header(getString(R.string.settings_advanced_debug))
+        }else null,
+        if(state.enableLogging) {
+            GenericSettingsItem.Setting(
+                getString(R.string.settings_advanced_poke_jobscheduler),
+                getText(R.string.settings_advanced_poke_jobscheduler_content),
+                R.drawable.ic_settings_advanced_poke_jobscheduler
+            ) {
+                viewModel.onPokeJobSchedulerClicked(requireContext())
+            }
+        }else null
     )
 
     private fun getStringOrUnsupported(isEnabled: Boolean, @StringRes resource: Int): CharSequence {

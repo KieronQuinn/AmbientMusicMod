@@ -17,9 +17,9 @@
 package com.google.android.as.oss.grpc.impl;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.android.as.oss.grpc.GrpcServerEndpointConfiguration;
+
 import io.grpc.Status;
 import io.grpc.binder.SecurityPolicy;
 import io.grpc.binder.ServerSecurityPolicy;
@@ -58,7 +58,16 @@ final class PcsSecurityPolicies {
 
   private static boolean isPackageAllowed(
       Context appContext, GrpcServerEndpointConfiguration configuration, int uid) {
-    return true;
+    String[] packages = appContext.getPackageManager().getPackagesForUid(uid);
+    if (packages == null) {
+      return false;
+    }
+    for (String packageName : packages) {
+      if (configuration.getAllowedPackages().contains(packageName)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private PcsSecurityPolicies() {}

@@ -86,6 +86,7 @@ interface RemoteSettingsRepository {
 }
 
 class RemoteSettingsRepositoryImpl(
+    private val gson: Gson,
     private val ambientServiceRepository: AmbientServiceRepository,
     private val shizukuServiceRepository: ShizukuServiceRepository,
     private val deviceConfigRepository: DeviceConfigRepository,
@@ -102,8 +103,6 @@ class RemoteSettingsRepositoryImpl(
             authority(SETTINGS_AUTHORITY)
         }.build()
     }
-
-    private val gson = Gson()
 
     private val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

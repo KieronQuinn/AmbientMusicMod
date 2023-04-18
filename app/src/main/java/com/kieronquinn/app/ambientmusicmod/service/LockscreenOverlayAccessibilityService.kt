@@ -156,7 +156,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
     private val messageHandler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            lifecycleScope.launchWhenCreated {
+            whenCreated {
                 lockscreenOverlayState.emit(msg.obj as OverlayState)
             }
         }
@@ -175,12 +175,12 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
 
     override fun onCreate() {
         super.onCreate()
-        lifecycleScope.launchWhenCreated {
+        whenCreated {
             accessibility.onAccessibilityStarted()
         }
         LAST_STATE?.let {
             LAST_STATE = null
-            lifecycleScope.launchWhenCreated {
+            whenCreated {
                 lockscreenOverlayState.emit(it)
             }
         }
@@ -214,7 +214,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         if(packageName == BuildConfig.APPLICATION_ID) return //Prevent self-trigger
         //We only care if a window is being added
         if(event.windowChanges == AccessibilityEvent.WINDOWS_CHANGE_ADDED){
-            lifecycleScope.launchWhenCreated {
+            whenCreated {
                 accessibilityWindowPackage.emit(packageName.toString())
             }
         }
@@ -223,8 +223,8 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
     private fun onWindowStateChange(event: AccessibilityEvent) {
         if(event.contentChangeTypes == AccessibilityEvent.CONTENT_CHANGE_TYPE_PANE_DISAPPEARED)
             return //Prevent triggering for disappearing windows
-        lifecycleScope.launchWhenCreated {
-            accessibilityWindowName.emit(event.text?.firstOrNull() ?: return@launchWhenCreated)
+        whenCreated {
+            accessibilityWindowName.emit(event.text?.firstOrNull() ?: return@whenCreated)
         }
     }
 
@@ -232,7 +232,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         //No-op
     }
 
-    private fun setupLockscreenState() = lifecycleScope.launchWhenCreated {
+    private fun setupLockscreenState() = whenCreated {
         onKeyguardStateChanged().collectLatest {
             keyguardShowing.emit(isLockscreenVisible())
         }
@@ -354,7 +354,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
             else -> null
         }
         if(onClick != null) {
-            lifecycleScope.launchWhenCreated {
+            whenCreated {
                 current.binding.root.onClicked().collect {
                     onClick()
                 }
@@ -377,7 +377,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         }
     }
 
-    private fun setupOverlayView() = lifecycleScope.launchWhenCreated {
+    private fun setupOverlayView() = whenCreated {
         overlayState.collect { state ->
             val darkText = darkWallpaperText.firstNotNull()
             if(state is OverlayState.Hidden){

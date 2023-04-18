@@ -40,6 +40,9 @@ public interface NetworkUsageLogContentMap {
    */
   Optional<ConnectionDetails> getFcStartQueryConnectionDetails(String featureName);
 
+  /** Returns the ConnectionDetails object for PD connections with the given client Id. */
+  Optional<ConnectionDetails> getPdConnectionDetails(String clientId);
+
   /** Returns the feature name corresponding to the given ConnectionDetails. */
   Optional<String> getFeatureName(ConnectionDetails connectionDetails);
 

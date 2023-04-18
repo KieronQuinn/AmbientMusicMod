@@ -7,8 +7,6 @@ import android.widget.ImageView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemOndemandBannerBinding
@@ -21,8 +19,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.ondemand.OnDemandViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onComplete
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 
 class OnDemandAdapter(
     recyclerView: LifecycleAwareRecyclerView,
@@ -55,7 +53,7 @@ class OnDemandAdapter(
                 holder.setup(item)
             }
             is OnDemandViewHolder.Header -> {
-                holder.setup()
+                holder.setup(holder)
             }
             else -> super.onBindViewHolder(holder, position)
         }
@@ -77,14 +75,14 @@ class OnDemandAdapter(
         onDemandBannerButton.setTextColor(accentColour)
         onDemandBannerButtonDisable.isVisible = banner.isOptionEnabled
         onDemandBannerButtonDisable.setTextColor(accentColour)
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             onDemandBannerButtonDisable.onClicked().collect {
                 banner.onDisableClick()
             }
         }
         banner.button?.let {
             onDemandBannerButton.setText(it.buttonText)
-            lifecycleScope.launchWhenResumed {
+            whenResumed {
                 onDemandBannerButton.onClicked().collect { _ ->
                     banner.onButtonClick(it.onClick)
                 }
@@ -92,12 +90,17 @@ class OnDemandAdapter(
         }
     }
 
-    private fun OnDemandViewHolder.Header.setup() = with(binding) {
+    private fun OnDemandViewHolder.Header.setup(
+        holder: LifecycleAwareRecyclerView.ViewHolder
+    ) = with(binding) {
         ondemandHeaderIcon.setImageResource(R.drawable.ic_nowplaying_ondemand)
-        ondemandHeaderMotion.loopHeader(ondemandHeaderIcon, lifecycleScope)
+        ondemandHeaderMotion.loopHeader(ondemandHeaderIcon, holder)
     }
 
-    private fun MotionLayout.loopHeader(iconImageView: ImageView, scope: LifecycleCoroutineScope) {
+    private fun MotionLayout.loopHeader(
+        iconImageView: ImageView,
+        holder: LifecycleAwareRecyclerView.ViewHolder
+    ) {
         val transitionToEndState = suspend {
             delay(2500L)
             iconImageView.setImageResource(R.drawable.audioanim_animation)
@@ -111,7 +114,7 @@ class OnDemandAdapter(
             setTransition(R.id.end_to_start)
             transitionToEnd()
         }
-        scope.launchWhenResumed {
+        holder.whenResumed {
             onComplete().collect {
                 when(it){
                     R.id.start -> {
@@ -123,7 +126,7 @@ class OnDemandAdapter(
                 }
             }
         }
-        scope.launchWhenResumed {
+        holder.whenResumed {
             transitionToEndState()
         }
     }

@@ -7,7 +7,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TracklistTracksFragment: GenericTracklistFragment<ShardTrack>() {
 
     override val adapter by lazy {
-        TracklistTracksAdapter(binding.tracklistGenericRecyclerview, ::onOnDemandClicked, emptyList())
+        TracklistTracksAdapter(
+            binding.tracklistGenericRecyclerview,
+            ::onOnDemandClicked,
+            viewModel::onTrackClicked,
+            emptyList()
+        )
     }
 
     override val viewModel by viewModel<TracklistTracksViewModel>()

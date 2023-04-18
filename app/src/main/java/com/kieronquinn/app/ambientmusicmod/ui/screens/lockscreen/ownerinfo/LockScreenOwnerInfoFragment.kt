@@ -3,7 +3,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
@@ -11,7 +10,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo.LockScreenOwnerInfoViewModel.LockScreenOwnerInfoSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.ownerinfo.LockScreenOwnerInfoViewModel.State
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LockScreenOwnerInfoFragment: BaseSettingsFragment(), BackAvailable {
@@ -29,7 +28,7 @@ class LockScreenOwnerInfoFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -82,7 +81,7 @@ class LockScreenOwnerInfoFragment: BaseSettingsFragment(), BackAvailable {
             getString(R.string.lockscreen_owner_info_fallback),
             state.fallbackInfo.ifEmpty { getString(R.string.lockscreen_owner_info_fallback_content_empty) },
             R.drawable.ic_lock_screen_owner_info,
-            viewModel::onFallbackClicked
+            onClick = viewModel::onFallbackClicked
         )
         return listOf(
             header,

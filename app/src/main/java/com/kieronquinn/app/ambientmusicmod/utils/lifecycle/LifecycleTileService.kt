@@ -19,6 +19,10 @@ abstract class LifecycleTileService : TileService(), LifecycleOwner {
         ServiceLifecycleDispatcher(this)
     }
 
+    override val lifecycle by lazy {
+        mDispatcher.lifecycle
+    }
+
     @CallSuper
     override fun onCreate() {
         mDispatcher.onServicePreSuperOnCreate()
@@ -50,10 +54,6 @@ abstract class LifecycleTileService : TileService(), LifecycleOwner {
     override fun onDestroy() {
         mDispatcher.onServicePreSuperOnDestroy()
         super.onDestroy()
-    }
-
-    override fun getLifecycle(): Lifecycle {
-        return mDispatcher.lifecycle
     }
 
 }

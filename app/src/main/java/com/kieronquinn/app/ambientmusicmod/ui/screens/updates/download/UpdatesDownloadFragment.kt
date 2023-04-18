@@ -16,6 +16,7 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigatio
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationMargin
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import io.noties.markwon.Markwon
@@ -62,13 +63,13 @@ class UpdatesDownloadFragment: BoundFragment<FragmentUpdatesDownloadFragmentBind
         binding.updatesDownloadFab.applyBottomNavigationMargin()
     }
 
-    private fun setupStartInstall() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupStartInstall() = whenResumed {
         binding.updatesDownloadStartInstall.onClicked().collect {
             viewModel.startInstall()
         }
     }
 
-    private fun setupGitHubButton() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupGitHubButton() = whenResumed {
         binding.updatesDownloadDownloadBrowser.onClicked().collect {
             viewModel.onDownloadBrowserClicked(args.release.gitHubUrl)
         }
@@ -76,7 +77,7 @@ class UpdatesDownloadFragment: BoundFragment<FragmentUpdatesDownloadFragmentBind
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -117,7 +118,7 @@ class UpdatesDownloadFragment: BoundFragment<FragmentUpdatesDownloadFragmentBind
         binding.updatesDownloadSubheading.isVisible = !release.installedVersion.isNullOrEmpty()
         binding.updatesDownloadBody.text = markwon.toMarkdown(release.body)
         binding.updatesDownloadInfo.applyBottomNavigationInset()
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.updatesDownloadDownloadBrowser.onClicked().collect {
                 viewModel.onDownloadBrowserClicked(release.gitHubUrl)
             }
@@ -169,7 +170,7 @@ class UpdatesDownloadFragment: BoundFragment<FragmentUpdatesDownloadFragmentBind
 
     private fun setupFabState() {
         handleFabState(viewModel.showFab.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.showFab.collect {
                 handleFabState(it)
             }
@@ -180,7 +181,7 @@ class UpdatesDownloadFragment: BoundFragment<FragmentUpdatesDownloadFragmentBind
         binding.updatesDownloadFab.isVisible = showFab
     }
 
-    private fun setupFabClick() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupFabClick() = whenResumed {
         binding.updatesDownloadFab.onClicked().collect {
             viewModel.startDownload()
         }

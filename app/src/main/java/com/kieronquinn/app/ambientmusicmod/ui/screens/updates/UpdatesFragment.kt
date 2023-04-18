@@ -3,7 +3,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.updates
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentUpdatesBinding
@@ -14,8 +13,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.Root
 import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.UpdatesViewModel.State
 import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.UpdatesViewModel.UpdatesSettingsItem
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationInset
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdatesFragment: BoundFragment<FragmentUpdatesBinding>(FragmentUpdatesBinding::inflate), Root {
@@ -58,7 +57,7 @@ class UpdatesFragment: BoundFragment<FragmentUpdatesBinding>(FragmentUpdatesBind
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -83,9 +82,11 @@ class UpdatesFragment: BoundFragment<FragmentUpdatesBinding>(FragmentUpdatesBind
     private fun loadItems(state: State.Loaded): List<BaseSettingsItem> = listOf(
         UpdatesSettingsItem.Shards(
             state.shardsState,
+            state.supportsMultipleCountries,
             viewModel::onShardsUpdateClicked,
             viewModel::onShardsViewTracksClicked,
-            viewModel::onCountryClicked
+            viewModel::onCountryClicked,
+            viewModel::onAdditionalCountries
         ),
         UpdatesSettingsItem.AMM(state.ammState){
            viewModel.onAMMUpdateClicked(getString(R.string.updates_amm_title), it)

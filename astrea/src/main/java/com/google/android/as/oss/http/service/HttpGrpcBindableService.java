@@ -20,18 +20,21 @@ import static com.google.android.as.oss.grpc.ContextKeys.WRITEABLE_FILE_CONTEXT_
 
 import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
+
 import androidx.annotation.GuardedBy;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.google.android.as.oss.common.ExecutorAnnotations.IoExecutorQualifier;
 import com.google.android.as.oss.common.config.ConfigReader;
-import com.google.android.apps.miphone.astrea.http.api.proto.HttpDownloadRequest;
-import com.google.android.apps.miphone.astrea.http.api.proto.HttpDownloadResponse;
-import com.google.android.apps.miphone.astrea.http.api.proto.HttpProperty;
-import com.google.android.apps.miphone.astrea.http.api.proto.HttpServiceGrpc;
-import com.google.android.apps.miphone.astrea.http.api.proto.ResponseBodyChunk;
-import com.google.android.apps.miphone.astrea.http.api.proto.ResponseHeaders;
+import com.google.android.as.oss.grpc.GrpcStatusProto;
+import com.google.android.as.oss.http.api.proto.HttpDownloadRequest;
+import com.google.android.as.oss.http.api.proto.HttpDownloadResponse;
+import com.google.android.as.oss.http.api.proto.HttpProperty;
+import com.google.android.as.oss.http.api.proto.HttpServiceGrpc;
+import com.google.android.as.oss.http.api.proto.ResponseBodyChunk;
+import com.google.android.as.oss.http.api.proto.ResponseHeaders;
+import com.google.android.as.oss.http.api.proto.UnrecognizedUrlException;
 import com.google.android.as.oss.http.config.PcsHttpConfig;
 import com.google.android.as.oss.networkusage.db.ConnectionDetails;
 import com.google.android.as.oss.networkusage.db.ConnectionDetails.ConnectionType;
@@ -43,16 +46,18 @@ import com.google.android.as.oss.networkusage.ui.content.UnrecognizedNetworkRequ
 import com.google.common.flogger.GoogleLogger;
 import com.google.protobuf.ByteString;
 
-import io.grpc.ServerServiceDefinition;
-import io.grpc.StatusRuntimeException;
-import io.grpc.stub.ServerCallStreamObserver;
-import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
+
 import javax.inject.Inject;
+
+import io.grpc.Status.Code;
+import io.grpc.StatusRuntimeException;
+import io.grpc.stub.ServerCallStreamObserver;
+import io.grpc.stub.StreamObserver;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -92,10 +97,34 @@ public class HttpGrpcBindableService extends HttpServiceGrpc.HttpServiceImplBase
     ((ServerCallStreamObserver<HttpDownloadResponse>) responseObserver)
         .setOnCancelHandler(() -> {});
 
+    // Reject plain HTTP URLs from downloader.
+    if (!isValidHttpsUrl(request.getUrl())) {
+      logger.atWarning().log("Rejected non HTTPS url request to PCS");
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format("Rejecting non HTTPS url: '%s'", request.getUrl())));
+      return;
+    }
+
+    // Log Unrecognized requests
+    if (!networkUsageLogRepository.isKnownConnection(ConnectionType.HTTP, request.getUrl())) {
+      logger.atInfo().log("Network usage log unrecognised HTTPS request for %s", request.getUrl());
+    }
+
     if (networkUsageLogRepository.shouldRejectRequest(ConnectionType.HTTP, request.getUrl())) {
-      logger.atWarning().withCause(UnrecognizedNetworkRequestException.forUrl(request.getUrl()))
-          .log("Rejected unknown HTTPS request to PCS");
-      responseObserver.onError(UnrecognizedNetworkRequestException.forUrl(request.getUrl()));
+      UnrecognizedNetworkRequestException exception =
+          UnrecognizedNetworkRequestException.forUrl(request.getUrl());
+      logger.atWarning().withCause(exception).log("Rejected unknown HTTPS request to PCS");
+
+      com.google.rpc.Status statusProto =
+          com.google.rpc.Status.newBuilder()
+              .setCode(Code.INVALID_ARGUMENT.value())
+              .setMessage(exception.getMessage())
+              .addDetails(
+                  GrpcStatusProto.packIntoAny(
+                      UnrecognizedUrlException.newBuilder().setUrl(request.getUrl()).build()))
+              .build();
+      responseObserver.onError(GrpcStatusProto.toStatusRuntimeException(statusProto));
       return;
     }
 
@@ -199,7 +228,8 @@ public class HttpGrpcBindableService extends HttpServiceGrpc.HttpServiceImplBase
                 }
 
                 logger.atInfo().log(
-                    "Responding with fetch_completed for URL '%s'", request.getUrl());
+                    "[pfd-write] DOWNLOAD COMPLETE: Downloaded %d bytes from URL [%s].",
+                    totalBytesRead, request.getUrl());
                 responseObserver.onCompleted();
                 insertNetworkUsageLogRow(
                     networkUsageLogRepository, request, Status.SUCCEEDED, totalBytesRead);
@@ -221,6 +251,10 @@ public class HttpGrpcBindableService extends HttpServiceGrpc.HttpServiceImplBase
             }
           });
     }
+  }
+
+  private boolean isValidHttpsUrl(String url) {
+    return url.startsWith("https://");
   }
 
   private static void logCallCancelledByClient(
@@ -343,13 +377,19 @@ public class HttpGrpcBindableService extends HttpServiceGrpc.HttpServiceImplBase
           }
         }
 
-        logger.atInfo().log("Responding with fetch_completed for URL [%s].", request.getUrl());
-        responseObserver.onCompleted();
+        logger.atInfo().log(
+            "[onReadyHandler] DOWNLOAD COMPLETE: Downloaded %d bytes from URL [%s].",
+            totalBytesRead.get(), request.getUrl());
+        try {
+          responseObserver.onCompleted();
+        }catch (IllegalStateException e){
+          //???
+        }
         backgroundExecutor.execute(
             () ->
                 insertNetworkUsageLogRow(
                     networkUsageLogRepository, request, Status.SUCCEEDED, totalBytesRead.get()));
-      } catch (IOException | IllegalStateException e) {
+      } catch (IOException e) {
         logger.atWarning().withCause(e).log(
             "Failed performing IO operation while downloading URL [%s].", request.getUrl());
         responseObserver.onError(e);

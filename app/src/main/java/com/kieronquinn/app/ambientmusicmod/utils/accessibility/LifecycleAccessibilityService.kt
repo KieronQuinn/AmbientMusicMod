@@ -17,6 +17,10 @@ abstract class LifecycleAccessibilityService: AccessibilityService(), LifecycleO
         ServiceLifecycleDispatcher(this@LifecycleAccessibilityService)
     }
 
+    override val lifecycle by lazy {
+        mDispatcher.lifecycle
+    }
+
     override fun onCreate() {
         mDispatcher.onServicePreSuperOnCreate()
         super.onCreate()
@@ -31,10 +35,6 @@ abstract class LifecycleAccessibilityService: AccessibilityService(), LifecycleO
     override fun onDestroy() {
         mDispatcher.onServicePreSuperOnDestroy()
         super.onDestroy()
-    }
-
-    override fun getLifecycle(): Lifecycle {
-        return mDispatcher.lifecycle
     }
 
 }

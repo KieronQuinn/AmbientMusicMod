@@ -9,7 +9,7 @@ import retrofit2.http.GET
 interface ShardsProvider {
 
     companion object {
-        fun getShardsProvider() = Retrofit.Builder()
+        fun getShardsProvider(): ShardsProvider = Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -18,5 +18,8 @@ interface ShardsProvider {
 
     @GET("KieronQuinn/AmbientMusicManifest/main/release.json")
     fun getShardsManifest(): Call<ShardManifest>
+
+    @GET("KieronQuinn/AmbientMusicManifest/main/release_v3.json")
+    fun getShardsManifestV3(): Call<ShardManifest>
 
 }
