@@ -16,6 +16,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.restoreoptio
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationInset
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationMarginShort
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.app.ambientmusicmod.utils.monetcompat.MonetElevationOverlayProvider
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
@@ -73,7 +74,7 @@ class BackupRestoreOptionsFragment: BoundFragment<FragmentBackupRestoreOptionsBi
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -146,7 +147,7 @@ class BackupRestoreOptionsFragment: BoundFragment<FragmentBackupRestoreOptionsBi
         )
     )
 
-    private fun setupNext() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupNext() = whenResumed {
         binding.backupRestoreOptionsRestore.onClicked().collect {
             viewModel.onNextClicked(args.uri)
         }

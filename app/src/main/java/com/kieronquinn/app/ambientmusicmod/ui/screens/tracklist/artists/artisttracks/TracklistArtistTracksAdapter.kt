@@ -1,26 +1,25 @@
 package com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.artisttracks
 
 import androidx.core.view.isVisible
-import androidx.lifecycle.LifecycleCoroutineScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemTracklistBinding
 import com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.generic.GenericTracklistAdapter
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.removeRipple
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 
 class TracklistArtistTracksAdapter(
     recyclerView: LifecycleAwareRecyclerView,
     override val onOnDemandClicked: (() -> Unit)?,
+    override val onTrackClicked: ((ShardTrack) -> Unit)?,
     override var items: List<ShardTrack>
-): GenericTracklistAdapter<ShardTrack>(recyclerView, onOnDemandClicked, items) {
+): GenericTracklistAdapter<ShardTrack>(recyclerView, onOnDemandClicked, onTrackClicked, items) {
 
     override fun setupView(
         item: ShardTrack,
         binding: ItemTracklistBinding,
-        lifecycleScope: LifecycleCoroutineScope
+        holder: ViewHolder
     ) = with(binding) {
         itemTracklistTitle.text = item.trackName
         if(item.album.isNullOrEmpty()){
@@ -36,12 +35,17 @@ class TracklistArtistTracksAdapter(
         }
         itemTracklistIcon.setImageResource(R.drawable.ic_nav_tracklist_tracks)
         itemTracklistOnDemand.isVisible = item.isLinear
-        lifecycleScope.launchWhenResumed {
+        holder.whenResumed {
             itemTracklistOnDemand.onClicked().collect {
                 onOnDemandClicked?.invoke()
             }
         }
-        root.removeRipple()
+        holder.whenResumed {
+            root.onClicked().collect {
+                onTrackClicked?.invoke(item)
+            }
+        }
+        Unit
     }
 
 }

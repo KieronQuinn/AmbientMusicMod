@@ -14,8 +14,11 @@ import androidx.annotation.StringRes
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.*
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.navigation.fragment.navArgs
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -27,17 +30,32 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentRecognitionBindin
 import com.kieronquinn.app.ambientmusicmod.model.recognition.Player
 import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState.ErrorReason
-import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.ui.activities.RecognitionModalActivity
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundDialogFragment
-import com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel.*
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel.PlaybackState
+import com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel.RecogniseResult
+import com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel.StartState
+import com.kieronquinn.app.ambientmusicmod.ui.screens.recognition.RecognitionViewModel.State
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.MusicRecognitionManager_RECOGNITION_FAILED_NEEDS_ROOT
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.animateProgress
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyGain
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.await
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.awaitPost
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.blockTouches
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.filterColour
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onComplete
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.progressCallback
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.runAndJoin
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.runTransition
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.toByteArray
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionFailureReason
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionSource
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -142,7 +160,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
             ColorStateList.valueOf(background)
     }
 
-    private fun setupScrim() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupScrim() = whenResumed {
         binding.root.progressCallback().collect {
             if(it.first == R.id.fab){
                 setBackgroundScrimAlpha(it.third)
@@ -202,7 +220,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
 
     override fun onResume() {
         super.onResume()
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             jumpToState(viewModel.state.value)
         }
     }
@@ -219,7 +237,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         blockTouches()
     }
 
-    private fun setupState() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupState() = whenResumed {
         viewModel.state.collectLatest {
             when (it) {
                 is State.Fab -> {
@@ -311,7 +329,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     }
 
     private fun setupSourcePicker() = with(binding.recognitionSourcePicker) {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionSourcePickerNnfp.onClicked().collect {
                 if(viewModel.state.value !is State.SourcePicker) return@collect
                 viewModel.onStateChanged(State.StartRecognising(
@@ -320,7 +338,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
                 ))
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionSourcePickerOnDemand.onClicked().collect {
                 if(viewModel.state.value !is State.SourcePicker) return@collect
                 viewModel.onStateChanged(State.StartRecognising(
@@ -487,7 +505,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
     private fun runSuccess(state: State.Success) = with(binding.recognitionSuccess) {
         root.bringToFront()
         binding.recognitionCircle.root.setImageResource(R.drawable.ic_recognition_circle_success)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionSuccessPlayback.onClicked().collect {
                 if(viewModel.state.value !is State.Success) return@collect
                 val audio = state.result.recognitionResult.audio ?: return@collect
@@ -501,7 +519,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         root.bringToFront()
         binding.recognitionCircle.root.setImageResource(R.drawable.ic_recognition_circle_failed)
         prepFailed(state.result)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionRetry.onClicked().collect {
                 if(viewModel.state.value !is State.Failed) return@collect
                 viewModel.onStateChanged(State.StartRecognising(
@@ -509,7 +527,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
                 ))
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionFailedPlayback.onClicked().collect {
                 if(viewModel.state.value !is State.Failed) return@collect
                 val audio = state.result.failure.audio ?: return@collect
@@ -522,7 +540,7 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         root.bringToFront()
         binding.recognitionCircle.root.setImageResource(R.drawable.ic_recognition_circle_failed)
         prepError(state.result)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionRetry.onClicked().collect {
                 if(viewModel.state.value !is State.Error) return@collect
                 viewModel.onStateChanged(State.StartRecognising(
@@ -539,19 +557,19 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         recognitionPlaybackPlay.updatePlayingState(
             viewModel.playbackState.value is PlaybackState.Playing
         )
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionPlaybackPlay.onClicked().collect {
                 if(viewModel.state.value !is State.Playback) return@collect
                 viewModel.onPlaybackPlayStopClicked()
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             recognitionPlaybackSave.onClicked().collect {
                 if(viewModel.state.value !is State.Playback) return@collect
                 viewModel.onPlaybackSaveClicked(saveLauncher)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.playbackState.collect {
                 if (it is PlaybackState.Playing) {
                     recognitionPlaybackWaveform.progress = it.progress
@@ -583,11 +601,11 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         (icon as AnimatedVectorDrawable).start()
     }
 
-    private fun close() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun close() = whenResumed {
         val state = viewModel.state.value
         if(state !is State.StateTransition || state.backToInitialTransitionId == 0){
             viewModel.onStateChanged(null)
-            return@launchWhenResumed
+            return@whenResumed
         }
         viewModel.onStateChanged(State.Initial(state.backToInitialTransitionId, true))
         binding.root.onComplete().await { it == R.id.initial }

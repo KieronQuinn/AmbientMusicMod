@@ -9,6 +9,35 @@
         android:id="@+id/tracklistTracksFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.tracks.TracklistTracksFragment"
         android:label="@string/tracklist_tracks_title"
-        tools:layout="@layout/fragment_tracklist_generic" />
+        tools:layout="@layout/fragment_tracklist_generic" >
+        <action
+            android:id="@+id/action_tracklistTracksFragment_to_trackInfoBottomSheetFragment2"
+            app:destination="@id/trackInfoBottomSheetFragment2" />
+    </fragment>
+    <dialog
+        android:id="@+id/trackInfoBottomSheetFragment2"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.trackinfo.TrackInfoBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_track_info_bottom_sheet">
+        <argument
+            android:name="track"
+            app:argType="com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack" />
+        <argument
+            android:name="from_artists"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <action
+            android:id="@+id/action_trackInfoBottomSheetFragment2_to_trackEditFragment"
+            app:destination="@id/trackEditFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/trackEditFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.edit.TrackEditFragment"
+        android:label="@string/tracklist_track_edit_title"
+        tools:layout="@layout/fragment_track_edit">
+        <argument
+            android:name="track"
+            app:argType="com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack" />
+    </fragment>
 
 </navigation>

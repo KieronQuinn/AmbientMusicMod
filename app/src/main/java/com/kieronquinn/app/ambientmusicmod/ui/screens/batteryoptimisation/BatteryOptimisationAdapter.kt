@@ -11,6 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsAdapter
 import com.kieronquinn.app.ambientmusicmod.ui.screens.batteryoptimisation.BatteryOptimisationViewModel.BatteryOptimisationSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.flow.collect
 
 class BatteryOptimisationAdapter(
@@ -59,7 +60,7 @@ class BatteryOptimisationAdapter(
         background.setTint(primary)
         setTextColor(accent)
         paintFlags = paintFlags or Paint.ANTI_ALIAS_FLAG or Paint.UNDERLINE_TEXT_FLAG
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             onClicked().collect {
                 item.onLinkClicked()
             }

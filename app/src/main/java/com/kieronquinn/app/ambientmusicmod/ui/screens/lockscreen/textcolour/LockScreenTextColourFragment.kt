@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.LockScreenTextColourViewModel.State
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +34,7 @@ class LockScreenTextColourFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }

@@ -16,6 +16,7 @@
         <item name="android:windowLightNavigationBar">@bool/lightStatusNav</item>
         <item name="android:overScrollMode">@integer/overscroll_enabled</item>
         <item name="actionOverflowMenuStyle">@style/AmbientMusicModOverflowMenu</item>
+        <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
     </style>
 
     <style name="Theme.AmbientMusicMod.Dialog" parent="Theme.Material3.DayNight.Dialog">

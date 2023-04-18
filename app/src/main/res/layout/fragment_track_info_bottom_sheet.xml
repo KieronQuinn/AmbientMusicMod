@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_16"
+    tools:background="@drawable/bottom_sheet_rounded_bg_dark"
+    tools:layout_gravity="bottom">
+
+    <TextView
+        android:id="@+id/track_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_16"
+        android:text="@string/tracklist_track_info_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.AmbientMusicMod" />
+
+    <com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
+        android:id="@+id/track_info_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_settings_text_item" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/track_info_neutral"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:text="@string/tracklist_track_info_edit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/track_info_positive"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:text="@string/close"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium" />
+
+
+    </FrameLayout>
+
+</LinearLayout>

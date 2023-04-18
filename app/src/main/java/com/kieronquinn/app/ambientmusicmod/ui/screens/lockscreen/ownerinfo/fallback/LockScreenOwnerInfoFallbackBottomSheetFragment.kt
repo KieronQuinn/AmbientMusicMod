@@ -7,6 +7,7 @@ import com.kieronquinn.app.ambientmusicmod.databinding.FragmentLockscreenOwnerIn
 import com.kieronquinn.app.ambientmusicmod.ui.base.BaseBottomSheetFragment
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onChanged
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
@@ -28,24 +29,24 @@ class LockScreenOwnerInfoFallbackBottomSheetFragment: BaseBottomSheetFragment<Fr
 
     private fun setupInput() = with(binding.lockscreenOwnerInfoFallbackEdit) {
         setText(viewModel.ownerInfo.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             onChanged().collect { viewModel.onOwnerInfoChanged(it?.toString() ?: "") }
         }
     }
 
-    private fun setupSave() = viewLifecycleOwner.lifecycleScope.launch {
+    private fun setupSave() = whenResumed {
         binding.lockscreenOwnerInfoFallbackPositive.onClicked().collect {
             viewModel.onSaveClicked()
         }
     }
 
-    private fun setupCancel() = viewLifecycleOwner.lifecycleScope.launch {
+    private fun setupCancel() = whenResumed {
         binding.lockscreenOwnerInfoFallbackNegative.onClicked().collect {
             viewModel.onCancelClicked()
         }
     }
 
-    private fun setupReset() = viewLifecycleOwner.lifecycleScope.launch {
+    private fun setupReset() = whenResumed {
         binding.lockscreenOwnerInfoFallbackNeutral.onClicked().collect {
             viewModel.onResetClicked()
         }

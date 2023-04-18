@@ -53,6 +53,12 @@ enum class NotificationChannel(
         NotificationManager.IMPORTANCE_HIGH,
         R.string.notification_channel_warnings_title,
         R.string.notification_channel_warnings_subtitle
+    ),
+    BACKUP (
+        "backup",
+        NotificationManager.IMPORTANCE_DEFAULT,
+        R.string.notification_channel_backups_title,
+        R.string.notification_channel_backups_subtitle
     )
 }
 
@@ -61,5 +67,6 @@ enum class NotificationId {
     FOREGROUND_SERVICE,
     UPDATES,
     ERRORS,
-    WARNINGS
+    WARNINGS,
+    BACKUP
 }

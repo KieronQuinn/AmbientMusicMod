@@ -8,6 +8,7 @@ import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.navigation.ContainerNavigation
 import com.kieronquinn.app.ambientmusicmod.repositories.AmbientServiceRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.JobsRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -21,18 +22,17 @@ abstract class SettingsAdvancedViewModel: ViewModel() {
     abstract fun onGainClicked()
     abstract fun onAlternativeEncodingChanged(enabled: Boolean)
     abstract fun onRunOnLittleCoresChanged(enabled: Boolean)
-    abstract fun onNnfpv3Changed(enabled: Boolean)
     abstract fun onSuperpacksRequireWiFiChanged(enabled: Boolean)
     abstract fun onSuperpacksRequireChargingChanged(enabled: Boolean)
     abstract fun onClearAlbumArtClicked(context: Context)
     abstract fun onEnableLoggingChanged(enabled: Boolean)
+    abstract fun onPokeJobSchedulerClicked(context: Context)
 
     sealed class State {
         object Loading: State()
         data class Loaded(
             val alternativeEncoding: Boolean,
             val runOnSmallCores: Boolean,
-            val nnfpv3: Boolean,
             val superpacksRequireWifi: Boolean,
             val superpacksRequireCharging: Boolean,
             val enableLogging: Boolean
@@ -42,13 +42,13 @@ abstract class SettingsAdvancedViewModel: ViewModel() {
 }
 
 class SettingsAdvancedViewModelImpl(
-    deviceConfigRepository: DeviceConfigRepository,
+    private val deviceConfigRepository: DeviceConfigRepository,
     private val serviceRepository: AmbientServiceRepository,
+    private val jobsRepository: JobsRepository,
     private val navigation: ContainerNavigation
 ): SettingsAdvancedViewModel() {
 
     private val runOnSmallCores = deviceConfigRepository.runOnSmallCores
-    private val nnfpv3 = deviceConfigRepository.nnfpv3Enabled
     private val superpacksRequireWifi = deviceConfigRepository.superpacksRequireWiFi
     private val superpacksRequireCharging = deviceConfigRepository.superpacksRequireCharging
     private val enableLogging = deviceConfigRepository.enableLogging
@@ -63,23 +63,16 @@ class SettingsAdvancedViewModelImpl(
 
     override val state = combine(
         runOnSmallCores.asFlow(),
-        nnfpv3.asFlow(),
         superpacksConfig,
         enableLogging.asFlow(),
         alternativeEncoding.asFlow(),
-    ) { small, nnfpv3, superpacks, logging, alternative ->
-        State.Loaded(alternative, small, nnfpv3, superpacks.first, superpacks.second, logging)
+    ) { small, superpacks, logging, alternative ->
+        State.Loaded(alternative, small, superpacks.first, superpacks.second, logging)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
     override fun onGainClicked() {
         viewModelScope.launch {
             navigation.navigate(SettingsAdvancedFragmentDirections.actionSettingsAdvancedFragmentToSettingsAdvancedGainBottomSheetFragment())
-        }
-    }
-
-    override fun onNnfpv3Changed(enabled: Boolean) {
-        viewModelScope.launch {
-            nnfpv3.set(enabled)
         }
     }
 
@@ -121,6 +114,13 @@ class SettingsAdvancedViewModelImpl(
                 R.string.settings_advanced_clear_album_art_cache_toast,
                 Toast.LENGTH_LONG
             ).show()
+        }
+    }
+
+    override fun onPokeJobSchedulerClicked(context: Context) {
+        viewModelScope.launch {
+            jobsRepository.forceExpediteJobs()
+            Toast.makeText(context, R.string.settings_advanced_poke_jobscheduler_toast, Toast.LENGTH_LONG).show()
         }
     }
 

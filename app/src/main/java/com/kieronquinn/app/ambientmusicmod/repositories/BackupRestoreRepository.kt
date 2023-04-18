@@ -11,14 +11,26 @@ import com.google.gson.JsonIOException
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
 import com.kieronquinn.app.ambientmusicmod.R
-import com.kieronquinn.app.ambientmusicmod.model.backup.*
-import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.*
+import com.kieronquinn.app.ambientmusicmod.model.backup.Backup
+import com.kieronquinn.app.ambientmusicmod.model.backup.FavouritesItem
+import com.kieronquinn.app.ambientmusicmod.model.backup.HistoryItem
+import com.kieronquinn.app.ambientmusicmod.model.backup.LinearItem
+import com.kieronquinn.app.ambientmusicmod.model.backup.SettingsBackup
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.BackupResult
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.BackupState
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.RestoreOptions
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.RestoreResult
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.RestoreState
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.map
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.safeQuery
 import com.kieronquinn.app.pixelambientmusic.model.SettingsStateChange
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.parcelize.Parcelize
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -124,6 +136,7 @@ interface BackupRestoreRepository {
 
 class BackupRestoreRepositoryImpl(
     context: Context,
+    private val gson: Gson,
     private val settingsRepository: SettingsRepository,
     private val deviceConfigRepository: DeviceConfigRepository,
     private val remoteSettingsRepository: RemoteSettingsRepository
@@ -159,7 +172,6 @@ class BackupRestoreRepositoryImpl(
     }
 
     private val contentProvider = context.contentResolver
-    private val gson = Gson()
     private val createDocumentFile = { uri: Uri ->
         DocumentFile.fromSingleUri(context, uri)
     }
@@ -322,7 +334,6 @@ class BackupRestoreRepositoryImpl(
             settingsRepository.automaticMusicDatabaseUpdates.getOrNull(),
             deviceConfigRepository.cacheShardEnabled.getOrNull(),
             deviceConfigRepository.runOnSmallCores.getOrNull(),
-            deviceConfigRepository.nnfpv3Enabled.getOrNull(),
             deviceConfigRepository.onDemandVibrateEnabled.getOrNull(),
             deviceConfigRepository.deviceCountry.getOrNull(),
             deviceConfigRepository.superpacksRequireCharging.getOrNull(),
@@ -331,7 +342,9 @@ class BackupRestoreRepositoryImpl(
             deviceConfigRepository.showAlbumArt.getOrNull(),
             settingsRepository.lockscreenOverlayColour.getOrNull(),
             settingsRepository.lockscreenOverlayCustomColour.getOrNull(),
-            deviceConfigRepository.alternativeEncoding.getOrNull()
+            deviceConfigRepository.alternativeEncoding.getOrNull(),
+            settingsRepository.periodicBackupEnabled.getOrNull(),
+            settingsRepository.periodicBackupInterval.getOrNull()
         )
     }
 
@@ -360,7 +373,6 @@ class BackupRestoreRepositoryImpl(
         //Device Config
         cacheShardEnabled.restoreTo(deviceConfigRepository.cacheShardEnabled)
         runOnSmallCores.restoreTo(deviceConfigRepository.runOnSmallCores)
-        nnfpv3Enabled.restoreTo(deviceConfigRepository.nnfpv3Enabled)
         onDemandVibrateEnabled.restoreTo(deviceConfigRepository.onDemandVibrateEnabled)
         deviceCountry.restoreTo(deviceConfigRepository.deviceCountry)
         superpacksRequireCharging.restoreTo(deviceConfigRepository.superpacksRequireCharging)
@@ -371,6 +383,8 @@ class BackupRestoreRepositoryImpl(
         overlayTextColour.restoreTo(settingsRepository.lockscreenOverlayColour)
         overlayCustomTextColour.restoreTo(settingsRepository.lockscreenOverlayCustomColour)
         alternativeEncoding.restoreTo(deviceConfigRepository.alternativeEncoding)
+        periodicBackupEnabled.restoreTo(settingsRepository.periodicBackupEnabled)
+        periodicBackupInterval.restoreTo(settingsRepository.periodicBackupInterval)
     }
 
     private suspend fun <T> T?.restoreTo(setting: BaseSettingsRepository.AmbientMusicModSetting<T>) {

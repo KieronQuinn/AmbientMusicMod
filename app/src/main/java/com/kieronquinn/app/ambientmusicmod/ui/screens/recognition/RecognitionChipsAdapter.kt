@@ -4,12 +4,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemRecognitionSuccessPlayerChipBinding
 import com.kieronquinn.app.ambientmusicmod.model.recognition.Player
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 
 class RecognitionChipsAdapter(
     var items: List<Player>,
@@ -37,7 +36,7 @@ class RecognitionChipsAdapter(
             setChipIconResource(item.icon)
             setText(item.name)
             setChipIconTintResource(item.chipTextColour)
-            holder.lifecycleScope.launchWhenResumed {
+            holder.whenResumed {
                 onClicked().collect {
                     onChipClicked(item.getIntent())
                 }

@@ -38,13 +38,13 @@ class LifecycleAwareRecyclerView : RecyclerView {
 
         private val lifecycleRegistry by lazy { LifecycleRegistry(this@ViewHolder) }
 
+        override val lifecycle by lazy {
+            lifecycleRegistry
+        }
+
         init {
             handleLifecycleEvent(Lifecycle.Event.ON_START)
             handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
-        }
-
-        final override fun getLifecycle(): Lifecycle {
-            return lifecycleRegistry
         }
 
         internal fun handleLifecycleEvent(event: Lifecycle.Event) {

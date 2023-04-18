@@ -9,13 +9,28 @@ import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.shards.CachedShardManifest
 import com.kieronquinn.app.ambientmusicmod.model.shards.ShardManifest
 import com.kieronquinn.app.ambientmusicmod.providers.ShardsProvider
-import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.*
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.LocalShardsState
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.RemoteShardsState
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.ShardCountry
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.ShardsState
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.contentReceiverAsFlow
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.contentResolverAsTFlow
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isArmv7
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.map
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.safeQuery
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import retrofit2.Call
 import java.io.File
 import java.time.Duration
 import java.time.Instant
@@ -43,7 +58,7 @@ interface ShardsRepository {
     data class LocalShardsState(
         val versionCode: Int,
         val date: LocalDateTime,
-        val selectedCountry: ShardCountry,
+        val selectedCountries: List<ShardCountry>,
         val trackCount: Int,
         val personalisedTrackCount: Int
     )
@@ -78,33 +93,54 @@ interface ShardsRepository {
         MX("mx", R.string.shard_country_mexico, R.drawable.ic_flag_mx),
         NL("nl", R.string.shard_country_netherlands, R.drawable.ic_flag_nl),
         RU("ru", R.string.shard_country_russia, R.drawable.ic_flag_ru),
-        US("us,xa", R.string.shard_country_united_states, R.drawable.ic_flag_us),
+        US("us,xa", R.string.shard_country_united_states, R.drawable.ic_flag_us);
+
+        companion object {
+            const val CORE_SHARED_FILENAME = "matcher_tah.leveldb"
+
+            fun takeIfCountry(code: String): String? {
+                return if(values().any { it.codes().contains(code.lowercase()) }) code else null
+            }
+
+            fun forCode(code: String): ShardCountry {
+                return values().first { it.codes().contains(code.lowercase()) }
+            }
+        }
+
+        fun codes(): List<String> {
+            return if(code.contains(",")){
+                listOf(code) + code.split(",")
+            }else listOf(code)
+        }
     }
 
 }
 
 class ShardsRepositoryImpl(
+    private val gson: Gson,
     private val context: Context,
     private val deviceConfigRepository: DeviceConfigRepository
 ): ShardsRepository {
 
     companion object {
-        private val REGEX_INDEX_URL =
+        private val REGEX_INDEX_URLS = setOf(
+            "(.*):https://storage.googleapis.com/music-iq-db/updatable_db_v3/(.*)-(.*)/manifest.json"
+                .toRegex(),
             "(.*):https://storage.googleapis.com/music-iq-db/updatable_ytm_db/(.*)-(.*)/manifest.json"
                 .toRegex()
+        )
 
         private const val AUTHORITY = "com.google.android.as.pam.ambientmusic.leveldbprovider"
         private const val SCHEME = "content"
         private const val METHOD_COUNT = "count"
         private const val METHOD_COUNT_LEVELDB = "leveldb"
         private const val METHOD_COUNT_LINEAR = "linear"
-        private const val METHOD_GET_COUNTRY = "country"
         private const val METHOD_DOWNLOAD_STATE = "downloadstate"
         private const val TYPE_LINEAR_NORMAL = "linear.db"
         private const val TYPE_LINEAR_V3 = "linear_v3.db"
 
         private val CACHE_TIMEOUT = Duration.ofHours(12).toMillis()
-        private const val CACHE_FILENAME = "shards_manifest"
+        private const val CACHE_FILENAME = "shards_manifest_v3"
 
         private val URI_DOWNLOAD_STATE = Uri.Builder().apply {
             scheme(SCHEME)
@@ -112,16 +148,24 @@ class ShardsRepositoryImpl(
             path(METHOD_DOWNLOAD_STATE)
         }.build()
 
+        val URI_LINEAR = Uri.Builder().apply {
+            scheme(SCHEME)
+            authority(AUTHORITY)
+            path(METHOD_COUNT_LINEAR)
+        }.build()
     }
 
     private val contentResolver = context.contentResolver
     private val shardsProvider = ShardsProvider.getShardsProvider()
+    private val scope = MainScope()
 
     private val updatesCacheDir = File(context.cacheDir, "updates").apply {
         mkdirs()
     }
 
-    private val gson = Gson()
+    private val linearChangeBus = context.contentReceiverAsFlow(URI_LINEAR)
+        .map { System.currentTimeMillis() }
+        .stateIn(scope, SharingStarted.Eagerly, System.currentTimeMillis())
 
     override fun getCurrentDownloads() = context.contentResolverAsTFlow(URI_DOWNLOAD_STATE) {
         val cursor = contentResolver.safeQuery(
@@ -159,11 +203,11 @@ class ShardsRepositoryImpl(
         }
     }
 
-    private suspend fun getLinearTracksCount(): Int = withContext(Dispatchers.IO) {
-        val type = if(deviceConfigRepository.nnfpv3Enabled.get()){
-            TYPE_LINEAR_V3
-        }else{
+    private fun getLinearTracksCount() = linearChangeBus.mapLatest {
+        val type = if (isArmv7) {
             TYPE_LINEAR_NORMAL
+        } else {
+            TYPE_LINEAR_V3
         }
         val uri = Uri.Builder().apply {
             scheme(SCHEME)
@@ -174,56 +218,51 @@ class ShardsRepositoryImpl(
         }.build()
         val cursor = contentResolver.safeQuery(
             uri, null, null, null, null
-        ) ?: return@withContext 0
+        ) ?: return@mapLatest 0
         val count = cursor.map {
             it.getInt(0)
         }.firstOrNull() ?: 0
         count.also {
             cursor.close()
         }
-    }
-
-    private fun getDeviceCountry(): String? {
-        val uri = Uri.Builder().apply {
-            scheme(SCHEME)
-            authority(AUTHORITY)
-            path(METHOD_GET_COUNTRY)
-        }.build()
-        val cursor = contentResolver.safeQuery(
-            uri, null, null, null, null
-        ) ?: return null
-        val country = cursor.map {
-            it.getString(0)
-        }.firstOrNull() ?: return null
-        return country.also {
-            cursor.close()
-        }
-    }
+    }.flowOn(Dispatchers.IO)
 
     private val localShards = combine(
         deviceConfigRepository.deviceCountry.asFlow(),
-        deviceConfigRepository.indexManifest.asFlow()
-    ) { overridden, index ->
-        val country = overridden.ifEmpty { getDeviceCountry() }
-        val shardCountry = ShardCountry.values().firstOrNull {
-            it.code.lowercase() == country?.lowercase()
-        } ?: ShardCountry.US
+        deviceConfigRepository.extraLanguages.asFlow(),
+        deviceConfigRepository.indexManifest.asFlow(),
+        getLinearTracksCount()
+    ) { _, _, index, personalisedTrackCount ->
+        val primaryCountry = getPrimaryCountry()
+        //If the primary is on automatic and changes, it may invalidate the extras
+        val extraCountries = getExtraCountries()
+            .filterNot { it == primaryCountry }
+            .distinct()
         val trackCount = getDatabaseTracksCount()
-        val personalisedTrackCount = getLinearTracksCount()
         val urlData = index.getUrlData()
         LocalShardsState(
             urlData.first,
             urlData.second,
-            shardCountry,
+            listOf(primaryCountry) + extraCountries,
             trackCount,
             personalisedTrackCount
         )
     }.flowOn(Dispatchers.IO)
 
+    private suspend fun getPrimaryCountry(): ShardCountry {
+        return ShardCountry.forCode(deviceConfigRepository.getPrimaryLanguage())
+    }
+
+    private suspend fun getExtraCountries(): List<ShardCountry> {
+        return deviceConfigRepository.getExtraLanguages().map {
+            ShardCountry.forCode(it)
+        }
+    }
+
     private fun getRemoteShards(ignoreCache: Boolean) = flow {
         val shards = try {
             val cached = if(ignoreCache) null else getShardsCache()
-            cached ?: shardsProvider.getShardsManifest().execute().body()?.also {
+            cached ?: shardsProvider.getCompatibleShardsManifest().execute().body()?.also {
                 it.cacheManifest()
             }
         }catch (e: Exception){
@@ -240,6 +279,14 @@ class ShardsRepositoryImpl(
         ))
     }.flowOn(Dispatchers.IO)
 
+    private fun ShardsProvider.getCompatibleShardsManifest(): Call<ShardManifest> {
+        return if (isArmv7) {
+            getShardsManifest()
+        } else {
+            getShardsManifestV3()
+        }
+    }
+
     override fun getShardsState(clearCache: Boolean): Flow<ShardsState> = flow {
         emit(combine(
             localShards, getRemoteShards(clearCache)
@@ -250,8 +297,7 @@ class ShardsRepositoryImpl(
     }
 
     private fun String.getUrlData(): Pair<Int, LocalDateTime> {
-        val result = REGEX_INDEX_URL.find(this)
-            ?: throw RuntimeException("Invalid index URL: $this")
+        val result = parseShardsUrl() ?: throw RuntimeException("Invalid index URL: $this")
         val version = result.groupValues[1].toInt()
         val date = result.groupValues[2]
         val time = result.groupValues[3]
@@ -262,6 +308,15 @@ class ShardsRepositoryImpl(
             LocalDateTime.ofInstant(it, ZoneId.systemDefault())
         }
         return Pair(version, localDate)
+    }
+
+    private fun String.parseShardsUrl(): MatchResult? {
+        REGEX_INDEX_URLS.forEach {
+            if(it.matches(this)){
+                return it.find(this)
+            }
+        }
+        return null
     }
 
     private fun getShardsCache(): ShardManifest? {

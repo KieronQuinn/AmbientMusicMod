@@ -8,6 +8,7 @@ import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.navigation.ContainerNavigation
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentContainerBinding
 import com.kieronquinn.app.ambientmusicmod.ui.base.BaseContainerFragment
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import kotlinx.coroutines.flow.collect
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,7 +40,7 @@ class ContainerFragment: BaseContainerFragment<FragmentContainerBinding>(Fragmen
 
     private fun setupUpdateBadge() {
         handleUpdateBadge(viewModel.updateAvailable.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.updateAvailable.collect {
                 handleUpdateBadge(it)
             }

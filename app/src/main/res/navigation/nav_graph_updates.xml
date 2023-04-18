@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_updatesFragment_to_contributorsFragment"
             app:destination="@id/contributorsFragment" />
+        <action
+            android:id="@+id/action_updatesFragment_to_settingsExtraCountryPickerFragment"
+            app:destination="@id/settingsExtraCountryPickerFragment" />
     </fragment>
     <fragment
         android:id="@+id/updatesDownloadFragment"
@@ -50,5 +53,10 @@
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.contributors.ContributorsFragment"
         android:label="@string/about_contributors"
         tools:layout="@layout/fragment_settings_base" />
+    <fragment
+        android:id="@+id/settingsExtraCountryPickerFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.extracountrypicker.SettingsExtraCountryPickerFragment"
+        android:label="@string/extra_country_picker_title"
+        tools:layout="@layout/item_country_picker"/>
 
 </navigation>

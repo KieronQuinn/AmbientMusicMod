@@ -4,6 +4,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import com.kieronquinn.app.ambientmusicmod.BuildConfig
@@ -16,6 +18,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
@@ -63,7 +66,10 @@ interface ShizukuServiceRepository {
 
 }
 
-class ShizukuServiceRepositoryImpl(context: Context): ShizukuServiceRepository {
+class ShizukuServiceRepositoryImpl(
+    private val settingsRepository: SettingsRepository,
+    context: Context
+): ShizukuServiceRepository {
 
     companion object {
         private const val SHIZUKU_PERMISSION_REQUEST_CODE = 1001
@@ -93,6 +99,10 @@ class ShizukuServiceRepositoryImpl(context: Context): ShizukuServiceRepository {
 
     override val isReady = onConnectionChange.map {
         assertReady()
+    }.onEach {
+        if(it) {
+            callServiceOnCreate()
+        }
     }
 
     override suspend fun assertReady(): Boolean {
@@ -219,6 +229,24 @@ class ShizukuServiceRepositoryImpl(context: Context): ShizukuServiceRepository {
             ping()
         }catch (e: RemoteException){
             false
+        }
+    }
+
+    private suspend fun callServiceOnCreate() {
+        //Notifications + Accessibility only became an issue on 13+
+        val shouldSetPermissions = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        val config = if(shouldSetPermissions){
+            ShizukuService.createConfigBundle(
+                !settingsRepository.hasSetNotificationPermission.get(),
+                !settingsRepository.hasSetAccessibilityPermission.get()
+            )
+        }else Bundle.EMPTY
+        val result = runWithService {
+            it.onCreate(config)
+        }
+        if (result is ShizukuServiceResponse.Success && shouldSetPermissions) {
+            settingsRepository.hasSetAccessibilityPermission.set(true)
+            settingsRepository.hasSetNotificationPermission.set(true)
         }
     }
 

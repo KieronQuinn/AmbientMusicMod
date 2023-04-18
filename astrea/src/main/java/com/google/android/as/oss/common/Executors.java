@@ -18,6 +18,7 @@ package com.google.android.as.oss.common;
 
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.util.concurrent.Executor;
 
 /** Declares static Executors used in PCS. */
@@ -27,6 +28,12 @@ public class Executors {
   public static final Executor GENERAL_SINGLE_THREAD_EXECUTOR =
       java.util.concurrent.Executors.newSingleThreadExecutor();
   public static final Executor PIR_EXECUTOR = java.util.concurrent.Executors.newCachedThreadPool();
+
+  public static final ListeningScheduledExecutorService PROTECTED_DOWNLOAD_EXECUTOR =
+      MoreExecutors.listeningDecorator(
+          java.util.concurrent.Executors.newScheduledThreadPool(
+              /* corePoolSize= */ 1,
+              new ThreadFactoryBuilder().setNameFormat("pcs-pd-%d").build()));
 
   private Executors() {}
 }

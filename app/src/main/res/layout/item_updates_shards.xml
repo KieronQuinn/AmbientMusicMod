@@ -158,24 +158,50 @@
         android:layout_marginTop="@dimen/margin_8"
         android:text="@string/updates_shards_view_tracks"
         android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium"
-        app:layout_constraintEnd_toStartOf="@id/updates_shards_country"
+        app:layout_constraintEnd_toStartOf="@id/updates_shards_countries"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/updates_shards_view_space"
         app:layout_constraintTop_toBottomOf="@id/updates_shards_track_data_container" />
 
-    <ImageButton
-        android:id="@+id/updates_shards_country"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/background_updates_shards_country"
-        android:clipToOutline="true"
-        android:outlineProvider="background"
-        android:padding="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_flag_gb"
+    <LinearLayout
+        android:id="@+id/updates_shards_countries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/updates_shards_view_tracks" />
+        app:layout_constraintTop_toTopOf="@id/updates_shards_view_tracks">
+
+        <ImageButton
+            android:id="@+id/updates_shards_country"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/background_updates_shards_country"
+            android:clipToOutline="true"
+            android:outlineProvider="background"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_flag_gb" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/updates_shards_country_extras"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/margin_16"
+            android:adjustViewBounds="true"
+            android:background="@drawable/background_shards_countries_circle"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+            android:textColor="?android:textColorPrimary"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="24dp"
+            app:iconTint="?android:textColorPrimary"
+            tools:icon="@drawable/ic_add" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

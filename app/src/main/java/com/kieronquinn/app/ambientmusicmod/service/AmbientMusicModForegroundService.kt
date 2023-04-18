@@ -282,7 +282,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
     private val handler = Handler(Looper.getMainLooper())
 
     private val alarmListener = AlarmManager.OnAlarmListener {
-        lifecycleScope.launchWhenCreated {
+        whenCreated {
             tickerFlow.emit(Unit)
         }
     }
@@ -290,7 +290,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
     private val messageHandler = object: Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            lifecycleScope.launchWhenCreated {
+            whenCreated {
                 when(MessageType.values().firstOrNull { it.ordinal == msg.what }) {
                     MessageType.RECOGNITION -> {
                         val state = msg.obj as RecognitionState.Recognised
@@ -299,6 +299,9 @@ class AmbientMusicModForegroundService: LifecycleService() {
                     MessageType.TRIGGER_IMMEDIATE -> {
                         log("Triggering, delay = ${settings.recognitionPeriod.get()}")
                         recognitionState.emit(null)
+                    }
+                    else -> {
+                        //No-op
                     }
                 }
             }
@@ -320,7 +323,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
         setupErrorNotificationRetry()
         setupOnDemandNotification()
         setupAlarm()
-        lifecycleScope.launchWhenCreated {
+        whenCreated {
             //Start the recognition flow
             recognitionState.emit(null)
         }
@@ -331,7 +334,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
         super.onDestroy()
     }
 
-    private fun setupRecogniser() = lifecycleScope.launchWhenCreated {
+    private fun setupRecogniser() = whenCreated {
         tickerFlow.flatMapLatest {
             if(!enabled.firstNotNull()) return@flatMapLatest MutableStateFlow(null)
             recognition.requestRecognition()
@@ -367,7 +370,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
     }
 
     private fun setupTimeout(timeoutAt: Long, clearTo: OverlayState) {
-        overlayTimeoutJob = lifecycleScope.launchWhenCreated {
+        overlayTimeoutJob = whenCreated {
             val now = System.currentTimeMillis()
             val delay = if(timeoutAt > now){
                 timeoutAt - now
@@ -377,20 +380,20 @@ class AmbientMusicModForegroundService: LifecycleService() {
         }
     }
 
-    private fun setupOverlay() = lifecycleScope.launchWhenCreated {
+    private fun setupOverlay() = whenCreated {
         overlayState.collect { state ->
             log(state.toString())
             LockscreenOverlayAccessibilityService.sendState(state)
         }
     }
 
-    private fun setupScreenOn() = lifecycleScope.launchWhenCreated {
+    private fun setupScreenOn() = whenCreated {
         screenOnTrigger.collect {
             recognitionState.emit(null)
         }
     }
 
-    private fun setupToggle() = lifecycleScope.launchWhenCreated {
+    private fun setupToggle() = whenCreated {
         enabled.drop(1).collect {
             if(it){
                 //Trigger an immediate recognition
@@ -406,30 +409,30 @@ class AmbientMusicModForegroundService: LifecycleService() {
         }
     }
 
-    private fun setupWidget() = lifecycleScope.launchWhenCreated {
+    private fun setupWidget() = whenCreated {
         recognitionState.collect {
             widgetRepository.notifyRecognitionState(it)
         }
     }
 
-    private fun setupBedtime() = lifecycleScope.launchWhenCreated {
+    private fun setupBedtime() = whenCreated {
         bedtime.checkTimeAndSyncWorkers()
     }
 
-    private fun setupOwnerInfo() = lifecycleScope.launchWhenCreated {
+    private fun setupOwnerInfo() = whenCreated {
         ownerInfoState.filterNotNull().collectLatest { info ->
             shizuku.runWithService { it.setOwnerInfo(info) }
         }
     }
 
-    private fun setupAlarm() = lifecycleScope.launchWhenCreated {
+    private fun setupAlarm() = whenCreated {
         recognitionDelay.collect {
             alarmManager.cancel(alarmListener)
             minuteTicker.schedule(it, MODE_RESCHEDULE_IF_SCHEDULED)
         }
     }
 
-    private fun setupErrorNotification() = lifecycleScope.launchWhenCreated {
+    private fun setupErrorNotification() = whenCreated {
         recognitionState.collect {
             if(it is RecognitionState.Error){
                 showErrorNotification(it)
@@ -482,14 +485,14 @@ class AmbientMusicModForegroundService: LifecycleService() {
         notificationManager.notify(NotificationId.ERRORS.ordinal, notification)
     }
 
-    private fun setupErrorNotificationRetry() = lifecycleScope.launchWhenCreated {
+    private fun setupErrorNotificationRetry() = whenCreated {
         retryActionClicked.collect {
             notificationManager.cancel(NotificationId.ERRORS.ordinal)
             sendImmediateTrigger()
         }
     }
 
-    private fun setupOnDemandNotification()  = lifecycleScope.launchWhenCreated {
+    private fun setupOnDemandNotification()  = whenCreated {
         onDemandWarningNotification.collect {
             if(it) {
                 showOnDemandNotification()
@@ -526,11 +529,11 @@ class AmbientMusicModForegroundService: LifecycleService() {
         } ?: delayTime.firstNotNull()
     }
 
-    private fun onOverlayTrackClicked(state: RecognitionState.Recognised) = lifecycleScope.launchWhenCreated {
+    private fun onOverlayTrackClicked(state: RecognitionState.Recognised) = whenCreated {
         when(settings.lockscreenOverlayClicked.get()) {
             LockscreenOnTrackClicked.ASSISTANT -> {
                 val intent = Player.Assistant(
-                    state.recognitionResult.googleId ?: return@launchWhenCreated
+                    state.recognitionResult.googleId ?: return@whenCreated
                 ).getIntent().apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
@@ -552,13 +555,13 @@ class AmbientMusicModForegroundService: LifecycleService() {
         }
     }
 
-    private fun unlockAndRun(message: String, block: () -> Unit) = lifecycleScope.launchWhenCreated {
+    private fun unlockAndRun(message: String, block: () -> Unit) = whenCreated {
         shizuku.runWithService {
             it.dismissKeyguard(block, message)
         }
     }
 
-    private fun onOverlayOnDemandClicked() = lifecycleScope.launchWhenCreated {
+    private fun onOverlayOnDemandClicked() = whenCreated {
         recognition.requestOnDemandRecognition().collect {
             recognitionState.emit(it)
         }

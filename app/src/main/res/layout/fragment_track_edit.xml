@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:padding="@dimen/margin_16">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/track_edit_track_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomEnd="@dimen/margin_16"
+                app:boxCornerRadiusBottomStart="@dimen/margin_16"
+                app:boxCornerRadiusTopEnd="@dimen/margin_16"
+                app:boxCornerRadiusTopStart="@dimen/margin_16"
+                app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:prefixTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/track_edit_track_name_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans_text_medium"
+                    android:hint="@string/tracklist_track_info_track_name"
+                    android:inputType="textCapWords"
+                    android:lines="1"
+                    android:maxLength="256"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                    tools:text="A Title" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/track_edit_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                app:boxCornerRadiusBottomEnd="@dimen/margin_16"
+                app:boxCornerRadiusBottomStart="@dimen/margin_16"
+                app:boxCornerRadiusTopEnd="@dimen/margin_16"
+                app:boxCornerRadiusTopStart="@dimen/margin_16"
+                app:counterOverflowTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/track_edit_track_name"
+                app:prefixTextAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod.Medium">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/track_edit_artist_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans_text_medium"
+                    android:hint="@string/tracklist_track_info_artist"
+                    android:inputType="textCapWords"
+                    android:lines="1"
+                    android:maxLength="256"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                    tools:text="An Artist" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/track_edit_loaded"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="track_edit_track_name,track_edit_artist" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/track_edit_loading_progress"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toTopOf="@id/track_edit_loading_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:trackCornerRadius="4dp"
+                app:trackThickness="8dp" />
+
+            <TextView
+                android:id="@+id/track_edit_loading_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/track_edit_loading_progress"
+                tools:text="@string/loading" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/track_edit_loading"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="track_edit_loading_label,track_edit_loading_progress" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/track_edit_artist_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tracklist_track_edit_save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
+        android:textColor="?android:textColorPrimary"
+        android:layout_gravity="bottom|center_horizontal"
+        app:icon="@drawable/ic_save"
+        app:iconTint="?android:textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</FrameLayout>

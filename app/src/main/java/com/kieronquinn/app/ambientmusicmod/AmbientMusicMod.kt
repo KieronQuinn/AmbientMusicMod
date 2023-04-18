@@ -4,9 +4,48 @@ import android.app.Application
 import android.content.Context
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.color.DynamicColors
+import com.google.gson.Gson
 import com.kieronquinn.app.ambientmusicmod.components.blur.BlurProvider
-import com.kieronquinn.app.ambientmusicmod.components.navigation.*
-import com.kieronquinn.app.ambientmusicmod.repositories.*
+import com.kieronquinn.app.ambientmusicmod.components.navigation.ContainerNavigation
+import com.kieronquinn.app.ambientmusicmod.components.navigation.ContainerNavigationImpl
+import com.kieronquinn.app.ambientmusicmod.components.navigation.RootNavigation
+import com.kieronquinn.app.ambientmusicmod.components.navigation.RootNavigationImpl
+import com.kieronquinn.app.ambientmusicmod.components.navigation.SetupNavigation
+import com.kieronquinn.app.ambientmusicmod.components.navigation.SetupNavigationImpl
+import com.kieronquinn.app.ambientmusicmod.components.navigation.TracklistNavigation
+import com.kieronquinn.app.ambientmusicmod.components.navigation.TracklistNavigationImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.AccessibilityRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.AccessibilityRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.AmbientServiceRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.AmbientServiceRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.ApiRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.ApiRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.BatteryOptimisationRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.BatteryOptimisationRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.BedtimeRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.BedtimeRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.JobsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.JobsRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsListRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsListRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.ShizukuServiceRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.ShizukuServiceRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.UpdatesRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.UpdatesRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.WidgetRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.WidgetRepositoryImpl
 import com.kieronquinn.app.ambientmusicmod.ui.activities.MainActivityViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.activities.MainActivityViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.backuprestore.BackupRestoreViewModel
@@ -53,6 +92,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.gain.Set
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.gain.SettingsAdvancedGainBottomSheetViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsBedtimeViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsBedtimeViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.extracountrypicker.SettingsExtraCountryPickerViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.extracountrypicker.SettingsExtraCountryPickerViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.recognitionbuffer.SettingsRecognitionBufferViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.recognitionbuffer.SettingsRecognitionBufferViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.recognitionperiod.SettingsRecognitionPeriodViewModel
@@ -81,6 +122,10 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.Tracklis
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.TracklistArtistsViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.artisttracks.TracklistArtistTracksViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.artisttracks.TracklistArtistTracksViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.edit.TrackEditViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.edit.TrackEditViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.trackinfo.TrackInfoBottomSheetViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.trackinfo.TrackInfoBottomSheetViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.tracks.TracklistTracksViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.tracks.TracklistTracksViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.updates.UpdatesViewModel
@@ -112,19 +157,21 @@ class AmbientMusicMod: Application() {
         single<ContainerNavigation> { ContainerNavigationImpl() }
         single<TracklistNavigation> { TracklistNavigationImpl() }
         single<SetupNavigation> { SetupNavigationImpl() }
-        single<ShizukuServiceRepository> { ShizukuServiceRepositoryImpl(get()) }
+        single<ShizukuServiceRepository> { ShizukuServiceRepositoryImpl(get(), get()) }
         single<AmbientServiceRepository> { AmbientServiceRepositoryImpl(get()) }
         single<RecognitionRepository> { RecognitionRepositoryImpl(get(), get(), get()) }
-        single<RemoteSettingsRepository> { RemoteSettingsRepositoryImpl(get(), get(), get(), get(), get(), get(), get()) }
-        single<AccessibilityRepository> { AccessibilityRepositoryImpl(get(), get()) }
+        single<RemoteSettingsRepository> { RemoteSettingsRepositoryImpl(get(), get(), get(), get(), get(), get(), get(), get()) }
+        single<AccessibilityRepository> { AccessibilityRepositoryImpl(get()) }
         single<BedtimeRepository> { BedtimeRepositoryImpl(get(), get()) }
-        single<ShardsRepository> { ShardsRepositoryImpl(get(), get()) }
-        single<UpdatesRepository> { UpdatesRepositoryImpl(get()) }
+        single<ShardsRepository> { ShardsRepositoryImpl(get(), get(), get()) }
+        single<UpdatesRepository> { UpdatesRepositoryImpl(get(), get()) }
         single<WidgetRepository>(createdAtStart = true) { WidgetRepositoryImpl(get(), get(), get(), get()) }
-        single<BackupRestoreRepository> { BackupRestoreRepositoryImpl(get(), get(), get(), get()) }
+        single<BackupRestoreRepository> { BackupRestoreRepositoryImpl(get(), get(), get(), get(), get()) }
         single<BatteryOptimisationRepository> { BatteryOptimisationRepositoryImpl(get()) }
+        single<JobsRepository>(createdAtStart = true) { JobsRepositoryImpl(get(), get(), get()) }
         single { BlurProvider.getBlurProvider(resources) }
         single { createMarkwon() }
+        single { Gson() }
     }
 
     private val viewModelsModule = module {
@@ -133,7 +180,7 @@ class AmbientMusicMod: Application() {
         viewModel<NowPlayingViewModel> { NowPlayingViewModelImpl(get(), get(), get(), get(), get()) }
         viewModel<RecognitionViewModel> { RecognitionViewModelImpl(get(), get(), get(), get(), get()) }
         viewModel<OnDemandViewModel> { OnDemandViewModelImpl(get(), get(), get()) }
-        viewModel<LockScreenViewModel> { LockScreenViewModelImpl(get(), get(), get(), get(), get(), get()) }
+        viewModel<LockScreenViewModel> { LockScreenViewModelImpl(get(), get(), get(), get(), get(), get(), get(), get()) }
         viewModel<LockScreenPositionViewModel> { LockScreenPositionViewModelImpl(get(), get()) }
         viewModel<LockScreenActionViewModel> { LockScreenActionViewModelImpl(get()) }
         viewModel<LockScreenOwnerInfoViewModel> { LockScreenOwnerInfoViewModelImpl(get(), get(), get()) }
@@ -141,11 +188,11 @@ class AmbientMusicMod: Application() {
         viewModel<LockScreenTextColourViewModel> { LockScreenTextColourViewModelImpl(get(), get()) }
         viewModel<LockScreenCustomTextColourMonetViewModel> { LockScreenCustomTextColourMonetViewModelImpl(get(), get()) }
         viewModel<LockScreenCustomTextColourCustomViewModel> { LockScreenCustomTextColourCustomViewModelImpl(get(), get()) }
-        viewModel<SettingsViewModel> { SettingsViewModelImpl(get(), get(), get()) }
+        viewModel<SettingsViewModel> { SettingsViewModelImpl(get(), get(), get(), get()) }
         viewModel<SettingsRecognitionPeriodViewModel> { SettingsRecognitionPeriodViewModelImpl(get()) }
         viewModel<SettingsRecognitionBufferViewModel> { SettingsRecognitionBufferViewModelImpl(get()) }
         viewModel<SettingsBedtimeViewModel> { SettingsBedtimeViewModelImpl(get()) }
-        viewModel<SettingsAdvancedViewModel> { SettingsAdvancedViewModelImpl(get(), get(), get()) }
+        viewModel<SettingsAdvancedViewModel> { SettingsAdvancedViewModelImpl(get(), get(), get(), get()) }
         viewModel<SettingsAdvancedGainBottomSheetViewModel> { SettingsAdvancedGainBottomSheetViewModelImpl(get(), get()) }
         viewModel<UpdatesViewModel> { UpdatesViewModelImpl(get(), get(), get(), get(), get(), get(), get()) }
         viewModel<UpdatesDownloadViewModel> { UpdatesDownloadViewModelImpl(get(), get(), get()) }
@@ -159,21 +206,24 @@ class AmbientMusicMod: Application() {
         viewModel<SetupPermissionsViewModel> { SetupPermissionsViewModelImpl(get(), get()) }
         viewModel<SetupBatteryOptimisationViewModel> { SetupBatteryOptimisationViewModelImpl(get(), get()) }
         viewModel<SetupCompleteViewModel> { SetupCompleteViewModelImpl(get(), get(), get()) }
-        viewModel<BackupRestoreViewModel> { BackupRestoreViewModelImpl(get()) }
+        viewModel<BackupRestoreViewModel> { BackupRestoreViewModelImpl(get(), get(), get()) }
         viewModel<BackupRestoreBackupViewModel> { BackupRestoreBackupViewModelImpl(get(), get()) }
         viewModel<BackupRestoreOptionsViewModel> { BackupRestoreOptionsViewModelImpl(get()) }
         viewModel<BackupRestoreRestoreViewModel> { BackupRestoreRestoreViewModelImpl(get(), get()) }
         viewModel<ContributorsViewModel> { ContributorsViewModelImpl(get()) }
         viewModel<BatteryOptimisationViewModel> { BatteryOptimisationViewModelImpl(get(), get(), get()) }
+        viewModel<SettingsExtraCountryPickerViewModel> { SettingsExtraCountryPickerViewModelImpl(get()) }
     }
 
     private val tracklistModule = module {
         viewModel<TracklistViewModel> { TracklistViewModelImpl(get(), get()) }
         scope<TracklistViewModel> {
-            scoped<ShardsListRepository> { ShardsListRepositoryImpl(get(), get(), this) }
-            viewModel<TracklistTracksViewModel> { TracklistTracksViewModelImpl(get()) }
+            scoped<ShardsListRepository> { ShardsListRepositoryImpl(get(), get(), get(), this) }
+            viewModel<TracklistTracksViewModel> { TracklistTracksViewModelImpl(get(), get()) }
             viewModel<TracklistArtistsViewModel> { TracklistArtistsViewModelImpl(get(), get()) }
             viewModel<TracklistArtistTracksViewModel> { TracklistArtistTracksViewModelImpl(get(), get()) }
+            viewModel<TrackInfoBottomSheetViewModel> { TrackInfoBottomSheetViewModelImpl(get(), get()) }
+            viewModel<TrackEditViewModel> { TrackEditViewModelImpl(get(), get()) }
         }
     }
 

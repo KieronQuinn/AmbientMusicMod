@@ -18,6 +18,7 @@ package com.google.android.as.oss.grpc.perapp;
 
 import com.google.android.as.oss.grpc.Annotations.GrpcServicePackageName;
 import com.google.android.as.oss.grpc.Annotations.PcsGrpcServiceName;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -36,7 +37,7 @@ class PcsGrpcConstantsModule {
   @Provides
   @PcsGrpcServiceName
   static String providePcsGrpcServiceName() {
-    return "com.google.android.as.oss.grpc.AstreaGrpcService";
+    return "com.google.android.apps.miphone.astrea.grpc.AstreaGrpcService";
   }
 
   private PcsGrpcConstantsModule() {}

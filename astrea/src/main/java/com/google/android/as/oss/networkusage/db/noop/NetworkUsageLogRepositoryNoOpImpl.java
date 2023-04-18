@@ -54,7 +54,7 @@ public class NetworkUsageLogRepositoryNoOpImpl implements NetworkUsageLogReposit
 
   @Override
   public boolean isKnownConnection(ConnectionType type, String connectionKeyString) {
-    return false;
+    return true;
   }
 
   @Override

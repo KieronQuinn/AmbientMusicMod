@@ -16,9 +16,16 @@
 
 package com.google.android.as.oss.grpc.impl;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 import android.content.Context;
+
+import com.google.android.as.oss.common.config.ConfigReader;
+import com.google.android.as.oss.grpc.Annotations;
 import com.google.android.as.oss.grpc.Annotations.GrpcServicePackageName;
 import com.google.android.as.oss.grpc.Annotations.PcsGrpcServiceName;
+import com.google.android.as.oss.grpc.config.PcsGrpcConfig;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -40,7 +47,8 @@ interface OnDeviceChannelModule {
   static Channel providesOnDeviceChannel(
       @ApplicationContext Context context,
       @GrpcServicePackageName String pcsPackageName,
-      @PcsGrpcServiceName String pcsGrpcServiceName) {
+      @PcsGrpcServiceName String pcsGrpcServiceName,
+      ConfigReader<PcsGrpcConfig> grpcConfigReader) {
     return BinderChannelBuilder.forAddress(
             AndroidComponentAddress.forRemoteComponent(pcsPackageName, pcsGrpcServiceName),
             context.getApplicationContext())
@@ -48,6 +56,7 @@ interface OnDeviceChannelModule {
         // Disable compression by default, since there's little benefit when all communication is
         // on-device, and it means sending supported-encoding headers with every call.
         .decompressorRegistry(DecompressorRegistry.emptyInstance())
+        .idleTimeout(grpcConfigReader.getConfig().idleTimeoutSeconds(), SECONDS)
         .compressorRegistry(CompressorRegistry.newEmptyInstance())
         .build();
   }

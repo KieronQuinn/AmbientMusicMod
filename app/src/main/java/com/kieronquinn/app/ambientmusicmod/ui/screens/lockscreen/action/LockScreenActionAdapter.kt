@@ -12,6 +12,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.action.LockScre
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 
@@ -56,7 +57,7 @@ class LockScreenActionAdapter(
         root.setOnClickListener {
             lockscreenActionRadio.callOnClick()
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             lockscreenActionRadio.onClicked().collect {
                 action.onClicked(action.action)
             }

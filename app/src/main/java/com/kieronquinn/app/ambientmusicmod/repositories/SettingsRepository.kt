@@ -3,9 +3,11 @@ package com.kieronquinn.app.ambientmusicmod.repositories
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
+import com.google.gson.annotations.SerializedName
 import com.kieronquinn.app.ambientmusicmod.BuildConfig
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.lockscreenoverlay.LockscreenOverlayStyle
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.BackupResult
 import com.kieronquinn.app.ambientmusicmod.repositories.BaseSettingsRepository.AmbientMusicModSetting
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.*
 import java.time.Duration
@@ -37,6 +39,16 @@ interface SettingsRepository {
     val bedtimeModeEnd: AmbientMusicModSetting<Long>
 
     val automaticMusicDatabaseUpdates: AmbientMusicModSetting<Boolean>
+
+    val hasSetNotificationPermission: AmbientMusicModSetting<Boolean>
+    val hasSetAccessibilityPermission: AmbientMusicModSetting<Boolean>
+
+    val periodicBackupEnabled: AmbientMusicModSetting<Boolean>
+    val periodicBackupInterval: AmbientMusicModSetting<PeriodicBackupInterval>
+    val periodicBackupUri: AmbientMusicModSetting<String>
+    val periodicBackupLastBackup: AmbientMusicModSetting<LastBackup>
+
+    val shardsCacheHash: AmbientMusicModSetting<String>
 
     //The wallpaper colour to use (< Android 12)
     val monetColor: AmbientMusicModSetting<Int>
@@ -120,6 +132,22 @@ interface SettingsRepository {
         )
     }
 
+    enum class PeriodicBackupInterval(
+        @StringRes
+        val title: Int
+    ) {
+        DAILY(R.string.backup_periodic_daily),
+        WEEKLY(R.string.backup_periodic_weekly),
+        MONTHLY(R.string.backup_periodic_monthly)
+    }
+
+    data class LastBackup(
+        @SerializedName("timestamp")
+        val timestamp: Long? = null,
+        @SerializedName("result")
+        val result: BackupResult? = null
+    )
+
 }
 
 class SettingsRepositoryImpl(
@@ -182,6 +210,26 @@ class SettingsRepositoryImpl(
 
         private const val AUTOMATIC_MUSIC_DATABASE_UPDATES = "automatic_music_database_updates"
         private const val DEFAULT_AUTOMATIC_MUSIC_DATABASE_UPDATES = false
+
+        private const val HAS_SET_NOTIFICATION_PERMISSION = "has_set_notification_permission"
+        private const val DEFAULT_HAS_SET_NOTIFICATION_PERMISSION = false
+
+        private const val HAS_SET_ACCESSIBILITY_PERMISSION = "has_set_accessibility_permission"
+        private const val DEFAULT_HAS_SET_ACCESSIBILITY_PERMISSION = false
+
+        private const val PERIODIC_BACKUP_ENABLED = "periodic_backup_enabled"
+        private const val DEFAULT_PERIODIC_BACKUP_ENABLED = false
+
+        private const val PERIODIC_BACKUP_INTERVAL = "periodic_backup_interval"
+        private val DEFAULT_PERIODIC_BACKUP_INTERVAL = PeriodicBackupInterval.WEEKLY
+
+        private const val PERIODIC_BACKUP_URI = "periodic_backup_uri"
+        private const val DEFAULT_PERIODIC_BACKUP_URI = ""
+
+        private const val PERIODIC_BACKUP_LAST = "periodic_backup_last"
+
+        private const val SHARDS_CACHE_HASH = "shards_cache_hash"
+        private const val DEFAULT_SHARDS_CACHE_HASH = ""
 
         private const val KEY_MONET_COLOR = "monet_color"
     }
@@ -248,6 +296,34 @@ class SettingsRepositoryImpl(
 
     override val automaticMusicDatabaseUpdates = boolean(
         AUTOMATIC_MUSIC_DATABASE_UPDATES, DEFAULT_AUTOMATIC_MUSIC_DATABASE_UPDATES
+    )
+
+    override val hasSetNotificationPermission = boolean(
+        HAS_SET_NOTIFICATION_PERMISSION, DEFAULT_HAS_SET_NOTIFICATION_PERMISSION
+    )
+
+    override val hasSetAccessibilityPermission = boolean(
+        HAS_SET_ACCESSIBILITY_PERMISSION, DEFAULT_HAS_SET_ACCESSIBILITY_PERMISSION
+    )
+
+    override val periodicBackupEnabled = boolean(
+        PERIODIC_BACKUP_ENABLED, DEFAULT_PERIODIC_BACKUP_ENABLED
+    )
+
+    override val periodicBackupInterval = enum(
+        PERIODIC_BACKUP_INTERVAL, DEFAULT_PERIODIC_BACKUP_INTERVAL
+    )
+
+    override val periodicBackupUri = string(
+        PERIODIC_BACKUP_URI, DEFAULT_PERIODIC_BACKUP_URI
+    )
+
+    override val periodicBackupLastBackup = gson(
+        PERIODIC_BACKUP_LAST, LastBackup()
+    )
+
+    override val shardsCacheHash = string(
+        SHARDS_CACHE_HASH, DEFAULT_SHARDS_CACHE_HASH
     )
 
     override val monetColor = color(

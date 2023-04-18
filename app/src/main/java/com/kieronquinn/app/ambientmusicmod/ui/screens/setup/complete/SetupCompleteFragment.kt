@@ -11,6 +11,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.ProvidesBack
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.replaceColour
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenCreated
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,7 +43,7 @@ class SetupCompleteFragment: BoundFragment<FragmentSetupCompleteBinding>(Fragmen
         playAnimation()
     }
 
-    private fun setupClose() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupClose() = whenResumed {
         binding.setupCompleteClose.onClicked().collect {
             viewModel.onCloseClicked()
         }

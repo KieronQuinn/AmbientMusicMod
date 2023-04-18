@@ -29,8 +29,7 @@ interface IShellProxy {
     //Get SystemUI package name without requiring QUERY_ALL_PACKAGES
     String getSystemUIPackageName() = 15;
 
-    //Grant the required permission to enable the accessibility service (Android 13+)
-    void grantAccessibilityPermission() = 16;
+    //UNUSED: 16 was grantAccessibilityPermission, functionality moved to onCreate
 
     //Dismiss Keyguard without an Activity
     oneway void dismissKeyguard(in IBinder callback, String message) = 17;
@@ -48,6 +47,12 @@ interface IShellProxy {
         in IBinder thread,
         in IBinder token
     ) = 20;
+
+    //Called when the service is started by AMM (not used by PAM)
+    oneway void onCreate(in Bundle config) = 21;
+
+    //Expedites a list of job IDs to run now, forcibly ignoring constraints if specified
+    oneway void expediteJobs(in int[] jobs, boolean force) = 22;
 
     void destroy() = 16777114;
 

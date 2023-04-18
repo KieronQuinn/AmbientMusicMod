@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemNowplayingBannerBinding
 import com.kieronquinn.app.ambientmusicmod.databinding.ItemNowplayingFooterBinding
@@ -16,10 +15,10 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsAdapter
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.NowPlayingSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.NowPlayingSettingsItem.ItemType
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.filterColour
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.filterColour
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 
 class NowPlayingAdapter(
     recyclerView: LifecycleAwareRecyclerView,
@@ -95,7 +94,7 @@ class NowPlayingAdapter(
         nowPlayingBannerButton.setTextColor(accentColour)
         bannerMessage.button?.let {
             nowPlayingBannerButton.setText(it.buttonText)
-            lifecycleScope.launchWhenResumed {
+            whenResumed {
                 nowPlayingBannerButton.onClicked().collect { _ ->
                     banner.onButtonClick(it.onClick)
                 }
@@ -111,7 +110,7 @@ class NowPlayingAdapter(
         background.setTint(primary)
         setTextColor(accent)
         paintFlags = paintFlags or Paint.ANTI_ALIAS_FLAG or Paint.UNDERLINE_TEXT_FLAG
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             onClicked().collect {
                 item.onLinkClicked()
             }

@@ -48,8 +48,6 @@ data class SettingsBackup(
     val cacheShardEnabled: Boolean?,
     @SerializedName("run_on_small_cores")
     val runOnSmallCores: Boolean?,
-    @SerializedName("nnfp_v3_enabled")
-    val nnfpv3Enabled: Boolean?,
     @SerializedName("on_demand_vibrate_enabled")
     val onDemandVibrateEnabled: Boolean?,
     @SerializedName("device_country")
@@ -67,5 +65,9 @@ data class SettingsBackup(
     @SerializedName("overlay_custom_text_colour")
     val overlayCustomTextColour: Int?,
     @SerializedName("alternative_encoding")
-    val alternativeEncoding: Boolean?
+    val alternativeEncoding: Boolean?,
+    @SerializedName("periodic_backup_enabled")
+    val periodicBackupEnabled: Boolean?,
+    @SerializedName("periodic_backup_interval")
+    val periodicBackupInterval: PeriodicBackupInterval?
 )

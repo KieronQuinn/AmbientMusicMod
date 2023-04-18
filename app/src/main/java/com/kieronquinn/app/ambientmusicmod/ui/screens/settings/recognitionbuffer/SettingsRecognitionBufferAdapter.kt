@@ -13,6 +13,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.recognitionbuffer
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.flow.collect
 
@@ -56,7 +57,7 @@ class SettingsRecognitionBufferAdapter(
         root.setOnClickListener {
             settingsRecognitionPeriodRadio.callOnClick()
         }
-        lifecycleScope.launchWhenResumed {
+        whenResumed {
             settingsRecognitionPeriodRadio.onClicked().collect {
                 buffer.onClicked(buffer.buffer)
             }

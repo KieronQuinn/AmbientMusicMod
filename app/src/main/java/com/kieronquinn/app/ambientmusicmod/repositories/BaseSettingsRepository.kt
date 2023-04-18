@@ -2,6 +2,7 @@ package com.kieronquinn.app.ambientmusicmod.repositories
 
 import android.content.SharedPreferences
 import android.graphics.Color
+import com.google.gson.Gson
 import com.kieronquinn.app.ambientmusicmod.repositories.BaseSettingsRepository.AmbientMusicModSetting
 import com.kieronquinn.app.ambientmusicmod.repositories.BaseSettingsRepositoryImpl.SettingsConverters.SHARED_BOOLEAN
 import com.kieronquinn.app.ambientmusicmod.repositories.BaseSettingsRepositoryImpl.SettingsConverters.SHARED_COLOR
@@ -13,13 +14,19 @@ import com.kieronquinn.app.ambientmusicmod.repositories.BaseSettingsRepositoryIm
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.toHexString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-interface BaseSettingsRepository {
+interface BaseSettingsRepository: KoinComponent {
 
     val sharedPreferences: SharedPreferences
 
@@ -33,6 +40,7 @@ interface BaseSettingsRepository {
         abstract fun getSync(): T
         abstract fun asFlow(): Flow<T>
         abstract fun asFlowNullable(): Flow<T?>
+        abstract suspend fun notifyChange()
     }
 
     /**
@@ -82,11 +90,17 @@ interface BaseSettingsRepository {
             throw RuntimeException("Not implemented!")
         }
 
+        override suspend fun notifyChange() {
+            throw RuntimeException("Not implemented!")
+        }
+
     }
 
 }
 
 abstract class BaseSettingsRepositoryImpl: BaseSettingsRepository {
+
+    private val gson by inject<Gson>()
 
     fun boolean(key: String, default: Boolean, onChanged: MutableSharedFlow<String>? = null) =
         AmbientMusicModSettingImpl(key, default, SHARED_BOOLEAN, onChanged)
@@ -108,6 +122,17 @@ abstract class BaseSettingsRepositoryImpl: BaseSettingsRepository {
 
     fun color(key: String, default: Int, onChanged: MutableSharedFlow<String>? = null) =
         AmbientMusicModSettingImpl(key, default, SHARED_COLOR, onChanged)
+
+    fun <T : Any> gson(
+        key: String,
+        default: T,
+        onChanged: MutableSharedFlow<String>? = null
+    ): AmbientMusicModSettingImpl<T> {
+        val sharedGson = { _: BaseSettingsRepositoryImpl, _: String, _: T ->
+            sharedGson(key, default)
+        }
+        return AmbientMusicModSettingImpl(key, default, sharedGson, onChanged)
+    }
 
     inline fun <reified T: Enum<T>> enum(
         key: String,
@@ -161,6 +186,17 @@ abstract class BaseSettingsRepositoryImpl: BaseSettingsRepository {
         sharedPreferences.edit().putString(key, it.toHexString()).commit()
     })
 
+    private fun <T> sharedGson(key: String, default: T) = ReadWriteProperty({
+        val rawJson = sharedPreferences.getString(key, "") ?: ""
+        try {
+            gson.fromJson(rawJson, default!!::class.java)
+        }catch (e: Exception){
+            default
+        }
+    }, {
+        sharedPreferences.edit().putString(key, gson.toJson(it)).commit()
+    })
+
     object SettingsConverters {
         internal val SHARED_INT: (BaseSettingsRepositoryImpl, String, Int) -> ReadWriteProperty<Any?, Int> =
             BaseSettingsRepositoryImpl::shared
@@ -176,6 +212,8 @@ abstract class BaseSettingsRepositoryImpl: BaseSettingsRepository {
             BaseSettingsRepositoryImpl::shared
         internal val SHARED_COLOR: (BaseSettingsRepositoryImpl, String, Int) -> ReadWriteProperty<Any?, Int> =
             BaseSettingsRepositoryImpl::sharedColor
+        internal val SHARED_GSON: (BaseSettingsRepositoryImpl, String, Any?) -> ReadWriteProperty<Any?, Any?> =
+            BaseSettingsRepositoryImpl::sharedGson
     }
 
     inner class AmbientMusicModSettingImpl<T>(
@@ -257,6 +295,10 @@ abstract class BaseSettingsRepositoryImpl: BaseSettingsRepository {
                 sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
             }
         }.flowOn(Dispatchers.IO)
+
+        override suspend fun notifyChange() {
+            onChange?.emit(key)
+        }
 
     }
 

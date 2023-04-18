@@ -10,11 +10,10 @@ import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -37,6 +36,16 @@ fun View.onClicked() = callbackFlow {
     }
     awaitClose {
         setOnClickListener(null)
+    }
+}.debounce(TAP_DEBOUNCE)
+
+fun View.onLongClicked(vibrate: Boolean = true) = callbackFlow {
+    setOnLongClickListener {
+        trySend(it)
+        vibrate
+    }
+    awaitClose {
+        setOnLongClickListener(null)
     }
 }.debounce(TAP_DEBOUNCE)
 
@@ -71,7 +80,7 @@ fun View.removeRipple() {
     setBackgroundResource(0)
 }
 
-fun View.delayPreDrawUntilFlow(flow: Flow<Boolean>, lifecycle: Lifecycle) {
+fun View.delayPreDrawUntilFlow(flow: Flow<Boolean>, lifecycle: Lifecycle, owner: LifecycleOwner) {
     val listener = ViewTreeObserver.OnPreDrawListener {
         false
     }
@@ -84,7 +93,7 @@ fun View.delayPreDrawUntilFlow(flow: Flow<Boolean>, lifecycle: Lifecycle) {
         removeListener()
     }
     viewTreeObserver.addOnPreDrawListener(listener)
-    lifecycle.coroutineScope.launchWhenResumed {
+    owner.whenResumed {
         flow.collect {
             removeListener()
         }

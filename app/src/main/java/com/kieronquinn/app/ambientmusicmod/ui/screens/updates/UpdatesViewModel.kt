@@ -23,7 +23,14 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.firstNotNull
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.getNetworkCapabilities
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isCharging
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 abstract class UpdatesViewModel: ViewModel() {
@@ -34,6 +41,7 @@ abstract class UpdatesViewModel: ViewModel() {
     abstract fun onShardsUpdateClicked(shardsState: ShardsState)
     abstract fun onShardsViewTracksClicked()
     abstract fun onCountryClicked()
+    abstract fun onAdditionalCountries()
     abstract fun onAMMUpdateClicked(label: String, updateState: UpdateState)
     abstract fun onPAMUpdateClicked(label: String, updateState: UpdateState)
 
@@ -52,7 +60,8 @@ abstract class UpdatesViewModel: ViewModel() {
             val shardsState: ShardsState,
             val ammState: UpdateState,
             val pamState: UpdateState,
-            val automaticDatabaseUpdates: Boolean
+            val automaticDatabaseUpdates: Boolean,
+            val supportsMultipleCountries: Boolean
         ): State() {
             override fun equals(other: Any?): Boolean {
                 return false
@@ -64,9 +73,11 @@ abstract class UpdatesViewModel: ViewModel() {
 
         data class Shards(
             val shardsState: ShardsState,
+            val multipleCountriesSupported: Boolean,
             val onUpdateClicked: (ShardsState) -> Unit,
             val onViewTracksClicked: () -> Unit,
-            val onCountryClicked: () -> Unit
+            val onCountryClicked: () -> Unit,
+            val onAdditionalCountriesClicked: () -> Unit,
         ): UpdatesSettingsItem(ItemType.SHARDS)
 
         data class AMM(
@@ -110,6 +121,7 @@ class UpdatesViewModelImpl(
         private const val LINK_GITHUB = "https://kieronquinn.co.uk/redirect/AmbientMusicMod/github"
         private const val LINK_XDA = "https://kieronquinn.co.uk/redirect/AmbientMusicMod/xda"
         private const val LINK_DONATE = "https://kieronquinn.co.uk/redirect/AmbientMusicMod/donate"
+        private const val MIN_MULTIPLE_COUNTRIES_VERSION_CODE = 120L
     }
 
     private val reloadBus = MutableStateFlow(Pair(System.currentTimeMillis(), false))
@@ -155,11 +167,20 @@ class UpdatesViewModelImpl(
             val shards = shardsRepository.getShardsState(it.second).firstNotNull().apply {
                 downloadState = download
             }
+            val supportsMultipleCountries = when(pam) {
+                is UpdateState.UpToDate -> {
+                    pam.localVersionCode >= MIN_MULTIPLE_COUNTRIES_VERSION_CODE
+                }
+                is UpdateState.UpdateAvailable -> {
+                    pam.localVersionCode >= MIN_MULTIPLE_COUNTRIES_VERSION_CODE
+                }
+                else -> false
+            }
             if(automaticUpdates && shards.updateAvailable && shards.remote != null){
                 //Automatically apply the update, this will trigger a download if possible
                 deviceConfigRepository.indexManifest.set(shards.remote.url)
             }
-            State.Loaded(shards, amm, pam, automaticUpdates)
+            State.Loaded(shards, amm, pam, automaticUpdates, supportsMultipleCountries)
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
@@ -179,6 +200,12 @@ class UpdatesViewModelImpl(
     override fun onCountryClicked() {
         viewModelScope.launch {
             navigation.navigate(UpdatesFragmentDirections.actionUpdatesFragmentToCountryPickerFragment())
+        }
+    }
+
+    override fun onAdditionalCountries() {
+        viewModelScope.launch {
+            navigation.navigate(UpdatesFragmentDirections.actionUpdatesFragmentToSettingsExtraCountryPickerFragment())
         }
     }
 

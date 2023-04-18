@@ -20,6 +20,8 @@ import com.google.android.as.oss.common.ExecutorAnnotations.FlExecutorQualifier;
 import com.google.android.as.oss.common.ExecutorAnnotations.GeneralExecutorQualifier;
 import com.google.android.as.oss.common.ExecutorAnnotations.IoExecutorQualifier;
 import com.google.android.as.oss.common.ExecutorAnnotations.PirExecutorQualifier;
+import com.google.android.as.oss.common.ExecutorAnnotations.ProtectedDownloadExecutorQualifier;
+import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 import dagger.Module;
 import dagger.Provides;
@@ -31,7 +33,7 @@ import javax.inject.Singleton;
 /** Module to provide {@link Executor} instances. */
 @Module
 @InstallIn(SingletonComponent.class)
-public abstract class ExecutorsModule {
+abstract class ExecutorsModule {
   @Provides
   @Singleton
   @FlExecutorQualifier
@@ -58,6 +60,13 @@ public abstract class ExecutorsModule {
   @IoExecutorQualifier
   static Executor ioExecutor() {
     return Executors.IO_EXECUTOR;
+  }
+
+  @Provides
+  @Singleton
+  @ProtectedDownloadExecutorQualifier
+  static ListeningExecutorService protectedDownloadExecutor() {
+    return Executors.PROTECTED_DOWNLOAD_EXECUTOR;
   }
 
   private ExecutorsModule() {}

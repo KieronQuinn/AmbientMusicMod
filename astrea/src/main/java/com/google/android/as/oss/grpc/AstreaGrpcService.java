@@ -22,10 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleService;
 import com.google.common.flogger.GoogleLogger;
 import dagger.hilt.android.AndroidEntryPoint;
-import io.grpc.LoadBalancerProvider;
-import io.grpc.LoadBalancerRegistry;
-import io.grpc.internal.PickFirstLoadBalancerProvider;
-
 import java.io.IOException;
 import javax.inject.Inject;
 

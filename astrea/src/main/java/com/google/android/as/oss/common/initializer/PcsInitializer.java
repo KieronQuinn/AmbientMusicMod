@@ -19,6 +19,15 @@ package com.google.android.as.oss.common.initializer;
 /** Defines a task that runs on app start-up. */
 public interface PcsInitializer {
 
+  int PRIORITY_HIGH = 10;
+  int PRIORITY_DEFAULT = 0;
+  int PRIORITY_LOW = -10;
+
   /** The method to run on app start-up. */
   void run();
+
+  /** Returns the priority of the initializer being run. */
+  default int getPriority() {
+    return PRIORITY_DEFAULT;
+  }
 }

@@ -17,11 +17,14 @@
 package com.google.android.as.oss.common.config;
 
 import androidx.annotation.GuardedBy;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Container that emits an observable signal when the value it stores changes. */
 // Note that T extends Object explicitly to make the null checker not accept @Nullable.
+// See [redacted]
+@SuppressWarnings("ExtendsObject")
 public class ListenableValue<T extends Object> {
   private final CopyOnWriteArrayList<ValueListener<T>> listeners;
 
@@ -34,10 +37,14 @@ public class ListenableValue<T extends Object> {
    * listener will be called for the null -> first value transition). Hence, do not use null in
    * general, this factory method is designed to help delayed initialization only.
    */
+  // See [redacted]
+  @SuppressWarnings("ExtendsObject")
   public static <T extends Object> ListenableValue<T> create() {
     return new ListenableValue<T>(null);
   }
 
+  // See [redacted]
+  @SuppressWarnings("ExtendsObject")
   public static <T extends Object> ListenableValue<T> create(T initialValue) {
     return new ListenableValue<T>(initialValue);
   }

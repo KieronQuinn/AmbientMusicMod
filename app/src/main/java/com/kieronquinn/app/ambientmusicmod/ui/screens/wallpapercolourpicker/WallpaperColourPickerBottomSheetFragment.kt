@@ -7,13 +7,13 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentWallpaperColorPickerBottomSheetBinding
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.ui.base.BaseBottomSheetFragment
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.android.ext.android.inject
 
 class WallpaperColourPickerBottomSheetFragment :
@@ -35,7 +35,7 @@ class WallpaperColourPickerBottomSheetFragment :
             )
             insets
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             with(binding) {
                 val availableColors = monet.getAvailableWallpaperColors() ?: emptyList()
                 //No available colors = likely using a live wallpaper, show a toast and dismiss
@@ -46,7 +46,7 @@ class WallpaperColourPickerBottomSheetFragment :
                         Toast.LENGTH_LONG
                     ).show()
                     dismiss()
-                    return@launchWhenResumed
+                    return@whenResumed
                 }
                 root.backgroundTintList =
                     ColorStateList.valueOf(monet.getBackgroundColor(requireContext()))
@@ -67,7 +67,7 @@ class WallpaperColourPickerBottomSheetFragment :
         }
     }
 
-    private fun onColorPicked(color: Int) = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun onColorPicked(color: Int) = whenResumed {
         settings.monetColor.set(color)
         //Trigger a manual update
         monet.updateMonetColors()

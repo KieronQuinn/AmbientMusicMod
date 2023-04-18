@@ -31,10 +31,15 @@ message PirConnectionKey {
   optional string url_regex = 1;
 }
 
+message PdConnectionKey {
+  optional string client_id = 1;
+}
+
 message ConnectionKey {
   oneof connection_key {
     FlConnectionKey fl_connection_key = 1;
     HttpConnectionKey http_connection_key = 2;
     PirConnectionKey pir_connection_key = 3;
+    PdConnectionKey pd_connection_key = 4;
   }
 }

@@ -14,7 +14,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentNowPlayingBinding
@@ -28,7 +27,6 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewM
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.State
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPlayingBinding::inflate), ProvidesOverflow, Root {
@@ -65,7 +63,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
 
     private fun setupState(){
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -87,7 +85,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
                 updateMargins(bottom = bottomInset + fabMargin + legacyWorkaround)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.nowPlayingRecyclerView.shouldShrinkFab().collect {
                 if(it){
                     shrink()
@@ -96,7 +94,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.fabNowplayingRecognise.onClicked().collect {
                 binding.fabNowplayingRecognise.collapse()
                 viewModel.onRecogniseFabClicked()
@@ -172,7 +170,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
             binding.fabNowplayingRecognise.alpha = if(visible) 0f else 1f
         }
         setAlpha(viewModel.recognitionDialogShowing.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.recognitionDialogShowing.collect {
                 setAlpha(it)
             }
@@ -186,7 +184,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
                 getString(R.string.faq_title),
                 getString(R.string.faq_content),
                 R.drawable.ic_faq,
-                viewModel::onFaqClicked
+                onClick = viewModel::onFaqClicked
             ))
             list.add(NowPlayingSettingsItem.Footer {
                 viewModel.onFooterLinkClicked(requireContext().isDarkMode)
@@ -206,37 +204,37 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
             getString(R.string.item_nowplaying_notifications_title),
             notificationContent(),
             R.drawable.ic_nowplaying_notifications,
-            viewModel::onNotificationsClicked
+            onClick = viewModel::onNotificationsClicked
         ))
         list.add(GenericSettingsItem.Setting(
             getString(R.string.item_nowplaying_lockscreen_title),
             getString(R.string.item_nowplaying_lockscreen_content),
             R.drawable.ic_nowplaying_lock_screen,
-            viewModel::onLockscreenClicked
+            onClick = viewModel::onLockscreenClicked
         ))
         list.add(GenericSettingsItem.Setting(
             getString(R.string.item_nowplaying_ondemand_title),
             getString(R.string.item_nowplaying_ondemand_content),
             R.drawable.ic_nowplaying_ondemand,
-            viewModel::onOnDemandClicked
+            onClick = viewModel::onOnDemandClicked
         ))
         list.add(GenericSettingsItem.Setting(
             getString(R.string.item_nowplaying_history_title),
             historyContent(),
             R.drawable.ic_nowplaying_history,
-            viewModel::onHistoryClicked
+            onClick = viewModel::onHistoryClicked
         ))
         list.add(GenericSettingsItem.Setting(
             getString(R.string.item_nowplaying_settings_title),
             getString(R.string.item_nowplaying_settings_content),
             R.drawable.ic_nowplaying_settings,
-            viewModel::onSettingsClicked
+            onClick = viewModel::onSettingsClicked
         ))
         list.add(GenericSettingsItem.Setting(
             getString(R.string.backup_restore_title),
             getString(R.string.backup_restore_content),
             R.drawable.ic_backup_restore,
-            viewModel::onBackupRestoreClicked
+            onClick = viewModel::onBackupRestoreClicked
         ))
         addFooter()
         return list

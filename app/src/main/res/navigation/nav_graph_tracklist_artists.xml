@@ -9,7 +9,7 @@
         android:id="@+id/tracklistArtistsFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.TracklistArtistsFragment"
         android:label="@string/tracklist_artists_title"
-        tools:layout="@layout/fragment_tracklist_generic" >
+        tools:layout="@layout/fragment_tracklist_generic">
         <action
             android:id="@+id/action_tracklistArtistsFragment_to_tracklistArtistTracksFragment"
             app:destination="@id/tracklistArtistTracksFragment" />
@@ -17,10 +17,39 @@
     <fragment
         android:id="@+id/tracklistArtistTracksFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.artisttracks.TracklistArtistTracksFragment"
-        android:label=" " >
+        android:label=" "
+        tools:layout="@layout/fragment_tracklist_generic">
         <argument
             android:name="artist"
             app:argType="string" />
+        <action
+            android:id="@+id/action_tracklistArtistTracksFragment_to_trackInfoBottomSheetFragment"
+            app:destination="@id/trackInfoBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/trackInfoBottomSheetFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.trackinfo.TrackInfoBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_track_info_bottom_sheet">
+        <argument
+            android:name="track"
+            app:argType="com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack" />
+        <argument
+            android:name="from_artists"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <action
+            android:id="@+id/action_trackInfoBottomSheetFragment_to_trackEditFragment2"
+            app:destination="@id/trackEditFragment2" />
+    </dialog>
+    <fragment
+        android:id="@+id/trackEditFragment2"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.edit.TrackEditFragment"
+        android:label="@string/tracklist_track_edit_title"
+        tools:layout="@layout/fragment_track_edit">
+        <argument
+            android:name="track"
+            app:argType="com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack" />
     </fragment>
 
 </navigation>

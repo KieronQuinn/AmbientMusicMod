@@ -74,9 +74,8 @@ public class DeviceFlagManager extends AbstractFlagManager {
           }
 
           private boolean deviceConfigAvailable() {
-            return false;
             // No need to lock -> can only change from empty to present.
-            /*if (poisonedState.getIsPoisoned().isPresent()) {
+            if (poisonedState.getIsPoisoned().isPresent()) {
               return poisonedState.getIsPoisoned().get();
             }
 
@@ -92,7 +91,7 @@ public class DeviceFlagManager extends AbstractFlagManager {
               logger.atSevere().log(
                   "Device Config not available for com.google.android.as: relying on defaults");
             }
-            return poisonedState.getIsPoisoned().get();*/
+            return poisonedState.getIsPoisoned().get();
           }
         });
   }

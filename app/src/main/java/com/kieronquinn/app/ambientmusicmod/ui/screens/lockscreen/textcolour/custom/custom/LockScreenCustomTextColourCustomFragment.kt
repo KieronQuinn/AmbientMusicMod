@@ -3,15 +3,21 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.cus
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentLockscreenCustomTextColourCustomBinding
 import com.kieronquinn.app.ambientmusicmod.ui.base.BoundFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.custom.LockScreenCustomTextColourCustomViewModel.CustomColour.ColourSource
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationInset
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.hexColorFilter
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onChanged
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onTouchUp
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.scrollToView
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.setColor
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.toHexColor
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LockScreenCustomTextColourCustomFragment: BoundFragment<FragmentLockscreenCustomTextColourCustomBinding>(FragmentLockscreenCustomTextColourCustomBinding::inflate) {
@@ -42,7 +48,7 @@ class LockScreenCustomTextColourCustomFragment: BoundFragment<FragmentLockscreen
         binding.customColourEdit.setText(Integer.toHexString(viewModel.colour.value.colour))
         binding.customColourEdit.filters = arrayOf(hexColorFilter(), InputFilter.LengthFilter(6))
         var isUpdating = false
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.colour.collect {
                 val colour = if(it.source == ColourSource.WHEEL || it.source == ColourSource.SETTINGS){
                     it.colour.toHexColor(false)
@@ -55,12 +61,12 @@ class LockScreenCustomTextColourCustomFragment: BoundFragment<FragmentLockscreen
                 isUpdating = false
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.customColourEdit.onChanged { isUpdating }.collect {
                 viewModel.setColourFromInput(it?.toString() ?: "")
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.customColourEdit.onTouchUp().collect {
                 delay(250L)
                 binding.root.scrollToView(binding.customColourInput)
@@ -70,7 +76,7 @@ class LockScreenCustomTextColourCustomFragment: BoundFragment<FragmentLockscreen
 
     private fun setupWheel() {
         binding.customColourPicker.setInitialColor(viewModel.colour.value.colour)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.colour.collect {
                 val colour = if(it.source == ColourSource.INPUT || it.source == ColourSource.SETTINGS){
                     it.colour
@@ -78,14 +84,14 @@ class LockScreenCustomTextColourCustomFragment: BoundFragment<FragmentLockscreen
                 binding.customColourPicker.setColor(colour)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             binding.customColourPicker.onChanged().collect {
                 viewModel.setColourFromWheel(it)
             }
         }
     }
 
-    private fun setupApply() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupApply() = whenResumed {
         binding.customColourApply.onClicked().collect {
             viewModel.onApplyClicked()
         }

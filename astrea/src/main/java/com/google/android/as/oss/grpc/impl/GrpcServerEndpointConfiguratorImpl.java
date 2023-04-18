@@ -21,11 +21,11 @@ import static com.google.android.as.oss.grpc.impl.PcsSecurityPolicies.untrustedP
 
 import android.content.Context;
 import android.os.IBinder;
-import android.util.Log;
-
 import androidx.annotation.Nullable;
+
 import com.google.android.as.oss.grpc.GrpcServerEndpointConfiguration;
 import com.google.android.as.oss.grpc.GrpcServerEndpointConfigurator;
+
 import dagger.Module;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
@@ -76,6 +76,7 @@ final class GrpcServerEndpointConfiguratorImpl implements GrpcServerEndpointConf
     // TODO: Use allowlistedOnly() instead of untrustedPolicy().
     ServerSecurityPolicy serverSecurityPolicy =
         buildServerSecurityPolicy(untrustedPolicy(), configuration);
+
     BinderServerBuilder builder =
         BinderServerBuilder.forAddress(
                 AndroidComponentAddress.forLocalComponent(context, cls), iBinderReceiver)

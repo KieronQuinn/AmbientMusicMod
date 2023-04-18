@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Html
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
@@ -12,6 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.contributors.ContributorsViewModel.ContributorsSettingsItem
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.getResourceIdArray
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContributorsFragment: BaseSettingsFragment(), BackAvailable {
@@ -28,7 +28,7 @@ class ContributorsFragment: BaseSettingsFragment(), BackAvailable {
         super.onViewCreated(view, savedInstanceState)
         binding.settingsBaseLoading.isVisible = true
         binding.settingsBaseRecyclerView.isVisible = false
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             adapter.update(createItems(), binding.settingsBaseRecyclerView)
             binding.settingsBaseLoading.isVisible = false
             binding.settingsBaseRecyclerView.isVisible = true
@@ -54,7 +54,7 @@ class ContributorsFragment: BaseSettingsFragment(), BackAvailable {
                 getString(resource),
                 getString(content[index]),
                 flags[index]
-            ){}
+            ) {}
         }.toTypedArray()
     }
 

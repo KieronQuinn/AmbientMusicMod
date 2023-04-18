@@ -50,6 +50,8 @@
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
+
+            <nav-graph android:value="@navigation/nav_graph_now_playing" />
         </activity>
 
         <activity

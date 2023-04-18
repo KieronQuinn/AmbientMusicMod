@@ -1,6 +1,8 @@
 package com.kieronquinn.app.ambientmusicmod.ui.screens.tracklist.artists.artisttracks
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
+import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.navigation.TracklistNavigation
 import com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack
 import com.kieronquinn.app.ambientmusicmod.repositories.ShardsListRepository
@@ -16,6 +18,7 @@ abstract class TracklistArtistTracksViewModel(
 
     abstract fun setArtist(artist: String)
     abstract fun onBackPressed()
+    abstract fun onTrackClicked(track: ShardTrack)
 
 }
 
@@ -23,6 +26,10 @@ class TracklistArtistTracksViewModelImpl(
     shardsListRepository: ShardsListRepository,
     private val navigation: TracklistNavigation
 ): TracklistArtistTracksViewModel(shardsListRepository) {
+
+    companion object {
+        private const val SEARCH_TERM_ONDEMAND = "ondemand"
+    }
 
     private val artist = MutableStateFlow<String?>(null)
 
@@ -39,15 +46,33 @@ class TracklistArtistTracksViewModelImpl(
 
     override fun filterList(items: List<ShardTrack>, searchTerm: String): List<ShardTrack> {
         if(searchTerm.isBlank()) return items
-        return items.filter {
-            it.trackName.lowercase().trim().contains(searchTerm.lowercase().trim())
-                    || it.album?.lowercase()?.contains(searchTerm.lowercase().trim()) ?: false
+        val linearOnly = searchTerm.equals(SEARCH_TERM_ONDEMAND, true)
+        return if(linearOnly) {
+            items.filter { it.isLinear }
+        }else{
+            items.filter {
+                it.trackName.lowercase().trim().contains(searchTerm.lowercase().trim())
+                        || it.album?.lowercase()?.contains(searchTerm.lowercase().trim()) ?: false
+            }
         }
     }
 
     override fun onBackPressed() {
         viewModelScope.launch {
             navigation.navigateBack()
+        }
+    }
+
+    override fun onTrackClicked(track: ShardTrack) {
+        viewModelScope.launch {
+            //Collisions mean we have to form this manually
+            navigation.navigate(
+                R.id.action_tracklistArtistTracksFragment_to_trackInfoBottomSheetFragment,
+                bundleOf(
+                    "track" to track,
+                    "from_artists" to true
+                )
+            )
         }
     }
 

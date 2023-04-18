@@ -5,7 +5,6 @@ import android.text.format.DateFormat
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
@@ -16,7 +15,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsBedtimeViewModel.SettingsBedtimeSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsBedtimeViewModel.State
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Duration
 import java.time.LocalTime
@@ -36,7 +35,7 @@ class SettingsBedtimeFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }

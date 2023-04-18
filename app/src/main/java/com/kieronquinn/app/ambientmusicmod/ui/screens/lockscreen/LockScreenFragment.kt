@@ -3,7 +3,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
 import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem
@@ -12,7 +11,7 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
 import com.kieronquinn.app.ambientmusicmod.ui.base.settings.BaseSettingsFragment
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.LockScreenViewModel.LockScreenSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.LockScreenViewModel.State
-import kotlinx.coroutines.flow.collect
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,7 +37,7 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun setupState() {
         handleState(viewModel.state.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.state.collect {
                 handleState(it)
             }
@@ -68,7 +67,7 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
             getString(R.string.lockscreen_owner_info),
             getString(R.string.lockscreen_owner_info_content),
             R.drawable.ic_lock_screen_owner_info,
-            viewModel::onOwnerInfoClicked
+            onClick = viewModel::onOwnerInfoClicked
         )
         if(!state.enabled) return listOf(switch, ownerInfo, LockScreenSettingsItem.Footer)
         val header = LockScreenSettingsItem.Header(
@@ -90,13 +89,13 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
                 getString(state.clickAction.title)
             ),
             R.drawable.ic_lockscreen_click_action,
-            viewModel::onClickActionClicked
+            onClick = viewModel::onClickActionClicked
         )
         val textColour = GenericSettingsItem.Setting(
             getString(R.string.lockscreen_overlay_text_colour_title),
             getString(R.string.lockscreen_overlay_text_colour_content, state.overlayTextColour),
             R.drawable.ic_lockscreen_overlay_text_colour,
-            viewModel::onTextColourClicked
+            onClick = viewModel::onTextColourClicked
         )
         val onDemand = if(state.onDemandAvailable){
             GenericSettingsItem.SwitchSetting(
@@ -107,8 +106,16 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
                 onChanged = viewModel::onOnDemandChanged
             )
         }else null
+        val systemUi = if(state.verboseEnabled){
+            GenericSettingsItem.Setting(
+                getString(R.string.lockscreen_systemui_package_name_title),
+                state.systemUiPackageName,
+                R.drawable.ic_settings_advanced_logging,
+                enabled = false
+            ) {}
+        }else null
         return listOfNotNull(
-            switch, header, enhancedSetting, clickAction, textColour, onDemand, ownerInfo, LockScreenSettingsItem.Footer
+            switch, header, enhancedSetting, clickAction, textColour, onDemand, ownerInfo, systemUi, LockScreenSettingsItem.Footer
         )
     }
 

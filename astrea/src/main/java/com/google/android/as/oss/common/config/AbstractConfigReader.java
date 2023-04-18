@@ -18,6 +18,8 @@ package com.google.android.as.oss.common.config;
 
 /** An abstract base implementation of a {@link ConfigReader} providing some common facilities. */
 // Note that ConfigT extends Object explicitly to make the null checker not accept @Nullable.
+// See [redacted]
+@SuppressWarnings("ExtendsObject")
 public abstract class AbstractConfigReader<ConfigT extends Object>
     implements ConfigReader<ConfigT> {
   private final ListenableValue<ConfigT> config = ListenableValue.<ConfigT>create();

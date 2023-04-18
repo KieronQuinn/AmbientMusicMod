@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentSettingsAdvancedGainBottomSheetBinding
 import com.kieronquinn.app.ambientmusicmod.ui.base.BaseBottomSheetFragment
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onChanged
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
+import java.util.Locale
 
 class SettingsAdvancedGainBottomSheetFragment: BaseBottomSheetFragment<FragmentSettingsAdvancedGainBottomSheetBinding>(FragmentSettingsAdvancedGainBottomSheetBinding::inflate) {
 
@@ -31,19 +30,19 @@ class SettingsAdvancedGainBottomSheetFragment: BaseBottomSheetFragment<FragmentS
         setupInsets(view)
     }
 
-    private fun setupPositive() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupPositive() = whenResumed {
         binding.settingsAdvancedGainPositive.onClicked().collect {
             viewModel.onPositiveClicked()
         }
     }
 
-    private fun setupNegative() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupNegative() = whenResumed {
         binding.settingsAdvancedGainNegative.onClicked().collect {
             viewModel.onNegativeClicked()
         }
     }
 
-    private fun setupNeutral() = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+    private fun setupNeutral() = whenResumed {
         binding.settingsAdvancedGainNeutral.onClicked().collect {
             viewModel.onNeutralClicked()
         }
@@ -74,12 +73,12 @@ class SettingsAdvancedGainBottomSheetFragment: BaseBottomSheetFragment<FragmentS
             getString(R.string.settings_advanced_gain_formatter, value)
         }
         handleSliderChange(viewModel.gain.value)
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             viewModel.gain.collect {
                 handleSliderChange(it)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        whenResumed {
             onChanged().collect {
                 viewModel.setGain(it)
             }

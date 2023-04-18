@@ -19,7 +19,13 @@
         android:layout_marginEnd="4dp"
         android:padding="20dp"
         app:tint="?android:colorControlNormal"
-        tools:src="@drawable/ic_community" />
+        tools:src="@drawable/ic_back" />
+
+    <Space
+        android:id="@+id/item_settings_text_space"
+        android:visibility="gone"
+        android:layout_width="@dimen/margin_16"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +39,7 @@
 
         <TextView
             android:id="@+id/item_settings_text_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium.AmbientMusicMod"
             android:textColor="?android:textColorPrimary"
@@ -41,7 +47,7 @@
 
         <TextView
             android:id="@+id/item_settings_text_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
             android:textColor="?android:textColorPrimary"

@@ -151,9 +151,10 @@ open class MonetSwitch: FrameLayout, MonetColorsChangedListener {
         root.backgroundTintList = bgTintList
         root.backgroundTintMode = PorterDuff.Mode.SRC_ATOP
         root.isActivated = switch.isChecked
-        switch.setOnCheckedChangeListener { _, _ ->
+        switch.setOnCheckedChangeListener { _, checked ->
             root.isActivated = switch.isChecked
             if(!suppressCheckChange){
+                isChecked = !checked
                 performClick()
             }
         }
