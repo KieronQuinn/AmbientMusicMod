@@ -22,7 +22,7 @@ Ambient Music Mod is a Shizuku or root app that ports Now Playing from Pixels to
 
 ## Screenshots
 
-[![Screenshots](https://i.imgur.com/RCPP9Sol.png)](https://i.imgur.com/RCPP9So.png)
+[![Screenshots](https://i.imgur.com/TTpzOQMl.png)](https://i.imgur.com/TTpzOQM.png)
 
 ## Installation
 
