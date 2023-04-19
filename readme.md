@@ -2,19 +2,19 @@
 
 **Ambient Music Mod** | [Now Playing](https://github.com/KieronQuinn/NowPlaying)
 
-Ambient Music Mod is a Shizuku or root app that ports Now Playing from Pixels to other Android devices. 
+Ambient Music Mod is a Shizuku/Sui app that ports Now Playing from Pixels to other Android devices. 
 
 ## Requirements
 
 - Android device running Android 9.0 or above (11+ recommended).
-- Shizuku (Android 12+) or root access (Android 9+). 
+- Shizuku (Android 12+) or Sui Magisk module (Android 9+). 
 	- Shizuku does not require root, instead needing an ADB command to be run every reboot.
 
 ## Features
 
 - Full Now Playing support, based on the latest version from Pixel devices and the latest music databases
 - Automatic Ambient Music recognition, with settings to control how often recognition runs - finding the right balance between battery usage and convenience
-- Now Playing History and Favourites support
+- Now Playing History, Favourites and Summary support
 - Support to trigger recognitions manually, including a homescreen widget
 - On Demand recognition on supported devices, using the Google Assistant-backed recognition engine for songs that are not in the local database (**must be triggered manually**)
 - Show Now Playing songs on the lock screen (accessibility service required)
