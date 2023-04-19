@@ -192,7 +192,7 @@ class UpdatesRepositoryImpl(
     }
 
     private fun getUpdateCache(repository: String): GitHubRelease? {
-        val file = File(updatesCacheDir, repository)
+        val file = File(updatesCacheDir, "${repository}_${BuildConfig.VERSION_CODE}")
         if(!file.exists()) return null
         val cachedRelease = try {
             gson.fromJson(file.readText(), CachedGitHubRelease::class.java)
@@ -207,7 +207,7 @@ class UpdatesRepositoryImpl(
     }
 
     private fun GitHubRelease.cacheRelease(repository: String) {
-        val file = File(updatesCacheDir, repository)
+        val file = File(updatesCacheDir, "${repository}_${BuildConfig.VERSION_CODE}")
         val cachedRelease = gson.toJson(CachedGitHubRelease(System.currentTimeMillis(), this))
         file.writeText(cachedRelease)
     }

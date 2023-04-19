@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.TransactionTooLargeException
 import android.util.SizeF
 import android.view.LayoutInflater
 import android.view.View
@@ -199,9 +200,11 @@ class WidgetRepositoryImpl(
     private fun List<AppWidget>.sendLayouts(
         state: RecognitionState?, onDemandEnabled: Boolean
     ) = forEach {
-        appWidgetManager.updateAppWidget(
-            it.id, it.getRemoteViews(state, onDemandEnabled)
-        )
+        try {
+            appWidgetManager.updateAppWidget(it.id, it.getRemoteViews(state, onDemandEnabled))
+        }catch (e: TransactionTooLargeException) {
+            //Suppress, shouldn't happen unless system has lagged
+        }
     }
 
     private fun getRemoteView41(): RemoteViews {

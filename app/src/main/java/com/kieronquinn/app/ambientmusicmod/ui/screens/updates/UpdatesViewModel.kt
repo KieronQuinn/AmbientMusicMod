@@ -132,7 +132,7 @@ class UpdatesViewModelImpl(
     }.flowOn(Dispatchers.IO)
 
     private fun getPamState(clearCache: Boolean) = flow {
-        emit(updatesRepository.getPAMUpdateState(clearCache))
+        emit(updatesRepository.getPAMUpdateState(ignoreCache = clearCache))
     }.flowOn(Dispatchers.IO)
 
     private val downloadState = combine(
