@@ -281,11 +281,8 @@ class ShizukuService: IShellProxy.Stub() {
         if(context.isOnDemandConfigValueSet()) {
             beginStreamingSearchViaSystem(request, callback)
         }else{
-            if(!isRoot){
-                callback.onRecognitionFailed(request, MusicRecognitionManager_RECOGNITION_FAILED_NEEDS_ROOT)
-            }else{
-                beginStreamingSearchViaRoot(request, callback, thread, token)
-            }
+            //Assume root is available as UI checks, if not a genuine service error will be shown
+            beginStreamingSearchViaRoot(request, callback, thread, token)
         }
     }
 

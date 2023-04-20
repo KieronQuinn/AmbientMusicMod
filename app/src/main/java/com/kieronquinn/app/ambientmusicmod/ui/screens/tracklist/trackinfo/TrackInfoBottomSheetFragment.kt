@@ -37,7 +37,13 @@ class TrackInfoBottomSheetFragment: BaseBottomSheetFragment<FragmentTrackInfoBot
     }
 
     private val players by lazy {
-        Player.getPlayers(requireContext(), track.playerUrls, track.googleId)
+        Player.getPlayers(
+            requireContext(),
+            track.playerUrls,
+            track.googleId,
+            track.trackName,
+            track.artist
+        )
     }
 
     private val adapter by lazy {

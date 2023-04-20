@@ -69,11 +69,7 @@ class UpdatesRepositoryImpl(
     }
 
     private val packageManager = context.packageManager
-
-    private val updatesCacheDir = File(context.cacheDir, "updates").apply {
-        mkdirs()
-    }
-
+    private val updatesCacheDir = File(context.cacheDir, "updates")
     private val pamProvider = GitHubProvider.getGitHubProvider("NowPlaying")
     private val ammProvider = GitHubProvider.getGitHubProvider("AmbientMusicMod")
 
@@ -192,6 +188,7 @@ class UpdatesRepositoryImpl(
     }
 
     private fun getUpdateCache(repository: String): GitHubRelease? {
+        updatesCacheDir.mkdirs()
         val file = File(updatesCacheDir, "${repository}_${BuildConfig.VERSION_CODE}")
         if(!file.exists()) return null
         val cachedRelease = try {
@@ -207,6 +204,7 @@ class UpdatesRepositoryImpl(
     }
 
     private fun GitHubRelease.cacheRelease(repository: String) {
+        updatesCacheDir.mkdirs()
         val file = File(updatesCacheDir, "${repository}_${BuildConfig.VERSION_CODE}")
         val cachedRelease = gson.toJson(CachedGitHubRelease(System.currentTimeMillis(), this))
         file.writeText(cachedRelease)

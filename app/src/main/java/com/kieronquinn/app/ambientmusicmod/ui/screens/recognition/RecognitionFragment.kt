@@ -387,10 +387,13 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         }
         when(state.result){
             is RecogniseResult.Success -> {
+                val result = state.result.recognitionResult
                 val players = Player.getPlayers(
                     requireContext(),
-                    state.result.recognitionResult.players,
-                    state.result.recognitionResult.googleId
+                    result.players,
+                    result.googleId,
+                    result.trackName,
+                    result.artist
                 )
                 prepSuccess(state.result, players)
             }
@@ -409,10 +412,13 @@ class RecognitionFragment: BoundDialogFragment<FragmentRecognitionBinding>(Fragm
         delay(750L)
         val newState = when(state.result){
             is RecogniseResult.Success -> {
+                val result = state.result.recognitionResult
                 val players = Player.getPlayers(
                     requireContext(),
-                    state.result.recognitionResult.players,
-                    state.result.recognitionResult.googleId
+                    result.players,
+                    result.googleId,
+                    result.trackName,
+                    result.artist
                 )
                 State.Success(R.id.recognising_icon_to_success, state.result, players)
             }

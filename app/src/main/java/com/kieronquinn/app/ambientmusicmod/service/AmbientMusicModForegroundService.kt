@@ -533,7 +533,9 @@ class AmbientMusicModForegroundService: LifecycleService() {
         when(settings.lockscreenOverlayClicked.get()) {
             LockscreenOnTrackClicked.ASSISTANT -> {
                 val intent = Player.Assistant(
-                    state.recognitionResult.googleId ?: return@whenCreated
+                    state.recognitionResult.googleId ?: return@whenCreated,
+                    state.recognitionResult.trackName,
+                    state.recognitionResult.artist
                 ).getIntent().apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
