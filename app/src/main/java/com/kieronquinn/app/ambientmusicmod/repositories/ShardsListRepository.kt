@@ -6,6 +6,7 @@ import android.net.Uri
 import com.kieronquinn.app.ambientmusicmod.model.database.ShardTrackCacheDatabase
 import com.kieronquinn.app.ambientmusicmod.model.shards.ShardTrack
 import com.kieronquinn.app.ambientmusicmod.repositories.ShardsListRepository.GetState
+import com.kieronquinn.app.ambientmusicmod.repositories.ShardsRepository.ShardCountry.Companion.CORE_SHARED_FILENAME
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.contentReceiverAsFlow
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.isArmv7
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.map
@@ -259,7 +260,7 @@ class ShardsListRepositoryImpl(
     private fun List<List<ShardTrack>>.merge(): List<ShardTrack> {
         //Merge the lists, then group by the shared ID and create the best track, then filter
         return flatten().groupBy {
-            it.dbId
+            "${it.trackName}:${it.artist}"
         }.map {
             it.value.createBest()
         }.distinctBy {
@@ -268,17 +269,19 @@ class ShardsListRepositoryImpl(
     }
 
     private fun List<ShardTrack>.createBest(): ShardTrack {
+        val preferred = firstOrNull { it.database != CORE_SHARED_FILENAME } ?: first()
+        val linear = firstOrNull { it.isLinear }
         return ShardTrack(
-            first().dbId,
-            first().id,
-            first().trackName,
-            first().artist,
-            first().googleId,
-            firstOrNull { it.playerUrls.isNotEmpty() }?.playerUrls ?: emptyArray(),
-            firstOrNull { it.album != null }?.album,
-            firstOrNull { it.year != null }?.year,
+            linear?.dbId ?: preferred.dbId,
+            preferred.id,
+            preferred.trackName,
+            preferred.artist,
+            preferred.googleId,
+            map { it.playerUrls.toList() }.flatten().distinct().toTypedArray(),
+            preferred.album,
+            preferred.year,
             any { it.isLinear },
-            first().database
+            preferred.database
         )
     }
 

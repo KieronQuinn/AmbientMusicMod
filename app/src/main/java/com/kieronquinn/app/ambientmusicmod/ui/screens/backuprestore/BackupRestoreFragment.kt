@@ -20,6 +20,7 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.takeUriPermission
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.app.ambientmusicmod.work.PeriodicBackupWorker
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.net.URLDecoder
 import java.time.Instant
 import java.util.Date
 
@@ -136,7 +137,9 @@ class BackupRestoreFragment: BaseSettingsFragment(), BackAvailable {
 
     private fun String.getKnownPathOrNull(): String? {
         return if(contains("%3A")){
-            substring(lastIndexOf("%3A") + 3).replace("%2F", "/")
+            substring(lastIndexOf("%3A") + 3).let {
+                URLDecoder.decode(it, "UTF-8")
+            }
         }else null
     }
 

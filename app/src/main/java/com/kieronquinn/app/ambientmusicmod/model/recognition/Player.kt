@@ -26,16 +26,19 @@ sealed class Player(
         private const val PREFIX_YOUTUBE_MUSIC = "https://music.youtube.com"
         private const val PREFIX_APPLE_MUSIC = "https://music.apple.com"
         private const val PREFIX_DEEZER = "https://www.deezer.com"
+        private const val PREFIX_GOOGLE = "/g/"
 
         fun getPlayers(
             context: Context,
             urls: Array<String>,
-            googleId: String?
+            googleId: String?,
+            trackName: String,
+            artist: String
         ): List<Player> {
             val players = ArrayList<Player>()
             val packageManager = context.packageManager
-            if(googleId != null && packageManager.isAppInstalled(PACKAGE_NAME_GSB)){
-                players.add(Assistant(googleId))
+            if(googleId?.isValid() == true && packageManager.isAppInstalled(PACKAGE_NAME_GSB)){
+                players.add(Assistant(googleId, trackName, artist))
             }
             urls.forEach {
                 getPlayerForUrl(it)?.let { player ->
@@ -56,6 +59,13 @@ sealed class Player(
                 else -> null
             }
         }
+
+        /**
+         *  /m/ URLs are no longer valid for Assistant, so Chips should not be shown for them
+         */
+        private fun String.isValid(): Boolean {
+            return startsWith(PREFIX_GOOGLE)
+        }
     }
 
     open fun getIntent(): Intent {
@@ -64,7 +74,11 @@ sealed class Player(
         }
     }
 
-    data class Assistant(override val url: String): Player(
+    data class Assistant(
+        override val url: String,
+        val trackName: String,
+        val artist: String
+    ): Player(
         url,
         R.drawable.ic_chip_player_assistant,
         R.string.recognition_chip_assistant,
@@ -76,6 +90,8 @@ sealed class Player(
         override fun getIntent(): Intent {
             return Intent("com.google.android.googlequicksearchbox.MUSIC_SEARCH").apply {
                 putExtra("android.soundsearch.extra.RECOGNIZED_TRACK_MID", url)
+                putExtra("android.soundsearch.extra.RECOGNIZED_TITLE", trackName)
+                putExtra("android.soundsearch.extra.RECOGNIZED_ARTIST", artist)
             }
         }
 
