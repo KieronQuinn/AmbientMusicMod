@@ -20,6 +20,7 @@ import com.kieronquinn.app.ambientmusicmod.model.settings.GenericSettingsItem.Ge
 import com.kieronquinn.app.ambientmusicmod.ui.views.LifecycleAwareRecyclerView
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onChanged
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onLongClicked
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.core.MonetCompat
 import com.kieronquinn.monetcompat.extensions.views.applyMonetLight
@@ -161,6 +162,15 @@ abstract class BaseSettingsAdapter(
             root.onClicked().collect {
                 item.onClick()
             }
+        }
+        if(item.onLongClick != null){
+            whenResumed {
+                root.onLongClicked().collect {
+                    item.onLongClick.invoke()
+                }
+            }
+        }else{
+            root.setOnLongClickListener(null)
         }
     }
 

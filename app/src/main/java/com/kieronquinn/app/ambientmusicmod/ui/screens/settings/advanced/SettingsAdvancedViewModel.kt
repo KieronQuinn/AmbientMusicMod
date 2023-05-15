@@ -26,6 +26,7 @@ abstract class SettingsAdvancedViewModel: ViewModel() {
     abstract fun onSuperpacksRequireChargingChanged(enabled: Boolean)
     abstract fun onClearAlbumArtClicked(context: Context)
     abstract fun onEnableLoggingChanged(enabled: Boolean)
+    abstract fun onExternalAccessClicked()
     abstract fun onPokeJobSchedulerClicked(context: Context)
 
     sealed class State {
@@ -97,6 +98,12 @@ class SettingsAdvancedViewModelImpl(
     override fun onEnableLoggingChanged(enabled: Boolean) {
         viewModelScope.launch {
             enableLogging.set(enabled)
+        }
+    }
+
+    override fun onExternalAccessClicked() {
+        viewModelScope.launch {
+            navigation.navigate(SettingsAdvancedFragmentDirections.actionSettingsAdvancedFragmentToSettingsAdvancedExternalAccessFragment())
         }
     }
 

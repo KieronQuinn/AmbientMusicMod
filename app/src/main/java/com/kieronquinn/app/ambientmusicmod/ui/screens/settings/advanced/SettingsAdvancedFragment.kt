@@ -96,6 +96,12 @@ class SettingsAdvancedFragment: BaseSettingsFragment(), BackAvailable {
             onChanged = viewModel::onEnableLoggingChanged
         ),
         GenericSettingsItem.Setting(
+            getString(R.string.settings_external_access_title),
+            getString(R.string.settings_external_access_content),
+            R.drawable.ic_settings_external_access,
+            onClick = viewModel::onExternalAccessClicked
+        ),
+        GenericSettingsItem.Setting(
             getString(R.string.settings_advanced_clear_album_art_cache),
             getString(R.string.settings_advanced_clear_album_art_cache_content),
             R.drawable.ic_advanced_clear_album_art_cache

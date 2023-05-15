@@ -43,6 +43,7 @@ sealed class GenericSettingsItem(val type: GenericSettingsItemType): BaseSetting
         @DrawableRes
         val icon: Int,
         val enabled: Boolean = true,
+        val onLongClick: (() -> Unit)? = null,
         val onClick: () -> Unit
     ): GenericSettingsItem(GenericSettingsItemType.SETTING)
 
