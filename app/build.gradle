@@ -11,11 +11,11 @@ plugins {
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "247:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20230402-030031/manifest.json"
-String DEFAULT_MANIFEST_V3 = "3048:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20230402-030031/manifest.json"
+String DEFAULT_MANIFEST = "248:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20230507-030029/manifest.json"
+String DEFAULT_MANIFEST_V3 = "3050:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20230507-030029/manifest.json"
 
-def tagName = '2.2.2'
-def version = 222
+def tagName = '2.3'
+def version = 230
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -111,24 +111,25 @@ protobuf {
 
 dependencies {
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.work:work-runtime-ktx:2.8.1"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.lifecycle:lifecycle-service:2.6.1"
+    implementation "androidx.security:security-crypto:1.0.0"
 
     //Material UI
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
 
     //MonetCompat for colours on < S
     implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'
 
     //Dependency Injection
-    implementation "io.insert-koin:koin-android:3.3.3"
+    implementation "io.insert-koin:koin-android:3.4.0"
 
     //Protobuf is used in reading data from ASI
     implementation "com.google.protobuf:protobuf-javalite:3.21.9"
@@ -179,7 +180,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.41"
 
     //OSS libraries activity
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 
     //Better Link Movement Method for inline links
     implementation 'me.saket:better-link-movement-method:2.2.0'

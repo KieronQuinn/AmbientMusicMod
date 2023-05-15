@@ -22,14 +22,17 @@
 
     <application
         android:name=".AmbientMusicMod"
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.AmbientMusicMod.Splash"
-        android:usesCleartextTraffic="${usesCleartextTraffic}">
+        android:usesCleartextTraffic="${usesCleartextTraffic}"
+        tools:targetApi="tiramisu">
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
@@ -71,6 +74,18 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receivers.ExternalAccessReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.action.ENABLE" />
+                <action android:name="${applicationId}.action.DISABLE" />
+                <action android:name="${applicationId}.action.TOGGLE" />
+                <action android:name="${applicationId}.action.RUN_RECOGNITION" />
+                <action android:name="${applicationId}.action.RUN_ONLINE_RECOGNITION" />
             </intent-filter>
         </receiver>
 

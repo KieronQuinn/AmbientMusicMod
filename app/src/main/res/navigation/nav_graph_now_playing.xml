@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_settingsAdvancedFragment"
             app:destination="@id/settingsAdvancedFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsExternalAccessFragment"
+            app:destination="@id/settingsAdvancedExternalAccessFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsRecognitionPeriodFragment"
@@ -94,6 +97,9 @@
         <action
             android:id="@+id/action_settingsAdvancedFragment_to_settingsAdvancedGainBottomSheetFragment"
             app:destination="@id/settingsAdvancedGainBottomSheetFragment" />
+        <action
+            android:id="@+id/action_settingsAdvancedFragment_to_settingsAdvancedExternalAccessFragment"
+            app:destination="@id/settingsAdvancedExternalAccessFragment" />
     </fragment>
     <dialog
         android:id="@+id/settingsAdvancedGainBottomSheetFragment"
@@ -195,5 +201,10 @@
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.custom.LockScreenCustomTextColourFragment"
         android:label="@string/lockscreen_overlay_text_colour_custom_title_long"
         tools:layout="@layout/fragment_lockscreen_custom_text_colour"/>
+    <fragment
+        android:id="@+id/settingsAdvancedExternalAccessFragment"
+        android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.externalaccess.SettingsAdvancedExternalAccessFragment"
+        android:label="@string/settings_external_access_title"
+        tools:layout="@layout/fragment_settings_base"/>
 
 </navigation>

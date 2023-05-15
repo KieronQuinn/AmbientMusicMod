@@ -28,6 +28,10 @@ import com.kieronquinn.app.ambientmusicmod.repositories.BedtimeRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.BedtimeRepositoryImpl
 import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.EncryptedSettingsRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.EncryptedSettingsRepositoryImpl
+import com.kieronquinn.app.ambientmusicmod.repositories.ExternalAccessRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.ExternalAccessRepositoryImpl
 import com.kieronquinn.app.ambientmusicmod.repositories.JobsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.JobsRepositoryImpl
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository
@@ -88,6 +92,8 @@ import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.SettingsViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.SettingsViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.SettingsAdvancedViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.SettingsAdvancedViewModelImpl
+import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.externalaccess.SettingsAdvancedExternalAccessViewModel
+import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.externalaccess.SettingsAdvancedExternalAccessViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.gain.SettingsAdvancedGainBottomSheetViewModel
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.gain.SettingsAdvancedGainBottomSheetViewModelImpl
 import com.kieronquinn.app.ambientmusicmod.ui.screens.settings.bedtime.SettingsBedtimeViewModel
@@ -152,6 +158,7 @@ class AmbientMusicMod: Application() {
     private val repositoriesModule = module {
         single<ApiRepository> { ApiRepositoryImpl(get()) }
         single<SettingsRepository> { SettingsRepositoryImpl(get()) }
+        single<EncryptedSettingsRepository> { EncryptedSettingsRepositoryImpl(get()) }
         single<DeviceConfigRepository>(createdAtStart = true) { DeviceConfigRepositoryImpl(get(), get()) }
         single<RootNavigation> { RootNavigationImpl() }
         single<ContainerNavigation> { ContainerNavigationImpl() }
@@ -169,6 +176,7 @@ class AmbientMusicMod: Application() {
         single<BackupRestoreRepository> { BackupRestoreRepositoryImpl(get(), get(), get(), get(), get()) }
         single<BatteryOptimisationRepository> { BatteryOptimisationRepositoryImpl(get()) }
         single<JobsRepository>(createdAtStart = true) { JobsRepositoryImpl(get(), get(), get()) }
+        single<ExternalAccessRepository> { ExternalAccessRepositoryImpl(get(), get(), get()) }
         single { BlurProvider.getBlurProvider(resources) }
         single { createMarkwon() }
         single { Gson() }
@@ -213,6 +221,7 @@ class AmbientMusicMod: Application() {
         viewModel<ContributorsViewModel> { ContributorsViewModelImpl(get()) }
         viewModel<BatteryOptimisationViewModel> { BatteryOptimisationViewModelImpl(get(), get(), get()) }
         viewModel<SettingsExtraCountryPickerViewModel> { SettingsExtraCountryPickerViewModelImpl(get()) }
+        viewModel<SettingsAdvancedExternalAccessViewModel> { SettingsAdvancedExternalAccessViewModelImpl(get(), get()) }
     }
 
     private val tracklistModule = module {
