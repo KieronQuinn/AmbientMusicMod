@@ -163,10 +163,14 @@ abstract class BaseSettingsAdapter(
                 item.onClick()
             }
         }
-        whenResumed {
-            root.onLongClicked().collect {
-                item.onLongClick?.invoke()
+        if(item.onLongClick != null){
+            whenResumed {
+                root.onLongClicked().collect {
+                    item.onLongClick.invoke()
+                }
             }
+        }else{
+            root.setOnLongClickListener(null)
         }
     }
 
