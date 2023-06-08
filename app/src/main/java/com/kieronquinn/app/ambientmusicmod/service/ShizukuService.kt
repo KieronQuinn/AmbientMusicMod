@@ -16,7 +16,6 @@ import android.media.musicrecognition.MusicRecognitionManager
 import android.media.musicrecognition.RecognitionRequest
 import android.os.*
 import android.view.IWindowManager
-import androidx.core.os.BuildCompat
 import androidx.core.os.bundleOf
 import com.android.internal.policy.IKeyguardDismissCallback
 import com.android.internal.widget.ILockSettings
@@ -181,7 +180,7 @@ class ShizukuService: IShellProxy.Stub() {
         bufferSizeInBytes: Int
     ): AudioRecord {
         return when {
-            BuildCompat.isAtLeastU() -> createAudioRecordApi34(
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> createAudioRecordApi34(
                 audioAttributes, audioFormat, sessionId, bufferSizeInBytes
             )
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> createAudioRecordApi31(
