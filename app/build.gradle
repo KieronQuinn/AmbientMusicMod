@@ -14,8 +14,8 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 String DEFAULT_MANIFEST = "248:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20230507-030029/manifest.json"
 String DEFAULT_MANIFEST_V3 = "3050:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20230507-030029/manifest.json"
 
-def tagName = '2.3'
-def version = 230
+def tagName = '2.3.1'
+def version = 231
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -36,7 +36,7 @@ def getKeystoreProperties() {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.kieronquinn.app.ambientmusicmod"
