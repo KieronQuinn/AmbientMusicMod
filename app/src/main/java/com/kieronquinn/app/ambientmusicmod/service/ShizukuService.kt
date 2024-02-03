@@ -79,6 +79,10 @@ class ShizukuService: IShellProxy.Stub() {
         }else null
     }
 
+    private val defaultAudioFormat by lazy {
+        AudioFormat.Builder().build()
+    }
+
     private val musicRecognitionManager by lazy {
         context.getSystemService("music_recognition") as MusicRecognitionManager
     }
@@ -156,7 +160,7 @@ class ShizukuService: IShellProxy.Stub() {
     }
 
     override fun AudioRecord_getFormat(): AudioFormat {
-        return audioRecord.format
+        return _audioRecord?.format ?: defaultAudioFormat
     }
 
     override fun AudioRecord_getBufferSizeInFrames(): Int {

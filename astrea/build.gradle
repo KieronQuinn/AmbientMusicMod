@@ -30,6 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = 17
     }
+    namespace 'com.kieronquinn.app.astrea'
 }
 
 protobuf {

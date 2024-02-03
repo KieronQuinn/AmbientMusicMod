@@ -142,7 +142,9 @@ reasons), so the overlay cannot be hidden during this time.
 
 ## Can I show Now Playing on the Always On (Ambient) Display?
 
-No, it is not possible to display overlays on Ambient Displays.
+Not directly, as it is not possible to display overlays on Ambient Displays, but if your device has
+an Always on Display supported by [Smartspacer](https://github.com/KieronQuinn/Smartspacer), you can
+use that to display Now Playing on the AoD.
 
 ## Does Ambient Music Mod work with third party Now Playing History apps?
 

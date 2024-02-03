@@ -20,7 +20,7 @@ fun Context.wallpaperSupportsDarkText() = callbackFlow {
         }
     }
     trySend(wallpaperManager.supportsDarkText())
-    registerReceiver(receiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
+    registerReceiverCompat(receiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     awaitClose {
         unregisterReceiver(receiver)
     }

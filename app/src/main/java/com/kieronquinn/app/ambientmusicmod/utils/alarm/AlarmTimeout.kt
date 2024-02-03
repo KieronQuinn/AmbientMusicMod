@@ -26,8 +26,7 @@ import android.os.SystemClock
  */
 class AlarmTimeout(private val mAlarmManager: AlarmManager, private val mListener: OnAlarmListener,
                    private val mTag: String, private val mHandler: Handler) : OnAlarmListener {
-    var isScheduled = false
-        private set
+    private var isScheduled = false
 
     /**
      * Schedules an alarm in `timeout` milliseconds in the future.
@@ -48,10 +47,18 @@ class AlarmTimeout(private val mAlarmManager: AlarmManager, private val mListene
             }
             else -> throw IllegalArgumentException("Illegal mode: $mode")
         }
-        mAlarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + timeout, mTag, this, mHandler)
-        isScheduled = true
-        return true
+        return try {
+            mAlarmManager.setExact(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + timeout, mTag, this, mHandler
+            )
+            isScheduled = true
+            true
+        }catch (e: SecurityException) {
+            //Not exempt from battery restrictions
+            isScheduled = false
+            false
+        }
     }
 
     fun cancel() {

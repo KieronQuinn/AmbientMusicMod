@@ -20,7 +20,6 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -34,8 +33,6 @@ import com.kieronquinn.app.ambientmusicmod.components.navigation.setupWithNaviga
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
 import com.kieronquinn.app.ambientmusicmod.utils.monetcompat.MonetElevationOverlayProvider
 import com.kieronquinn.monetcompat.extensions.toArgb
-import com.kieronquinn.monetcompat.extensions.views.applyMonet
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, ViewGroup?, Boolean) -> V): BoundFragment<V>(inflate) {
@@ -88,7 +85,7 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
     }
 
     private fun BottomNavigationView.setupBottomNavigation() {
-        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             context.getLegacyWorkaroundNavBarHeight()
         } else 0
         onApplyInsets { view, insets ->

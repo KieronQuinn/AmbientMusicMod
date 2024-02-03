@@ -7,7 +7,6 @@ import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentSetupPermissionsBinding
 import com.kieronquinn.app.ambientmusicmod.ui.base.BackAvailable
@@ -20,7 +19,6 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SetupPermissionsFragment: BoundFragment<FragmentSetupPermissionsBinding>(FragmentSetupPermissionsBinding::inflate), BackAvailable {
@@ -51,7 +49,7 @@ class SetupPermissionsFragment: BoundFragment<FragmentSetupPermissionsBinding>(F
 
     private fun setupInsets() {
         val standardPadding = resources.getDimension(R.dimen.margin_16).toInt()
-        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             requireContext().getLegacyWorkaroundNavBarHeight()
         } else 0
         binding.setupPermissionsControls.onApplyInsets { view, insets ->

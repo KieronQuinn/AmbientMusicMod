@@ -18,8 +18,6 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.randomSecureString
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -46,8 +44,7 @@ abstract class SettingsAdvancedExternalAccessViewModel: ViewModel() {
     }
 
     sealed class State {
-        object Loading: State()
-        object FailedToLoadSettings: State()
+        data object Loading: State()
         data class Loaded(
             val enabled: Boolean,
             val toggleEnabled: Boolean,
@@ -70,7 +67,7 @@ class SettingsAdvancedExternalAccessViewModelImpl(
     private val requireTokenEnabled = settings.externalAccessRequireToken
     private val accessToken = settings.externalAccessToken
 
-    private val encryptedSettings = combine(
+    override val state = combine(
         enabled.asFlow(),
         toggleEnabled.asFlow(),
         recognitionEnabled.asFlow(),
@@ -84,15 +81,6 @@ class SettingsAdvancedExternalAccessViewModelImpl(
             requireToken,
             token
         )
-    }
-
-    override val state = flowOf(settings.encryptionAvailable).flatMapLatest {
-        if(it) {
-            encryptedSettings
-        } else {
-            //Failed to load encrypted settings so don't hit the combine and instead show error
-            flowOf(State.FailedToLoadSettings)
-        }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, State.Loading)
 
     override fun onEnabledChanged(enabled: Boolean) {

@@ -7,15 +7,16 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.protobuf'
     id 'dev.rikka.tools.refine'
+    id 'com.google.devtools.ksp'
 }
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "248:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20230507-030029/manifest.json"
-String DEFAULT_MANIFEST_V3 = "3050:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20230507-030029/manifest.json"
+String DEFAULT_MANIFEST = "266:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240128-030108/manifest.json"
+String DEFAULT_MANIFEST_V3 = "3073:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240128-030108/manifest.json"
 
-def tagName = '2.3.1'
-def version = 231
+def tagName = '2.3.2'
+def version = 232
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -41,7 +42,7 @@ android {
     defaultConfig {
         applicationId "com.kieronquinn.app.ambientmusicmod"
         minSdk 28
-        targetSdk 33
+        targetSdk 34
         versionCode version
         versionName tagName
 
@@ -86,7 +87,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+        aidl true
     }
+    namespace 'com.kieronquinn.app.ambientmusicmod'
 }
 
 protobuf {
@@ -111,31 +114,31 @@ protobuf {
 
 dependencies {
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.work:work-runtime-ktx:2.8.1"
+    implementation "androidx.work:work-runtime-ktx:2.9.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-service:2.6.1"
-    implementation "androidx.security:security-crypto:1.0.0"
+    implementation "androidx.lifecycle:lifecycle-service:2.7.0"
+    implementation "androidx.security:security-crypto:1.1.0-alpha06"
 
     //Material UI
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.11.0'
 
     //MonetCompat for colours on < S
     implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'
 
     //Dependency Injection
-    implementation "io.insert-koin:koin-android:3.4.0"
+    implementation "io.insert-koin:koin-android:3.5.0"
 
     //Protobuf is used in reading data from ASI
-    implementation "com.google.protobuf:protobuf-javalite:3.21.9"
+    implementation "com.google.protobuf:protobuf-javalite:3.25.2"
 
     //Lottie for animations
-    implementation 'com.airbnb.android:lottie:5.2.0'
+    implementation 'com.airbnb.android:lottie:6.3.0'
 
     //Used for chip layouts
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
@@ -144,7 +147,7 @@ dependencies {
     implementation 'com.github.alxrm:audiowave-progressbar:0.9.2'
 
     implementation 'com.google.guava:guava:31.1-android'
-    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     //Update & APK downloading
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -174,10 +177,10 @@ dependencies {
     implementation "dev.rikka.tools.refine:runtime:$refine_version"
 
     //Dagger + Hilt for injection in Astrea
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    implementation 'com.google.dagger:dagger:2.41'
-    kapt 'com.google.dagger:dagger-compiler:2.41'
-    kapt "com.google.dagger:hilt-compiler:2.41"
+    implementation "com.google.dagger:hilt-android:2.50"
+    implementation 'com.google.dagger:dagger:2.50'
+    kapt 'com.google.dagger:dagger-compiler:2.50'
+    kapt "com.google.dagger:hilt-compiler:2.50"
 
     //OSS libraries activity
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
@@ -192,9 +195,9 @@ dependencies {
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
 
     //Room for local song list cache
-    def room_version = "2.5.1"
+    def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

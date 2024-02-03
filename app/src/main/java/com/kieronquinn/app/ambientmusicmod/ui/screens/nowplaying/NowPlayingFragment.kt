@@ -25,7 +25,13 @@ import com.kieronquinn.app.ambientmusicmod.ui.base.ProvidesOverflow
 import com.kieronquinn.app.ambientmusicmod.ui.base.Root
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.NowPlayingSettingsItem
 import com.kieronquinn.app.ambientmusicmod.ui.screens.nowplaying.NowPlayingViewModel.State
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.applyBottomNavigationInset
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.collapse
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.shouldShrinkFab
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -76,7 +82,7 @@ class NowPlayingFragment: BoundFragment<FragmentNowPlayingBinding>(FragmentNowPl
 
     private fun setupFab() = with(binding.fabNowplayingRecognise){
         backgroundTintList = ColorStateList.valueOf(monet.getPrimaryColor(context))
-        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             context.getLegacyWorkaroundNavBarHeight()
         } else 0
         onApplyInsets { _, insets ->

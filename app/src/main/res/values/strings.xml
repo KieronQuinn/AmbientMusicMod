@@ -376,7 +376,6 @@
     <string name="settings_external_access_token_title">Access Token</string>
     <string name="settings_external_access_token_content">Your access token is: %1s\n\nTap to copy, long press to reset.\n\nCheck the Wiki page for more info on how to use this token.</string>
     <string name="settings_external_access_token_copied">Copied!</string>
-    <string name="settings_external_access_encryption_failed">Failed to load settings, you may need to reinstall Ambient Music Mod</string>
 
     <string name="title_settings_bedtime">Bedtime</string>
     <string name="settings_bedtime_switch">Disable at Bedtime</string>
