@@ -2,7 +2,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.settings.advanced.externa
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.model.settings.BaseSettingsItem
@@ -46,14 +45,6 @@ class SettingsAdvancedExternalAccessFragment: BaseSettingsFragment(), BackAvaila
                 binding.settingsBaseLoading.isVisible = false
                 binding.settingsBaseRecyclerView.isVisible = true
                 adapter.update(state.loadItems(), binding.settingsBaseRecyclerView)
-            }
-            is State.FailedToLoadSettings -> {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.settings_external_access_encryption_failed,
-                    Toast.LENGTH_LONG
-                ).show()
-                viewModel.navigateBack()
             }
         }
     }

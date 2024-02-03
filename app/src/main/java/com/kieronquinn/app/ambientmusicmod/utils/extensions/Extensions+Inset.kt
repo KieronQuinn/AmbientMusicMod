@@ -4,7 +4,11 @@ import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
+import androidx.core.view.updatePadding
 import com.kieronquinn.app.ambientmusicmod.R
 
 fun View.onApplyInsets(block: (view: View, insets: WindowInsetsCompat) -> Unit) {
@@ -12,12 +16,13 @@ fun View.onApplyInsets(block: (view: View, insets: WindowInsetsCompat) -> Unit) 
         block(view, insets)
         insets
     }
+    ViewCompat.getRootWindowInsets(this)?.let { block(this, it) }
 }
 
 fun View.applyBottomNavigationInset(extraPadding: Float = 0f) {
     val bottomNavHeight = resources.getDimension(R.dimen.bottom_nav_height).toInt()
     updatePadding(bottom = bottomNavHeight + extraPadding.toInt())
-    val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+    val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
         context.getLegacyWorkaroundNavBarHeight()
     } else 0
     onApplyInsets { _, insets ->
@@ -29,7 +34,7 @@ fun View.applyBottomNavigationInset(extraPadding: Float = 0f) {
 
 fun View.applyBottomNavigationMargin(extraPadding: Float = 0f) {
     val bottomNavHeight = resources.getDimension(R.dimen.bottom_nav_height_margins).toInt()
-    val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+    val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
         context.getLegacyWorkaroundNavBarHeight()
     } else 0
     onApplyInsets { _, insets ->
@@ -43,7 +48,7 @@ fun View.applyBottomNavigationMargin(extraPadding: Float = 0f) {
 
 fun View.applyBottomNavigationMarginShort(extraPadding: Float = 0f) {
     val bottomNavHeight = resources.getDimension(R.dimen.bottom_nav_height).toInt()
-    val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+    val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
         context.getLegacyWorkaroundNavBarHeight()
     } else 0
     onApplyInsets { _, insets ->

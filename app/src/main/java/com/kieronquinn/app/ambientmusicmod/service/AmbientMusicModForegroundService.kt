@@ -24,23 +24,52 @@ import com.kieronquinn.app.ambientmusicmod.model.lockscreenoverlay.OverlayState
 import com.kieronquinn.app.ambientmusicmod.model.lockscreenoverlay.stateEquals
 import com.kieronquinn.app.ambientmusicmod.model.recognition.Player
 import com.kieronquinn.app.ambientmusicmod.model.settings.BannerMessage
-import com.kieronquinn.app.ambientmusicmod.repositories.*
+import com.kieronquinn.app.ambientmusicmod.repositories.AccessibilityRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.BedtimeRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.DeviceConfigRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState
 import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState.ErrorReason
+import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
+import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.LockscreenOnTrackClicked
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.RecognitionPeriod
+import com.kieronquinn.app.ambientmusicmod.repositories.ShizukuServiceRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.WidgetRepository
 import com.kieronquinn.app.ambientmusicmod.ui.activities.MainActivity
 import com.kieronquinn.app.ambientmusicmod.utils.alarm.AlarmTimeout
 import com.kieronquinn.app.ambientmusicmod.utils.alarm.AlarmTimeout.Companion.MODE_RESCHEDULE_IF_SCHEDULED
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.applySecurity
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.autoClearAfterBy
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.batterySaverEnabled
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.broadcastReceiverAsFlow
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.dismissKeyguard
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.ellipsizeToSize
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.firstNotNull
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.startForeground
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.verifySecurity
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenCreated
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionFailure
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionFailureReason
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionMetadata
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionSource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import org.koin.android.ext.android.inject
 import java.time.Duration
 import java.time.LocalDateTime
@@ -94,6 +123,9 @@ class AmbientMusicModForegroundService: LifecycleService() {
             RECOGNITION, TRIGGER_IMMEDIATE
         }
     }
+
+    private val loggingEnabled = deviceConfig.enableLogging.asFlow()
+        .stateIn(lifecycleScope, SharingStarted.Eagerly, deviceConfig.enableLogging.getSync())
 
     private val delayTime = combine(
         settings.recognitionPeriod.asFlow(),
@@ -266,9 +298,6 @@ class AmbientMusicModForegroundService: LifecycleService() {
     private val bufferTime = settings.recognitionBuffer.asFlow()
         .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
 
-    private val loggingEnabled = deviceConfig.enableLogging.asFlow()
-        .stateIn(lifecycleScope, SharingStarted.Eagerly, deviceConfig.enableLogging.getSync())
-
     private val minuteTicker by lazy {
         AlarmTimeout(alarmManager, alarmListener, ALARM_ID, handler)
     }
@@ -311,7 +340,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         MESSAGE_HANDLER = messageHandler
-        startForeground(NotificationId.FOREGROUND_SERVICE.ordinal, showNotification())
+        startForeground(NotificationId.FOREGROUND_SERVICE, showNotification())
         setupRecogniser()
         setupOverlay()
         setupScreenOn()
@@ -389,7 +418,9 @@ class AmbientMusicModForegroundService: LifecycleService() {
 
     private fun setupScreenOn() = whenCreated {
         screenOnTrigger.collect {
-            recognitionState.emit(null)
+            recognition.requestRecognition().collect {
+                recognitionState.emit(it)
+            }
         }
     }
 

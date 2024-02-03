@@ -39,6 +39,8 @@ class PeriodicBackupWorker(
     companion object {
         private val TAG = PeriodicBackupWorker::class.java.simpleName
         private val URI_DEEP_LINK = Uri.parse("amm://backuprestore")
+        private const val PERIODIC_BACKUP_NAME = "amm_backup_periodic.ammbkp"
+        private const val PERIODIC_BACKUP_NAME_TMP = "amm_backup_periodic.ammbkp.tmp"
 
         fun enqueueOrCancelWorker(
             workManager: WorkManager,
@@ -137,7 +139,9 @@ class PeriodicBackupWorker(
                 is BackupRestoreRepository.BackupState.BackupComplete -> {
                     if (it.result == BackupRestoreRepository.BackupResult.SUCCESS) {
                         notificationManager.cancel(NotificationId.BACKUP.ordinal)
+                        deleteTempFileIfExists()
                     } else {
+                        restoreTempFileIfExists()
                         showErrorNotification(it.result)
                     }
                     settingsRepository.periodicBackupLastBackup.set(
@@ -162,24 +166,34 @@ class PeriodicBackupWorker(
         }
     }
 
-    private suspend fun getBackupUri(): Uri? {
+    private suspend fun getBackupFolder(): DocumentFile? {
         val uri = settingsRepository.periodicBackupUri.get().takeIf { it.isNotBlank() }
             ?: return null
         return try {
             val folder = DocumentFile.fromTreeUri(context, Uri.parse(uri)) ?: return null
-            folder.createDeletingIfExists(
-                "application/ammbkp", "amm_backup_periodic.ammbkp"
-            )?.uri
+            folder.createRenamingIfExists("application/ammbkp", PERIODIC_BACKUP_NAME)
         }catch (e: Exception){
             null
         }
     }
 
-    private fun DocumentFile.createDeletingIfExists(
+    private suspend fun getBackupUri(): Uri? {
+        return getBackupFolder()?.uri
+    }
+
+    private fun DocumentFile.createRenamingIfExists(
         mimeType: String, fileName: String
     ): DocumentFile? {
-        if(findFile(fileName)?.delete() == false) return null
+        findFile(fileName)?.renameTo(PERIODIC_BACKUP_NAME_TMP)
         return createFile(mimeType, fileName)
+    }
+
+    private suspend fun deleteTempFileIfExists() {
+        getBackupFolder()?.findFile(PERIODIC_BACKUP_NAME)?.delete()
+    }
+
+    private suspend fun restoreTempFileIfExists() {
+        getBackupFolder()?.findFile(PERIODIC_BACKUP_NAME_TMP)?.renameTo(PERIODIC_BACKUP_NAME)
     }
 
     private fun Context.showErrorNotification(

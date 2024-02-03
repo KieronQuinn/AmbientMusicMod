@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.kieronquinn.app.ambientmusicmod">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <permission
         android:name="com.kieronquinn.app.ambientmusicmod.ACCESS_SERVICE"
@@ -12,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
@@ -79,7 +79,8 @@
 
         <receiver
             android:name=".receivers.ExternalAccessReceiver"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="${applicationId}.action.ENABLE" />
                 <action android:name="${applicationId}.action.DISABLE" />
@@ -89,7 +90,8 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.AmbientMusicModForegroundService" />
+        <service android:name=".service.AmbientMusicModForegroundService"
+            android:foregroundServiceType="specialUse" />
 
         <service
             android:name=".service.QuickSettingTileService"
@@ -159,6 +161,9 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidgetprovider_dynamic" />
+            <meta-data
+                android:name="com.samsung.android.appwidget.provider"
+                android:resource="@xml/samsung_widget" />
         </receiver>
 
         <!-- 4x1 widget (< Android 12) -->

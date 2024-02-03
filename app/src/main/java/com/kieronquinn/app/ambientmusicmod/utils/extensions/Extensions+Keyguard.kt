@@ -13,7 +13,7 @@ fun Context.onKeyguardStateChanged() = callbackFlow {
             trySend(Unit)
         }
     }
-    registerReceiver(
+    registerReceiverCompat(
         receiver,
         IntentFilter().apply {
             addAction(Intent.ACTION_SCREEN_OFF)

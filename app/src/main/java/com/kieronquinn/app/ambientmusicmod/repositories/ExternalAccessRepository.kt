@@ -1,11 +1,12 @@
 package com.kieronquinn.app.ambientmusicmod.repositories
 
 import android.content.Intent
+import com.kieronquinn.app.ambientmusicmod.repositories.RecognitionRepository.RecognitionState
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.SettingsState
+import com.kieronquinn.app.ambientmusicmod.service.AmbientMusicModForegroundService
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.firstNotNull
 import com.kieronquinn.app.pixelambientmusic.model.SettingsStateChange
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 
@@ -64,7 +65,11 @@ class ExternalAccessRepositoryImpl(
                 recognitionRepository.requestOnDemandRecognition()
             }else{
                 recognitionRepository.requestRecognition()
-            }.launchIn(scope)
+            }.collect {
+                if(it is RecognitionState.Recognised){
+                    AmbientMusicModForegroundService.sendManualRecognition(it)
+                }
+            }
         }
     }
 
@@ -85,21 +90,18 @@ class ExternalAccessRepositoryImpl(
     }
 
     private suspend fun verifyTokenIfRequired(intent: Intent): Boolean {
-        if(!encryptedSettings.encryptionAvailable) return false
         if(!encryptedSettings.externalAccessRequireToken.get()) return true
         val token = intent.getStringExtra(EXTRA_TOKEN) ?: return false
         return encryptedSettings.externalAccessToken.get() == token
     }
 
     private suspend fun toggleEnabled(): Boolean {
-        return encryptedSettings.encryptionAvailable
-                && encryptedSettings.externalAccessEnabled.get()
+        return encryptedSettings.externalAccessEnabled.get()
                 && encryptedSettings.externalAccessToggleEnabled.get()
     }
 
     private suspend fun recognitionEnabled(): Boolean {
-        return encryptedSettings.encryptionAvailable
-                && encryptedSettings.externalAccessEnabled.get()
+        return encryptedSettings.externalAccessEnabled.get()
                 && encryptedSettings.externalAccessRecognitionEnabled.get()
     }
 

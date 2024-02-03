@@ -20,13 +20,33 @@ import com.kieronquinn.app.ambientmusicmod.PACKAGE_NAME_PAM
 import com.kieronquinn.app.ambientmusicmod.model.settings.BannerMessage
 import com.kieronquinn.app.ambientmusicmod.model.settings.toLocalBannerMessage
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository.*
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.contentResolverAsTFlow
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getNetworkCapabilities
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getSplits
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isArmv7
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isOnDemandConfigValueSet
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isPermissionGranted
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isX86_64
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.map
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onPackageChanged
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.registerReceiverCompat
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.safeQuery
 import com.kieronquinn.app.pixelambientmusic.model.LastRecognisedSong
 import com.kieronquinn.app.pixelambientmusic.model.SettingsStateChange
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import com.kieronquinn.app.pixelambientmusic.model.SettingsState as RemoteSettingsState
 
@@ -162,7 +182,7 @@ class RemoteSettingsRepositoryImpl(
             }
         }
         trySend(isEnabled())
-        context.registerReceiver(
+        context.registerReceiverCompat(
             receiver, IntentFilter(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED)
         )
         awaitClose {

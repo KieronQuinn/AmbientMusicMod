@@ -7,7 +7,6 @@ import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.databinding.FragmentSetupDataUsageBinding
@@ -24,7 +23,6 @@ import com.kieronquinn.app.ambientmusicmod.utils.extensions.onClicked
 import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
 import com.kieronquinn.monetcompat.extensions.views.overrideRippleColor
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SetupDataUsageFragment: BoundFragment<FragmentSetupDataUsageBinding>(FragmentSetupDataUsageBinding::inflate), BackAvailable, ProvidesBack {
@@ -114,7 +112,7 @@ class SetupDataUsageFragment: BoundFragment<FragmentSetupDataUsageBinding>(Fragm
 
     private fun setupInsets() {
         val standardPadding = resources.getDimension(R.dimen.margin_16).toInt()
-        val legacyWorkaround = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        val legacyWorkaround = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             requireContext().getLegacyWorkaroundNavBarHeight()
         } else 0
         binding.setupDataUsageControls.onApplyInsets { view, insets ->

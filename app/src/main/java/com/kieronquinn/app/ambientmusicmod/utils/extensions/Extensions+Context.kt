@@ -6,6 +6,7 @@ import android.app.Application
 import android.app.IApplicationThread
 import android.app.IServiceConnection
 import android.content.*
+import android.content.Context.RECEIVER_EXPORTED
 import android.content.pm.LauncherApps
 import android.content.res.Configuration
 import android.database.ContentObserver
@@ -16,13 +17,11 @@ import android.net.Uri
 import android.os.*
 import android.provider.Settings
 import android.text.format.DateFormat
-import android.util.Log
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepository
-import com.kieronquinn.app.ambientmusicmod.repositories.RemoteSettingsRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -88,10 +87,19 @@ fun Context.broadcastReceiverAsFlow(vararg actions: String) = callbackFlow {
         }
     }
     actions.forEach {
-        registerReceiver(receiver, IntentFilter(it))
+        registerReceiverCompat(receiver, IntentFilter(it))
     }
     awaitClose {
         unregisterReceiver(receiver)
+    }
+}
+
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
+fun Context.registerReceiverCompat(receiver: BroadcastReceiver, intentFilter: IntentFilter) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        registerReceiver(receiver, intentFilter, RECEIVER_EXPORTED)
+    }else{
+        registerReceiver(receiver, intentFilter)
     }
 }
 
