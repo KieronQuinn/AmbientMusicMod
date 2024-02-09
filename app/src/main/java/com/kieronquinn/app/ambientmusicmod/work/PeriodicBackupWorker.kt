@@ -18,6 +18,7 @@ import com.kieronquinn.app.ambientmusicmod.components.notifications.Notification
 import com.kieronquinn.app.ambientmusicmod.components.notifications.NotificationId
 import com.kieronquinn.app.ambientmusicmod.components.notifications.createNotification
 import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository
+import com.kieronquinn.app.ambientmusicmod.repositories.BackupRestoreRepository.BackupState
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.LastBackup
 import com.kieronquinn.app.ambientmusicmod.repositories.SettingsRepository.PeriodicBackupInterval
@@ -136,7 +137,7 @@ class PeriodicBackupWorker(
         if(!settingsRepository.periodicBackupEnabled.get()) return@launch
         createBackup().collect {
             when(it){
-                is BackupRestoreRepository.BackupState.BackupComplete -> {
+                is BackupState.BackupComplete -> {
                     if (it.result == BackupRestoreRepository.BackupResult.SUCCESS) {
                         notificationManager.cancel(NotificationId.BACKUP.ordinal)
                         deleteTempFileIfExists()
@@ -156,13 +157,18 @@ class PeriodicBackupWorker(
     }
 
     private fun createBackup() = flow {
-        val uri = getBackupUri()
+        val backupFolder = getBackupFolder() ?: run {
+            emit(BackupState.BackupComplete(BackupRestoreRepository.BackupResult.FAILED_TO_WRITE))
+            return@flow
+        }
+        backupFolder.renameExistingBackupIfExists()
+        val uri = backupFolder.createFile("application/ammbkp", PERIODIC_BACKUP_NAME)?.uri
         if(uri != null) {
             backupRepository.createBackup(uri).collect {
                 emit(it)
             }
         }else{
-            emit(BackupRestoreRepository.BackupState.BackupComplete(BackupRestoreRepository.BackupResult.FAILED_TO_WRITE))
+            emit(BackupState.BackupComplete(BackupRestoreRepository.BackupResult.FAILED_TO_WRITE))
         }
     }
 
@@ -170,29 +176,22 @@ class PeriodicBackupWorker(
         val uri = settingsRepository.periodicBackupUri.get().takeIf { it.isNotBlank() }
             ?: return null
         return try {
-            val folder = DocumentFile.fromTreeUri(context, Uri.parse(uri)) ?: return null
-            folder.createRenamingIfExists("application/ammbkp", PERIODIC_BACKUP_NAME)
+            DocumentFile.fromTreeUri(context, Uri.parse(uri))
         }catch (e: Exception){
             null
         }
     }
 
-    private suspend fun getBackupUri(): Uri? {
-        return getBackupFolder()?.uri
-    }
-
-    private fun DocumentFile.createRenamingIfExists(
-        mimeType: String, fileName: String
-    ): DocumentFile? {
-        findFile(fileName)?.renameTo(PERIODIC_BACKUP_NAME_TMP)
-        return createFile(mimeType, fileName)
+    private fun DocumentFile.renameExistingBackupIfExists() {
+        findFile(PERIODIC_BACKUP_NAME)?.renameTo(PERIODIC_BACKUP_NAME_TMP)
     }
 
     private suspend fun deleteTempFileIfExists() {
-        getBackupFolder()?.findFile(PERIODIC_BACKUP_NAME)?.delete()
+        getBackupFolder()?.findFile(PERIODIC_BACKUP_NAME_TMP)?.delete()
     }
 
     private suspend fun restoreTempFileIfExists() {
+        getBackupFolder()?.findFile(PERIODIC_BACKUP_NAME)?.delete()
         getBackupFolder()?.findFile(PERIODIC_BACKUP_NAME_TMP)?.renameTo(PERIODIC_BACKUP_NAME)
     }
 

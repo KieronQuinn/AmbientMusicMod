@@ -465,4 +465,12 @@ class ShizukuService: IShellProxy.Stub() {
         }
     }
 
+    private fun grantRestrictedSettings() {
+        runCommand("cmd appops set ${BuildConfig.APPLICATION_ID} ACCESS_RESTRICTED_SETTINGS allow")
+    }
+
+    init {
+        grantRestrictedSettings()
+    }
+
 }
