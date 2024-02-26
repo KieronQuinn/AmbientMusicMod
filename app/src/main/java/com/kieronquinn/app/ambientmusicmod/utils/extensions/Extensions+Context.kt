@@ -131,12 +131,21 @@ fun Context.getServiceDispatcher(
 ): IServiceConnection {
     val mainThreadHandler = Context::class.java.getMethod("getMainThreadHandler")
         .invoke(this) as Handler
-    return Context::class.java.getMethod(
-        "getServiceDispatcher",
-        ServiceConnection::class.java,
-        Handler::class.java,
-        Integer.TYPE
-    ).invoke(context, serviceConnection, mainThreadHandler, flags) as IServiceConnection
+    return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        Context::class.java.getMethod(
+            "getServiceDispatcher",
+            ServiceConnection::class.java,
+            Handler::class.java,
+            Long::class.java
+        ).invoke(context, serviceConnection, mainThreadHandler, flags.toLong())
+    }else{
+        Context::class.java.getMethod(
+            "getServiceDispatcher",
+            ServiceConnection::class.java,
+            Handler::class.java,
+            Integer.TYPE
+        ).invoke(context, serviceConnection, mainThreadHandler, flags)
+    } as IServiceConnection
 }
 
 fun Context.getApplicationThread(): IApplicationThread {
