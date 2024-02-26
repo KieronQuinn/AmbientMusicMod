@@ -12,11 +12,11 @@ plugins {
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "266:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240128-030108/manifest.json"
-String DEFAULT_MANIFEST_V3 = "3074:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240204-030052/manifest.json"
+String DEFAULT_MANIFEST = "268:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240218-030037/manifest.json"
+String DEFAULT_MANIFEST_V3 = "3076:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240218-030037/manifest.json"
 
-def tagName = '2.3.3'
-def version = 233
+def tagName = '2.3.4'
+def version = 234
 
 def getKeystoreProperties() {
     def properties = new Properties()
