@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.TransactionTooLargeException
 import android.util.SizeF
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +29,11 @@ import com.kieronquinn.app.pixelambientmusic.model.RecognitionMetadata
 import com.kieronquinn.app.pixelambientmusic.model.RecognitionSource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 interface WidgetRepository {
@@ -159,7 +162,6 @@ class WidgetRepositoryImpl(
         }.flatMap {
             it.second.map { id ->
                 val options = appWidgetManager.getAppWidgetOptions(id)
-                val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
                 AppWidget(id, it.first)
             }
         }
@@ -202,7 +204,7 @@ class WidgetRepositoryImpl(
     ) = forEach {
         try {
             appWidgetManager.updateAppWidget(it.id, it.getRemoteViews(state, onDemandEnabled))
-        }catch (e: TransactionTooLargeException) {
+        }catch (e: Throwable) {
             //Suppress, shouldn't happen unless system has lagged
         }
     }
