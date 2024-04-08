@@ -104,7 +104,7 @@ class AmbientMusicModForegroundService: LifecycleService() {
             if (restart) {
                 context.stopService(intent)
             }
-            context.startForegroundService(intent)
+            context.startService(intent)
         }
 
         fun sendManualRecognition(state: RecognitionState.Recognised){

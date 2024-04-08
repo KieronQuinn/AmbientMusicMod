@@ -12,11 +12,11 @@ plugins {
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "268:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240218-030037/manifest.json"
-String DEFAULT_MANIFEST_V3 = "3076:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240218-030037/manifest.json"
+String DEFAULT_MANIFEST = "271:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240331-030011/manifest.json"
+String DEFAULT_MANIFEST_V3 = "3079:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240324-040013/manifest.json"
 
-def tagName = '2.3.4'
-def version = 234
+def tagName = '2.3.5'
+def version = 235
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -126,13 +126,13 @@ dependencies {
     implementation "androidx.security:security-crypto:1.1.0-alpha06"
 
     //Material UI
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.google.android.material:material:1.12.0-rc01'
 
     //MonetCompat for colours on < S
     implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'
 
     //Dependency Injection
-    implementation "io.insert-koin:koin-android:3.5.0"
+    implementation "io.insert-koin:koin-android:3.5.3"
 
     //Protobuf is used in reading data from ASI
     implementation "com.google.protobuf:protobuf-javalite:3.25.2"
