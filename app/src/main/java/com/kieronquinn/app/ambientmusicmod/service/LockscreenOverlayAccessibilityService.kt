@@ -87,6 +87,9 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
     private val overlayCustomTextColour = settings.lockscreenOverlayCustomColour.asFlow()
         .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
 
+    private val overlayShadow = settings.lockscreenOverlayShadowEnabled.asFlow()
+        .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
+
     private val mainSwitch = combine(
         remoteSettings.getRemoteSettings(lifecycleScope).filterNotNull(),
         accessibility.enabled
@@ -293,6 +296,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
 
     private suspend fun setupAndAttachView(state: OverlayState, darkText: Boolean, yPos: Int) = viewLock.withLock {
         val colour = getOverlayTextColour(darkText)
+        val shadow = overlayShadow.firstNotNull()
         val style = when (state) {
             is OverlayState.Hidden -> {
                 detachViewLocked()
@@ -339,6 +343,7 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         current.title.isVisible = text != null
         current.title.text = text
         current.title.setTextColor(colour)
+        current.title.setShadowEnabled(shadow)
         layoutParams.y = yPos
         try {
             windowManager.addView(current.binding.root, layoutParams)
@@ -362,6 +367,15 @@ class LockscreenOverlayAccessibilityService : LifecycleAccessibilityService() {
         }else{
             current.binding.root.setOnClickListener(null)
         }
+    }
+
+    private fun TextView.setShadowEnabled(enabled: Boolean) {
+        setShadowLayer(
+            shadowRadius,
+            shadowDx,
+            shadowDy,
+            if(enabled) Color.BLACK else Color.TRANSPARENT
+        )
     }
 
     private suspend fun detachView() = viewLock.withLock {

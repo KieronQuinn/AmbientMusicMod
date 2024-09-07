@@ -56,7 +56,7 @@ private fun IActivityManager.bindServiceInstanceCompat(
     callingPackage: String?,
     userId: Int
 ): Int {
-    return if (BuildCompat.isAtLeastT()) {
+    return try {
         bindServiceInstance(
             caller,
             token,
@@ -68,7 +68,7 @@ private fun IActivityManager.bindServiceInstanceCompat(
             callingPackage,
             userId
         )
-    } else {
+    } catch (e: NoSuchMethodError) {
         bindIsolatedService(
             caller,
             token,

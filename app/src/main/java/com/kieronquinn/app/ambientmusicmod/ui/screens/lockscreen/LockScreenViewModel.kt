@@ -35,6 +35,7 @@ abstract class LockScreenViewModel: ViewModel() {
     abstract fun onStyleChanged(style: LockscreenOverlayStyle)
     abstract fun onOnDemandChanged(enabled: Boolean)
     abstract fun onTextColourClicked()
+    abstract fun onShadowChanged(enabled: Boolean)
 
     abstract fun onPositionClicked()
     abstract fun onClickActionClicked()
@@ -50,6 +51,7 @@ abstract class LockScreenViewModel: ViewModel() {
             val onDemandAvailable: Boolean,
             val onDemandEnabled: Boolean,
             val overlayTextColour: String,
+            val overlayShadowEnabled: Boolean,
             val verboseEnabled: Boolean,
             val systemUiPackageName: String
         ): State() {
@@ -97,6 +99,7 @@ class LockScreenViewModelImpl(
     private val style = settingsRepository.lockscreenOverlayStyle
     private val overlayTextColour = settingsRepository.lockscreenOverlayColour
     private val overlayCustomTextColour = settingsRepository.lockscreenOverlayCustomColour
+    private val overlayShadowEnabled = settingsRepository.lockscreenOverlayShadowEnabled
     private val clicked = settingsRepository.lockscreenOverlayClicked
     private val onDemandLockscreenEnabled = settingsRepository.onDemandLockscreenEnabled
 
@@ -124,8 +127,11 @@ class LockScreenViewModelImpl(
     }
 
     private val combinedStyle = combine(
-        style.asFlow(), overlayTextColour.asFlow(), overlayCustomTextColour.asFlow()
-    ) { s, textColour, customTextColour ->
+        style.asFlow(),
+        overlayTextColour.asFlow(),
+        overlayCustomTextColour.asFlow(),
+        overlayShadowEnabled.asFlow()
+    ) { s, textColour, customTextColour, shadow ->
         val colour = when(textColour){
             OverlayTextColour.AUTOMATIC -> context.getString(R.string.lockscreen_overlay_text_colour_automatic_title)
             OverlayTextColour.BLACK -> context.getString(R.string.lockscreen_overlay_text_colour_black_title)
@@ -135,7 +141,7 @@ class LockScreenViewModelImpl(
                 else customTextColour.toHexColor(true)
             }
         }
-        Pair(s, colour)
+        Triple(s, colour, shadow)
     }
 
     override val state = combine(
@@ -153,6 +159,7 @@ class LockScreenViewModelImpl(
             demand.first,
             demand.second,
             style.second,
+            style.third,
             deviceConfigRepository.enableLogging.get(),
             packageName
                 ?: context.getString(R.string.lockscreen_systemui_package_name_title)
@@ -207,6 +214,12 @@ class LockScreenViewModelImpl(
     override fun onTextColourClicked() {
         viewModelScope.launch {
             navigation.navigate(LockScreenFragmentDirections.actionLockScreenFragmentToLockScreenTextColourFragment())
+        }
+    }
+
+    override fun onShadowChanged(enabled: Boolean) {
+        viewModelScope.launch {
+            overlayShadowEnabled.set(enabled)
         }
     }
 

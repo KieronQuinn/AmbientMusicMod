@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    tools:layout_gravity="center">
+
+    <FrameLayout
+        android:layout_width="24dp"
+        android:layout_height="24dp">
+
+        <ProgressBar
+            android:id="@+id/widget_icon_recognised"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/audioanim_animation_progress"
+            android:indeterminateTint="?android:textColorPrimary" />
+
+        <ProgressBar
+            android:id="@+id/widget_icon_no_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/audioanim_no_music_progress"
+            android:indeterminateTint="?android:textColorPrimary"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/widget_button_on_demand"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@null"
+            android:src="@drawable/ic_source_picker_on_demand"
+            android:tint="?android:textColorPrimary"
+            android:visibility="gone"
+            tools:ignore="UseAppTint" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/widget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_8"
+        android:fontFamily="google-sans-text"
+        android:gravity="center_vertical"
+        android:shadowColor="?widgetShadowColour"
+        android:shadowDx="0.5"
+        android:shadowDy="0.5"
+        android:shadowRadius="0.5"
+        android:text="@string/item_nowplaying_header_preview"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.AmbientMusicMod"
+        android:textColor="?android:textColorPrimary"
+        tools:fontFamily="@font/google_sans_text" />
+
+</LinearLayout>

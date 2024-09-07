@@ -314,3 +314,5 @@ fun Context.isOnDemandConfigValueSet(): Boolean {
         "config_defaultMusicRecognitionService"
     ) == COMPONENT_GSA_ON_DEMAND
 }
+
+fun Context.dip(value: Int): Int = resources.dip(value)

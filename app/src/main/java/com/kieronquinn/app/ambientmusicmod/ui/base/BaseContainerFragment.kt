@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -30,7 +30,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.navigation.BaseNavigation
 import com.kieronquinn.app.ambientmusicmod.components.navigation.setupWithNavigation
-import com.kieronquinn.app.ambientmusicmod.utils.extensions.*
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.collapsedState
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getLegacyWorkaroundNavBarHeight
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getRememberedAppBarCollapsed
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.getTopFragment
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isDarkMode
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.isLandscape
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onApplyInsets
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onDestinationChanged
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.onNavigationIconClicked
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.rememberAppBarCollapsed
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.setOnBackPressedCallback
+import com.kieronquinn.app.ambientmusicmod.utils.extensions.whenResumed
 import com.kieronquinn.app.ambientmusicmod.utils.monetcompat.MonetElevationOverlayProvider
 import com.kieronquinn.monetcompat.extensions.toArgb
 import kotlinx.coroutines.launch
@@ -159,37 +170,40 @@ abstract class BaseContainerFragment<V: ViewBinding>(inflate: (LayoutInflater, V
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private fun setupBack() {
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            shouldBackDispatcherBeEnabled()
-        ) {
-            (navHostFragment.getTopFragment() as? ProvidesBack)?.let {
-                if(it.onBackPressed()) return@addCallback
-            }
-            (this@BaseContainerFragment as? ProvidesBack)?.let {
-                if(it.onBackPressed()) return@addCallback
-            }
-            if(!navController.popBackStack() && !viewModel.onParentBackPressed()) {
-                requireActivity().finish()
+        val callback = object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (navHostFragment.getTopFragment() as? ProvidesBack)?.let {
+                    if(it.onBackPressed()) return@handleOnBackPressed
+                }
+                (this@BaseContainerFragment as? ProvidesBack)?.let {
+                    if(it.onBackPressed()) return@handleOnBackPressed
+                }
+                if(!navController.popBackStack() && !viewModel.onParentBackPressed()) {
+                    requireActivity().finish()
+                }
             }
         }
+        navController.setOnBackPressedCallback(callback)
+        navController.enableOnBackPressed(shouldBackDispatcherBeEnabled())
+        navController.setOnBackPressedDispatcher(requireActivity().onBackPressedDispatcher)
         whenResumed {
             navController.onDestinationChanged().collect {
-                callback.isEnabled = shouldBackDispatcherBeEnabled()
+                navController.enableOnBackPressed(shouldBackDispatcherBeEnabled())
             }
         }
     }
 
     private fun shouldBackDispatcherBeEnabled(): Boolean {
         val top = navHostFragment.getTopFragment()
-        return top is ProvidesBack || top !is Root
+        return top is ProvidesBack
     }
 
     private fun setupAppBar() = with(appBar) {
-        addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             fragment.updatePadding(bottom = appBarLayout.totalScrollRange + verticalOffset)
-        })
+        }
     }
 
     open fun onTopFragmentChanged(topFragment: Fragment, currentDestination: NavDestination){

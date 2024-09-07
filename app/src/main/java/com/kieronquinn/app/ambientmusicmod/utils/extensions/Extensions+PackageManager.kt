@@ -16,10 +16,10 @@ fun PackageManager.isPermissionGranted(packageName: String, vararg permission: S
         return true
     }
     return packageInfo.requestedPermissions
-        .zip(packageInfo.requestedPermissionsFlags.toTypedArray())
-        .filter { permission.contains(it.first) }
-        .also { if(it.size != permission.size) return false } //Missing at least one permission
-        .all { it.second and PackageInfo.REQUESTED_PERMISSION_GRANTED != 0 }
+        ?.zip(packageInfo.requestedPermissionsFlags?.toTypedArray() ?: return false)
+        ?.filter { permission.contains(it.first) }
+        ?.also { if(it.size != permission.size) return false } //Missing at least one permission
+        ?.all { it.second and PackageInfo.REQUESTED_PERMISSION_GRANTED != 0 } == true
 }
 
 fun PackageManager.isAppInstalled(packageName: String): Boolean {

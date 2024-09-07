@@ -154,6 +154,7 @@
         <!-- Dynamic widget (Android 12+) -->
         <receiver
             android:name=".providers.AmbientMusicModWidgetDynamic"
+            android:label="@string/widget_regular_label"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -169,6 +170,7 @@
         <!-- 4x1 widget (< Android 12) -->
         <receiver
             android:name=".providers.AmbientMusicModWidget41"
+            android:label="@string/widget_regular_label"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -181,6 +183,7 @@
         <!-- 4x2 widget (< Android 12) -->
         <receiver
             android:name=".providers.AmbientMusicModWidget42"
+            android:label="@string/widget_regular_label"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -188,6 +191,22 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidgetprovider_42" />
+        </receiver>
+
+        <!-- Minimal Widget -->
+        <receiver
+            android:name=".providers.AmbientMusicModWidgetMinimal"
+            android:label="@string/widget_minimal_label"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidgetprovider_minimal" />
+            <meta-data
+                android:name="com.samsung.android.appwidget.provider"
+                android:resource="@xml/samsung_widget" />
         </receiver>
 
         <provider

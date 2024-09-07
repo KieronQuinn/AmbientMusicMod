@@ -69,5 +69,7 @@ data class SettingsBackup(
     @SerializedName("periodic_backup_enabled")
     val periodicBackupEnabled: Boolean?,
     @SerializedName("periodic_backup_interval")
-    val periodicBackupInterval: PeriodicBackupInterval?
+    val periodicBackupInterval: PeriodicBackupInterval?,
+    @SerializedName("overlay_shadow_enabled")
+    val overlayShadowEnabled: Boolean?
 )

@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.protobuf'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -64,35 +65,35 @@ protobuf {
 
 dependencies {
     //AndroidX for basic (mainly Annotations), Room and LifecycleService
-    def room_version = "2.5.1"
+    def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation 'androidx.core:core-ktx:1.10.0'
-    implementation "androidx.lifecycle:lifecycle-service:2.6.1"
+    ksp "androidx.room:room-compiler:$room_version"
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation "androidx.lifecycle:lifecycle-service:2.8.5"
 
     //gRPC for comms + annotations for compiled code
     implementation 'io.grpc:grpc-android:1.54.0'
     implementation 'io.grpc:grpc-binder:1.54.0'
-    implementation 'io.grpc:grpc-stub:1.54.0'
+    implementation 'io.grpc:grpc-stub:1.57.0'
     implementation 'io.grpc:grpc-okhttp:1.54.0'
-    implementation 'io.grpc:grpc-protobuf-lite:1.54.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.57.0'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
     //okhttp for networking
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
     //Flogger for logging
     implementation 'com.google.flogger:flogger:0.7.4'
     implementation 'com.google.flogger:google-extensions:0.7.4'
 
     //Dagger + Hilt for injection
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    implementation 'com.google.dagger:dagger:2.41'
-    kapt 'com.google.dagger:dagger-compiler:2.41'
-    kapt "com.google.dagger:hilt-compiler:2.41"
+    implementation "com.google.dagger:hilt-android:2.50"
+    implementation 'com.google.dagger:dagger:2.50'
+    kapt 'com.google.dagger:dagger-compiler:2.50'
+    kapt "com.google.dagger:hilt-compiler:2.50"
 
     //Other Google requirements
-    implementation "com.google.guava:guava:31.1-android"
+    implementation "com.google.guava:guava:32.0.1-android"
     kapt 'com.google.auto.value:auto-value:1.9'
     compileOnly 'com.jakewharton.auto.value:auto-value-annotations:1.4'
     implementation 'com.ryanharter.auto.value:auto-value-parcel:0.2.5'

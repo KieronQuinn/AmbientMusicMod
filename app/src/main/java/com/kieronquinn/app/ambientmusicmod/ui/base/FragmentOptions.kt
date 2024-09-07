@@ -6,7 +6,6 @@ import android.view.MenuItem
 
 interface BackAvailable
 interface LockCollapsed
-interface CanShowSnackbar
 interface NoToolbar
 
 interface Root

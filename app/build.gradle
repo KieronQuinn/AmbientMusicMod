@@ -12,11 +12,11 @@ plugins {
 
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-String DEFAULT_MANIFEST = "271:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240331-030011/manifest.json"
-String DEFAULT_MANIFEST_V3 = "3079:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240324-040013/manifest.json"
+String DEFAULT_MANIFEST = "290:https://storage.googleapis.com/music-iq-db/updatable_ytm_db/20240901-030029/manifest.json"
+String DEFAULT_MANIFEST_V3 = "3099:https://storage.googleapis.com/music-iq-db/updatable_db_v3/20240901-030029/manifest.json"
 
-def tagName = '2.3.5'
-def version = 235
+def tagName = '2.4'
+def version = 240
 
 def getKeystoreProperties() {
     def properties = new Properties()
@@ -37,12 +37,12 @@ def getKeystoreProperties() {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.kieronquinn.app.ambientmusicmod"
         minSdk 28
-        targetSdk 34
+        targetSdk 35
         versionCode version
         versionName tagName
 
@@ -114,19 +114,21 @@ protobuf {
 
 dependencies {
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.work:work-runtime-ktx:2.9.0"
+    implementation "androidx.work:work-runtime-ktx:2.9.1"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-service:2.7.0"
+    implementation "androidx.lifecycle:lifecycle-service:2.8.5"
     implementation "androidx.security:security-crypto:1.1.0-alpha06"
+    implementation "androidx.fragment:fragment-ktx:1.8.3"
+    implementation "androidx.activity:activity-ktx:1.9.2"
 
     //Material UI
-    implementation 'com.google.android.material:material:1.12.0-rc01'
+    implementation 'com.google.android.material:material:1.12.0'
 
     //MonetCompat for colours on < S
     implementation 'com.github.KieronQuinn:MonetCompat:0.4.1'
@@ -138,7 +140,7 @@ dependencies {
     implementation "com.google.protobuf:protobuf-javalite:3.25.2"
 
     //Lottie for animations
-    implementation 'com.airbnb.android:lottie:6.3.0'
+    implementation 'com.airbnb.android:lottie:6.4.0'
 
     //Used for chip layouts
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
@@ -146,7 +148,7 @@ dependencies {
     //Audio visualisation during playback
     implementation 'com.github.alxrm:audiowave-progressbar:0.9.2'
 
-    implementation 'com.google.guava:guava:31.1-android'
+    implementation 'com.google.guava:guava:32.0.1-android'
     implementation 'com.google.code.gson:gson:2.10.1'
 
     //Update & APK downloading
@@ -161,6 +163,7 @@ dependencies {
 
     //Used to cleanly restart the app in full after setup
     implementation 'com.jakewharton:process-phoenix:2.1.2'
+    implementation 'androidx.core:core-remoteviews:1.1.0'
 
     //Stubs for system APIs (not included in APK)
     compileOnly project(path: ':systemstubs')
@@ -183,7 +186,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.50"
 
     //OSS libraries activity
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.1.0'
 
     //Better Link Movement Method for inline links
     implementation 'me.saket:better-link-movement-method:2.2.0'
@@ -200,6 +203,6 @@ dependencies {
     ksp "androidx.room:room-compiler:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
