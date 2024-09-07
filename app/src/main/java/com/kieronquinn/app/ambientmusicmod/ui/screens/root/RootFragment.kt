@@ -2,7 +2,6 @@ package com.kieronquinn.app.ambientmusicmod.ui.screens.root
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.kieronquinn.app.ambientmusicmod.R
 import com.kieronquinn.app.ambientmusicmod.components.navigation.RootNavigation

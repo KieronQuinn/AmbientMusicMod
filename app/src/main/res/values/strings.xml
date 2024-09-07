@@ -69,7 +69,7 @@
     <string name="item_nowplaying_notifications_title">Notifications</string>
     <string name="item_nowplaying_notifications_content_enabled">On</string>
     <string name="item_nowplaying_notifications_content_disabled">Off</string>
-    <string name="item_nowplaying_lockscreen_title">Lock Screen</string>
+    <string name="item_nowplaying_lockscreen_title">Lock Screen &amp; Widget</string>
     <string name="item_nowplaying_lockscreen_content">Display identified songs on your lock screen</string>
     <string name="item_nowplaying_ondemand_title">On Demand Recognition</string>
     <string name="item_nowplaying_ondemand_content">Identify songs playing nearby that aren\'t recognised by your device</string>
@@ -237,8 +237,11 @@
     <string name="lockscreen_owner_info_fallback_content_empty">[Empty]</string>
     <string name="lockscreen_owner_info_fallback_reset">Reset</string>
 
-    <string name="lockscreen_overlay_text_colour_title">Overlay Text Colour</string>
-    <string name="lockscreen_overlay_text_colour_content">Set the text colour of the lockscreen overlay: %1s</string>
+    <string name="lockscreen_overlay_text_colour_title">Overlay / Minimal Widget Text Colour</string>
+    <string name="lockscreen_overlay_text_colour_title_short">Text Colour</string>
+    <string name="lockscreen_overlay_text_colour_content">Set the text colour of the lockscreen overlay &amp; minimal widget: %1s</string>
+    <string name="lockscreen_overlay_shadow_enabled_title">Overlay / Minimal Widget Shadow</string>
+    <string name="lockscreen_overlay_shadow_enabled_content">Show a shadow behind the lockscreen overlay &amp; minimal widget\'s text for contrast against wallpapers</string>
 
     <string name="lockscreen_overlay_text_colour_automatic_title">Automatic</string>
     <string name="lockscreen_overlay_text_colour_automatic_content">Automatically adjusts to the wallpaper colour, provided by the system (may not work on all wallpapers)</string>
@@ -456,6 +459,8 @@
     <string name="widget_recognising">Recognising</string>
     <string name="widget_error">Error Recognising Music</string>
     <string name="widget_error_disabled">Recognition is disabled</string>
+    <string name="widget_regular_label">Now Playing</string>
+    <string name="widget_minimal_label">Now Playing (Minimal)</string>
 
     <!-- Setup -->
     <string name="landing_title">@string/app_name</string>

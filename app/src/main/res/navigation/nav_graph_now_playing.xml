@@ -190,7 +190,7 @@
     <fragment
         android:id="@+id/lockScreenTextColourFragment"
         android:name="com.kieronquinn.app.ambientmusicmod.ui.screens.lockscreen.textcolour.LockScreenTextColourFragment"
-        android:label="@string/lockscreen_overlay_text_colour_title"
+        android:label="@string/lockscreen_overlay_text_colour_title_short"
         tools:layout="@layout/fragment_settings_base" >
         <action
             android:id="@+id/action_lockScreenTextColourFragment_to_lockScreenCustomTextColourFragment"

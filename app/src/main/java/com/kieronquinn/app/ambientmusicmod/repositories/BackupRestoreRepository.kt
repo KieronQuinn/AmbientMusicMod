@@ -344,7 +344,8 @@ class BackupRestoreRepositoryImpl(
             settingsRepository.lockscreenOverlayCustomColour.getOrNull(),
             deviceConfigRepository.alternativeEncoding.getOrNull(),
             settingsRepository.periodicBackupEnabled.getOrNull(),
-            settingsRepository.periodicBackupInterval.getOrNull()
+            settingsRepository.periodicBackupInterval.getOrNull(),
+            settingsRepository.lockscreenOverlayShadowEnabled.getOrNull()
         )
     }
 
@@ -385,6 +386,7 @@ class BackupRestoreRepositoryImpl(
         alternativeEncoding.restoreTo(deviceConfigRepository.alternativeEncoding)
         periodicBackupEnabled.restoreTo(settingsRepository.periodicBackupEnabled)
         periodicBackupInterval.restoreTo(settingsRepository.periodicBackupInterval)
+        overlayShadowEnabled.restoreTo(settingsRepository.lockscreenOverlayShadowEnabled)
     }
 
     private suspend fun <T> T?.restoreTo(setting: BaseSettingsRepository.AmbientMusicModSetting<T>) {

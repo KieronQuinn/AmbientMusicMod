@@ -69,7 +69,20 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
             R.drawable.ic_lock_screen_owner_info,
             onClick = viewModel::onOwnerInfoClicked
         )
-        if(!state.enabled) return listOf(switch, ownerInfo, LockScreenSettingsItem.Footer)
+        val textColour = GenericSettingsItem.Setting(
+            getString(R.string.lockscreen_overlay_text_colour_title),
+            getString(R.string.lockscreen_overlay_text_colour_content, state.overlayTextColour),
+            R.drawable.ic_lockscreen_overlay_text_colour,
+            onClick = viewModel::onTextColourClicked
+        )
+        val shadow = GenericSettingsItem.SwitchSetting(
+            state.overlayShadowEnabled,
+            getString(R.string.lockscreen_overlay_shadow_enabled_title),
+            getString(R.string.lockscreen_overlay_shadow_enabled_content),
+            R.drawable.ic_shadow,
+            onChanged = viewModel::onShadowChanged
+        )
+        if(!state.enabled) return listOf(switch, ownerInfo, textColour, shadow, LockScreenSettingsItem.Footer)
         val header = LockScreenSettingsItem.Header(
             state.style,
             viewModel::onStyleChanged,
@@ -91,12 +104,6 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
             R.drawable.ic_lockscreen_click_action,
             onClick = viewModel::onClickActionClicked
         )
-        val textColour = GenericSettingsItem.Setting(
-            getString(R.string.lockscreen_overlay_text_colour_title),
-            getString(R.string.lockscreen_overlay_text_colour_content, state.overlayTextColour),
-            R.drawable.ic_lockscreen_overlay_text_colour,
-            onClick = viewModel::onTextColourClicked
-        )
         val onDemand = if(state.onDemandAvailable){
             GenericSettingsItem.SwitchSetting(
                 state.onDemandEnabled,
@@ -115,7 +122,7 @@ class LockScreenFragment: BaseSettingsFragment(), BackAvailable {
             ) {}
         }else null
         return listOfNotNull(
-            switch, header, enhancedSetting, clickAction, textColour, onDemand, ownerInfo, systemUi, LockScreenSettingsItem.Footer
+            switch, header, enhancedSetting, clickAction, textColour, shadow, onDemand, ownerInfo, systemUi, LockScreenSettingsItem.Footer
         )
     }
 

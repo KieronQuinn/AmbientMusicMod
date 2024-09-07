@@ -26,6 +26,7 @@ interface SettingsRepository {
     val lockscreenOverlayClicked: AmbientMusicModSetting<LockscreenOnTrackClicked>
     val lockscreenOverlayColour: AmbientMusicModSetting<OverlayTextColour>
     val lockscreenOverlayCustomColour: AmbientMusicModSetting<Int>
+    val lockscreenOverlayShadowEnabled: AmbientMusicModSetting<Boolean>
 
     val lockscreenOwnerInfo: AmbientMusicModSetting<Boolean>
     val lockscreenOwnerInfoShowNote: AmbientMusicModSetting<Boolean>
@@ -187,6 +188,9 @@ class SettingsRepositoryImpl(
 
         private const val LOCK_SCREEN_OVERLAY_CUSTOM_TEXT_COLOUR = "lock_screen_overlay_custom_text_colour"
 
+        private const val LOCK_SCREEN_OVERLAY_SHADOW = "lock_screen_overlay_shadow"
+        private const val DEFAULT_LOCK_SCREEN_OVERLAY_SHADOW = true
+
         private const val LOCK_SCREEN_OWNER_INFO = "lock_screen_owner_info"
         private const val DEFAULT_LOCK_SCREEN_OWNER_INFO = false
 
@@ -268,6 +272,10 @@ class SettingsRepositoryImpl(
 
     override val lockscreenOverlayCustomColour = color(
         LOCK_SCREEN_OVERLAY_CUSTOM_TEXT_COLOUR, Integer.MAX_VALUE
+    )
+
+    override val lockscreenOverlayShadowEnabled = boolean(
+        LOCK_SCREEN_OVERLAY_SHADOW, DEFAULT_LOCK_SCREEN_OVERLAY_SHADOW
     )
 
     override val lockscreenOwnerInfo = boolean(

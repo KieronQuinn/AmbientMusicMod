@@ -100,4 +100,19 @@
         <item name="fontFamily">@font/google_sans_text</item>
     </style>
 
+    <style name="WidgetShadowEnabled" parent="Theme.MaterialComponents.DayNight">
+        <item name="widgetShadowColour">@android:color/black</item>
+    </style>
+
+    <style name="WidgetShadowDisabled" parent="Theme.MaterialComponents.DayNight">
+        <item name="widgetShadowColour">@android:color/transparent</item>
+    </style>
+
+    <style name="WidgetText" parent="@android:style/Widget.TextView">
+        <item name="android:shadowColor">?widgetShadowColour</item>
+        <item name="android:shadowDx">0.5</item>
+        <item name="android:shadowDy">0.5</item>
+        <item name="android:shadowRadius">0.5</item>
+    </style>
+
 </resources>

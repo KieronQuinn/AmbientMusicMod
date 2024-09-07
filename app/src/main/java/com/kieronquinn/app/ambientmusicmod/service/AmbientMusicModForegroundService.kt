@@ -197,9 +197,10 @@ class AmbientMusicModForegroundService: LifecycleService() {
 
     private val screenOnTrigger = combine(
         broadcastReceiverAsFlow(Intent.ACTION_SCREEN_ON),
-        settings.triggerWhenScreenOn.asFlow()
-    ) { _, enabled ->
-        if(enabled) Unit else null
+        settings.triggerWhenScreenOn.asFlow(),
+        enabled
+    ) { _, enabled, mainEnabled ->
+        if(mainEnabled && enabled) Unit else null
     }.filterNotNull()
 
     private val overlayState = combine(

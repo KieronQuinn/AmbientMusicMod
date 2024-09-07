@@ -12,3 +12,5 @@ fun Resources.getResourceIdArray(@ArrayRes resourceId: Int): Array<Int> {
     array.recycle()
     return items.toTypedArray()
 }
+
+fun Resources.dip(value: Int): Int = (value * displayMetrics.density).toInt()
